@@ -2,6 +2,7 @@ import { FaBuilding } from "react-icons/fa";
 import { IoMdCheckbox } from "react-icons/io";
 import { Card } from "./card";
 import { Table } from "./table";
+import Title from "./header/title";
 
 export default function Main() {
     const cardList = [
@@ -13,9 +14,7 @@ export default function Main() {
 
     return (
         <main className="flex-1 p-6 pt-24 flex flex-col bg-white/90">
-            <h1 className="text-4xl fixed top-0 font-bold uppercase w-full p-6 text-start text-black bg-white shadow-md z-10 ">
-                Sistema de Gestão de Manutenção
-            </h1>
+            <Title title={"Sistema de Gestão de Manutenção"} />
             <div>
                 <div className="grid grid-cols-4 gap-4 p-6 flex-row">
                     {cardList.map((props, index) => (
