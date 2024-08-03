@@ -1,5 +1,6 @@
 import Image from "next/image";
-import NavLink from "./navLink";
+import NavLink from "./aside/navLink";
+
 
 export default function Aside() {
   return (

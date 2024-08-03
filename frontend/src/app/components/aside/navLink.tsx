@@ -6,10 +6,8 @@ import { GrHostMaintenance } from "react-icons/gr";
 export default function NavLink(){
  
     const links = [
-        { target:"/pages/index", text:"Dashboard", icon:<MdDashboard /> },
-        { target:"#", text:"Ambientes", icon:<FaSearchLocation /> },
-        { target:"/pages/machines", text:"Equipamentos", icon:<BsTools /> },
-        { target:"/pages/maintenance", text:"Manutenções", icon:<GrHostMaintenance /> },
+        { target:"/pages/index", text:"Manutenção", icon:<MdDashboard /> },
+        { target:"/pages/machines", text:"Máquinas", icon:<BsTools /> },
         { target:"/pages/tools", text:"Ferramentas", icon:<FaUserCog /> },
         { target:"/pages/teams", text:"Times", icon:<FaUserCog /> },
         { target:"/pages/controlStock", text:"Controle de Estoque", icon:<FaUserCog /> },
