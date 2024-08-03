@@ -1,13 +1,15 @@
-import Aside from "../../components/aside/asideBar";
-import Footer from "../../components/footer/footer";
-import Main from "../../components/main";
+
+import MainMaintenance from "@/app/components/maintenance/mainMaintenance";
+import Footer from "../../components/footer";
+import Aside from "@/app/components/asideBar";
+
 
 export default function Index() {
   return (
     <div className="h-screen flex flex-col">
-      <div className="flex-1 flex ">
+      <div className="flex-1 flex">
         <Aside />
-        <Main />
+        <MainMaintenance />
       </div>
       <Footer />
     </div>
