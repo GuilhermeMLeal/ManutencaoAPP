@@ -1,7 +1,6 @@
-
 import Aside from "@/app/components/asideBar";
 import Footer from "@/app/components/footer";
-import CreateMaintenance from "@/app/components/maintenance/createMaintenance/createMaintenance";
+import CreateMaintenance from "@/app/components/maintenance/createMaintenance";
 
 export default function CreateMaintenancePage() {
   return (

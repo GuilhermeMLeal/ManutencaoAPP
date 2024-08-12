@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField, Button, Grid, Box, MenuItem } from "@mui/material";
-import Title from "../../title";
+import Title from "../title";
 
 export default function CreateMaintenance() {
   return (
@@ -78,7 +78,7 @@ export default function CreateMaintenance() {
             <Grid item>
               <input
                 accept="image/*"
-                style={{ display: 'none' }}
+                style={{ display: "none" }}
                 id="raised-button-file"
                 multiple
                 type="file"
@@ -102,9 +102,11 @@ export default function CreateMaintenance() {
             />
           </Grid>
           <Grid item xs={12}>
-            <a href="/pages/index"><Button variant="contained" color="primary" fullWidth >
-              Cadastrar Solicitação
-            </Button></a>
+            <a href="/pages/index">
+              <Button variant="contained" color="primary" fullWidth>
+                Cadastrar Solicitação
+              </Button>
+            </a>
           </Grid>
         </Grid>
       </Box>

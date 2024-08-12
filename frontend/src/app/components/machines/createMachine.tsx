@@ -2,12 +2,23 @@ import React from "react";
 import { TextField, Button, Grid, Box } from "@mui/material";
 import Title from "@/app/components/title";
 
-
 export default function CreateMachine() {
   return (
     <main className="flex-1 p-6 pt-24 flex flex-col bg-white/90">
       <Title title={"Cadastro de Máquinas"} />
-      <Box component="form" noValidate>
+      <Box
+        component="form"
+        noValidate
+        sx={{
+          width: "100%",
+          maxWidth: 1000,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "auto",
+        }}
+      >
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -77,22 +88,24 @@ export default function CreateMachine() {
             <Grid item>
               <input
                 accept="image/*"
-                style={{ display: 'none' }}
+                style={{ display: "none" }}
                 id="raised-button-file"
                 multiple
                 type="file"
               />
               <label htmlFor="raised-button-file">
                 <Button variant="contained" component="span">
-                  Upload de Imagens
+                  Upload de Arquivos
                 </Button>
               </label>
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" color="primary" fullWidth type="submit">
-              Cadastrar Máquina
-            </Button>
+            <a href="/pages/machines">
+              <Button variant="contained" color="primary" fullWidth>
+                Cadastrar Máquina
+              </Button>
+            </a>
           </Grid>
         </Grid>
       </Box>

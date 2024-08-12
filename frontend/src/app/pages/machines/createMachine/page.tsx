@@ -1,7 +1,6 @@
-
 import Aside from "@/app/components/asideBar";
 import Footer from "@/app/components/footer";
-import CreateMachine from "@/app/machines/createMaintenance/createMachine";
+import CreateMachine from "@/app/components/machines/createMachine";
 
 export default function CreateMachinePage() {
   return (
