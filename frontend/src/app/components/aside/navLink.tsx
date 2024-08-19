@@ -1,19 +1,26 @@
-import { MdDashboard } from "react-icons/md";
-import { FaUserCog } from "react-icons/fa";
-import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import ConstructionIcon from "@mui/icons-material/Construction";
+import { GrVmMaintenance } from "react-icons/gr";
+import GroupsIcon from "@mui/icons-material/Groups";
+import ChecklistIcon from "@mui/icons-material/Checklist";
+import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
 
 export default function NavLink() {
   const links = [
-    { target: "/pages/index", text: "Manutenção", icon: <MdDashboard /> },
-    { target: "/pages/machines", text: "Máquinas", icon: <PrecisionManufacturingIcon />  },
-    { target: "/pages/tools", text: "Ferramentas", icon: <FaUserCog /> },
-    { target: "/pages/teams", text: "Times", icon: <FaUserCog /> },
+    { target: "/pages/index", text: "Manutenção", icon: <GrVmMaintenance /> },
+    {
+      target: "/pages/machines",
+      text: "Máquinas",
+      icon: <PrecisionManufacturingIcon />,
+    },
+    { target: "/pages/tools", text: "Peças", icon: <ConstructionIcon /> },
+    { target: "/pages/teams", text: "Times", icon: <GroupsIcon /> },
     {
       target: "/pages/controlStock",
-      text: "Controle de Estoque",
-      icon: <FaUserCog />,
+      text: "Controle de Estoque de Peças",
+      icon: <ChecklistIcon />,
     },
-    { target: "#", text: "Usuário", icon: <FaUserCog /> },
+    { target: "#", text: "Usuário", icon: <ManageAccountsIcon /> },
   ];
 
   return (
