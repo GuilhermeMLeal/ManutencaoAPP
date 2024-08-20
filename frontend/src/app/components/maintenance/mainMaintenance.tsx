@@ -35,10 +35,11 @@ export default function MainMaintenance() {
 
   return (
     <main className="flex-1 p-6 pt-24 flex flex-col bg-white/90">
-      <Title title={"Sistema de Gestão de Manutenção"} />
-      <a href="/pages/index/createMaintenance">
-        <Button variant="contained">Cadastrar uma Manutenção</Button>
-      </a>
+      <Title
+        title={"Sistema de Gestão de Manutenção"}
+        subtitle="Gestão de Manutenção"
+        textButton="Cadastrar uma Manutenção"
+      />
       <div>
         <div className="grid grid-cols-4 gap-4 p-6 flex-row">
           {cardList.map((props, index) => (

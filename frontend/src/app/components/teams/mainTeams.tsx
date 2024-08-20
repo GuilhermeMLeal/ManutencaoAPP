@@ -23,17 +23,11 @@ const teamData = [
 export default function MainTeam() {
   return (
     <main className="flex-1 flex flex-col p-6 pt-24 bg-white/90">
-      <Title title={"Sistema de Gestão de Equipes"} />
-      <Box sx={{ textAlign: "center", mb: 4, paddingTop: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Visualização Detalhada de Equipes
-        </Typography>
-        <a href="/pages/teams/createTeam">
-          <Button variant="contained" color="primary" size="large">
-            Cadastrar uma Equipe
-          </Button>
-        </a>
-      </Box>
+      <Title
+        title="Sistema de Gestão de Equipes"
+        subtitle="Visualização Detalhada de Equipe"
+        textButton="Cadastrar uma Equipe"
+      />
       <Container maxWidth="lg">
         <Box
           sx={{
