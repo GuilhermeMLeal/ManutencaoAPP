@@ -1,11 +1,11 @@
 import React from "react";
 import { TextField, Button, Grid, Box, InputAdornment } from "@mui/material";
-import Title from "@/app/components/title";
+import TitleCreate from "../titleCreate";
 
 export default function CreateTool() {
   return (
     <main className="flex-1 p-6 pt-24 flex flex-col bg-white/90">
-      <Title title={"Cadastro de Peças"} />
+      <TitleCreate title={"Cadastro de Peças"} />
       <Box
         component="form"
         noValidate

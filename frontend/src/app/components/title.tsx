@@ -4,9 +4,10 @@ interface TitleType {
   title: string;
   subtitle: string;
   textButton: string;
+  pageText:string;
 }
 
-export default function Title({ title, subtitle, textButton }: TitleType) {
+export default function Title({ title, subtitle, textButton , pageText}: TitleType) {
   return (
     <>
       <h1 className="text-4xl fixed top-0 font-bold uppercase w-full p-6 text-start text-black bg-white shadow-md z-10">
@@ -21,7 +22,7 @@ export default function Title({ title, subtitle, textButton }: TitleType) {
         >
           {subtitle}
         </Typography>
-        <a href="/pages/teams/createTeam">
+        <a href={pageText}>
           <Button variant="contained" color="primary" size="large">
             {textButton}
           </Button>

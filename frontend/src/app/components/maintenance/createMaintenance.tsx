@@ -1,11 +1,12 @@
 import React from "react";
 import { TextField, Button, Grid, Box, MenuItem } from "@mui/material";
 import Title from "../title";
+import TitleCreate from "../titleCreate";
 
 export default function CreateMaintenance() {
   return (
     <main className="flex-1 p-6 pt-24 flex flex-col bg-white/90">
-      <Title title={"Cadastro de Solicitações de Manutenção"} />
+      <TitleCreate title={"Cadastro de Solicitações de Manutenção"} />
       <Box component="form" noValidate>
         <Grid container spacing={3}>
           <Grid item xs={12}>
