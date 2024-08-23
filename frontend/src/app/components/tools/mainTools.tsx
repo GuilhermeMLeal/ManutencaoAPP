@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Button, Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import CardBox from "../cardBox";
 import Title from "../title";
 
@@ -60,6 +60,7 @@ export default function MainTools() {
         title="Sistema de Gestão de Peças"
         subtitle="Visualização Detalhada de Peças"
         textButton="Cadastrar uma Peça"
+        pageText="/pages/tools/createTool"
       />
       <Container maxWidth="lg">
         <Box

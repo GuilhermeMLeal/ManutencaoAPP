@@ -27,7 +27,7 @@ export default function MainMachine() {
         title="Sistema de Gestão de Máquinas"
         subtitle="Visualização Detalhada de Máquinas"
         textButton="Cadastrar uma Máquina"
-        pageText=""
+        pageText="/pages/machines/createMachine"
       />
       <Container maxWidth="lg">
         <Box

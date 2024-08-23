@@ -27,7 +27,7 @@ export default function MainTeam() {
         title="Sistema de Gestão de Equipes"
         subtitle="Visualização Detalhada de Equipe"
         textButton="Cadastrar uma Equipe"
-        pageText=""
+        pageText="/pages/teams/createTeam"
       />
       <Container maxWidth="lg">
         <Box
