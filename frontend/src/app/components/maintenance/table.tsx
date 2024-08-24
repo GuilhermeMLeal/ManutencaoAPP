@@ -3,7 +3,8 @@
 import { BiSolidEraser } from "react-icons/bi";
 import { FaRegEdit } from "react-icons/fa";
 import { useState } from "react";
-import { Dialog, DialogTitle, DialogContent, TextField, Button, Grid, MenuItem, Select, InputLabel, FormControl } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, TextField, Button, Grid, MenuItem, Select, InputLabel, FormControl, Box } from "@mui/material";
+import { FindItemTextBox } from "../findItemTextBox";
 
 export function Table() {
   const [openDialog, setOpenDialog] = useState(false);
@@ -54,8 +55,9 @@ export function Table() {
   };
 
   return (
-    <>
-      <div className="overflow-x-auto rounded-xl">
+    <>         
+    <FindItemTextBox textButton="Cadastrar uma Manutenção" pageText="/pages/index/createMaintenance" nameTextSearch="Manutenção" />
+       <div className="overflow-x-auto rounded-xl">
         <div className="max-h-64 overflow-y-auto">
           <table className="min-w-full divide-y divide-gray-200 text-center">
             <thead className="bg-gray-50 sticky top-0">

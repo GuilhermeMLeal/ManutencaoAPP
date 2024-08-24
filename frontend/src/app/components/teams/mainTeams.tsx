@@ -1,6 +1,7 @@
 import { Button, Container, Box, Typography } from "@mui/material";
 import Title from "../title";
 import CardBox from "../cardBox";
+import { FindItemTextBox } from "../findItemTextBox";
 
 const teamData = [
   {
@@ -26,9 +27,8 @@ export default function MainTeam() {
       <Title
         title="Sistema de Gestão de Equipes"
         subtitle="Visualização Detalhada de Equipe"
-        textButton="Cadastrar uma Equipe"
-        pageText="/pages/teams/createTeam"
       />
+      <FindItemTextBox textButton="Cadastrar uma Equipe" pageText="/pages/teams/createTeam" nameTextSearch="Equipe" />
       <Container maxWidth="lg">
         <Box
           sx={{

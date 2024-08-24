@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Container } from "@mui/material";
 import CardBox from "../cardBox";
 import Title from "../title";
+import { FindItemTextBox } from "../findItemTextBox";
 
 function createData(
   name: string,
@@ -59,9 +60,8 @@ export default function MainTools() {
       <Title
         title="Sistema de Gestão de Peças"
         subtitle="Visualização Detalhada de Peças"
-        textButton="Cadastrar uma Peça"
-        pageText="/pages/tools/createTool"
       />
+      <FindItemTextBox  textButton="Cadastrar uma Peça" pageText="/pages/tools/createTool" nameTextSearch="Peça"/>
       <Container maxWidth="lg">
         <Box
           sx={{

@@ -1,6 +1,7 @@
 import { Button, Container, Box, Typography } from "@mui/material";
 import Title from "../title";
 import CardBox from "../cardBox";
+import { FindItemTextBox } from "../findItemTextBox";
 
 const machineData = [
   {
@@ -26,9 +27,8 @@ export default function MainMachine() {
       <Title
         title="Sistema de Gestão de Máquinas"
         subtitle="Visualização Detalhada de Máquinas"
-        textButton="Cadastrar uma Máquina"
-        pageText="/pages/machines/createMachine"
       />
+      <FindItemTextBox textButton="Cadastrar uma Máquina" pageText="/pages/machines/createMachine"  nameTextSearch="Máquina"/>
       <Container maxWidth="lg">
         <Box
           sx={{
