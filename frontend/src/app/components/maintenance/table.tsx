@@ -56,7 +56,7 @@ export function Table() {
 
   return (
     <>         
-    <FindItemTextBox textButton="Cadastrar uma Manutenção" pageText="/pages/index/createMaintenance" nameTextSearch="Manutenção" />
+    <FindItemTextBox textReport = "Criar Relatório de Manutenções" textButton="Cadastrar uma Manutenção" pageText="/pages/index/createMaintenance" nameTextSearch="Manutenção" />
        <div className="overflow-x-auto rounded-xl">
         <div className="max-h-64 overflow-y-auto">
           <table className="min-w-full divide-y divide-gray-200 text-center">

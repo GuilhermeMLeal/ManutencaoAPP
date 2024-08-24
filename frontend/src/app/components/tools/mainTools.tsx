@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Box, Container } from "@mui/material";
 import CardBox from "../cardBox";
@@ -55,13 +57,22 @@ const rows = [
 ];
 
 export default function MainTools() {
+  const handleSeeMore = (name: string) => {
+    console.log(`Ver mais sobre ${name}`);
+  };
+
   return (
     <main className="flex-1 flex flex-col p-6 pt-24 bg-white/90">
       <Title
         title="Sistema de Gestão de Peças"
         subtitle="Visualização Detalhada de Peças"
       />
-      <FindItemTextBox  textButton="Cadastrar uma Peça" pageText="/pages/tools/createTool" nameTextSearch="Peça"/>
+      <FindItemTextBox 
+        textReport = "Criar Relatório de Peças"
+        textButton="Cadastrar uma Peça" 
+        pageText="/pages/tools/createTool" 
+        nameTextSearch="Peça"
+      />
       <Container maxWidth="lg">
         <Box
           sx={{
@@ -75,10 +86,12 @@ export default function MainTools() {
           {rows.map((row, index) => (
             <CardBox
               key={index}
-              image={row.imageUrl}
-              title={`${row.name} (Código: ${row.code})`}
-              description={`Fornecedor: ${row.supplier} - Quantidade: ${row.quantity} - Valor Unitário: R$${row.unitPrice.toFixed(2)}`}
-              text={row.name}
+              item={{
+                title: `${row.name} (Código: ${row.code})`,
+                description: `Fornecedor: ${row.supplier} - Quantidade: ${row.quantity} - Valor Unitário: R$${row.unitPrice.toFixed(2)}`,
+                image: row.imageUrl,
+              }}
+              onSeeMore={() => handleSeeMore(row.name)}
             />
           ))}
         </Box>

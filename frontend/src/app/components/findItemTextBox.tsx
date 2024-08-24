@@ -1,13 +1,15 @@
 import { Box, TextField } from "@mui/material";
 import CreateItem from "./createItem";
+import CreateReport from "./createReport";
 
 interface TextBox{
     nameTextSearch: string;
+    textReport: string;
     textButton: string;
     pageText:string;
 }
 
-export function FindItemTextBox({ nameTextSearch, textButton, pageText }: TextBox) {
+export function FindItemTextBox({ nameTextSearch, textReport,textButton, pageText }: TextBox) {
     return (
       <Box
         sx={{
@@ -17,6 +19,7 @@ export function FindItemTextBox({ nameTextSearch, textButton, pageText }: TextBo
           paddingBottom: '3%',
         }}
       >
+        <CreateReport textButton={textReport} />
         <CreateItem textButton={textButton} pageText={pageText} />
         <TextField
           id="outlined-basic"

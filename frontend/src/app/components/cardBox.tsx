@@ -1,26 +1,32 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import React from 'react';
+import { Card, CardContent, CardMedia, Typography, CardActions, Button } from '@mui/material';
 
-export default function CardBox(props: any) {
+interface CardBoxProps {
+  item: {
+    title: string;
+    description: string;
+    image: string;
+  };
+  onSeeMore: () => void;
+}
+
+export default function CardBox({ item, onSeeMore }: CardBoxProps) {
   return (
     <Card sx={{ width: 300 }}>
-      <CardMedia sx={{ height: 140 }} image={props.image} title={props.text} />
+      <CardMedia sx={{ height: 140 }} image={item.image} title={item.title} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {props.title}
+          {item.title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {props.description}
+          {item.description}
         </Typography>
       </CardContent>
       <CardActions>
         <Button size="small">Editar</Button>
-        <Button size="small">Ver Mais Sobre</Button>
+        <Button size="small" onClick={onSeeMore}>
+          Ver Mais Sobre
+        </Button>
       </CardActions>
     </Card>
   );

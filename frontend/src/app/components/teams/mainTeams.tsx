@@ -1,4 +1,17 @@
-import { Button, Container, Box, Typography } from "@mui/material";
+"use client";
+
+import React, { useState } from "react";
+import {
+  Button,
+  Container,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  CardMedia,
+} from "@mui/material";
 import Title from "../title";
 import CardBox from "../cardBox";
 import { FindItemTextBox } from "../findItemTextBox";
@@ -22,13 +35,31 @@ const teamData = [
 ];
 
 export default function MainTeam() {
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
+
+  const handleOpenDialog = (item: any) => {
+    setSelectedItem(item);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setSelectedItem(null);
+  };
+
   return (
     <main className="flex-1 flex flex-col p-6 pt-24 bg-white/90">
       <Title
         title="Sistema de Gestão de Equipes"
         subtitle="Visualização Detalhada de Equipe"
       />
-      <FindItemTextBox textButton="Cadastrar uma Equipe" pageText="/pages/teams/createTeam" nameTextSearch="Equipe" />
+      <FindItemTextBox
+        textReport = "Criar Relatório de Equipe"
+        textButton="Cadastrar uma Equipe"
+        pageText="/pages/teams/createTeam"
+        nameTextSearch="Equipe"
+      />
       <Container maxWidth="lg">
         <Box
           sx={{
@@ -42,13 +73,22 @@ export default function MainTeam() {
           {teamData.map((team, index) => (
             <CardBox
               key={index}
-              title={team.title}
-              description={team.description}
-              image={team.image}
+              item={team}
+              onSeeMore={() => handleOpenDialog(team)}
             />
           ))}
         </Box>
       </Container>
+      <Dialog open={openDialog} onClose={handleCloseDialog}>
+        <DialogTitle>{selectedItem?.title}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{selectedItem?.description}</DialogContentText>
+          <CardMedia sx={{ height: 140 }} image={selectedItem?.image} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Fechar</Button>
+        </DialogActions>
+      </Dialog>
     </main>
   );
 }

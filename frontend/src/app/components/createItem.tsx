@@ -10,7 +10,7 @@ export default function CreateItem({ textButton, pageText }: CreateItem) {
     return (
     <>
       <Link href={pageText} passHref>
-          <Button variant="contained" color="primary" size="large">
+          <Button variant="contained" color="primary" size="large" sx={{height:'60px'}}>
             {textButton}
           </Button>
         </Link>
