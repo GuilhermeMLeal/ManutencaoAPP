@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Box, Container, TablePagination } from "@mui/material";
 import CardBox from "../cardBox";
-import Title from "../title";
+import Title from "../titleMain";
 import { FindItemTextBox } from "../findItemTextBox";
 import PaginationComponent from "../PaginationComponent";
 

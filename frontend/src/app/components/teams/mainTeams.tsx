@@ -12,7 +12,7 @@ import {
   DialogTitle,
   CardMedia,
 } from "@mui/material";
-import Title from "../title";
+import Title from "../titleMain";
 import CardBox from "../cardBox";
 import { FindItemTextBox } from "../findItemTextBox";
 import PaginationComponent from "../PaginationComponent";
