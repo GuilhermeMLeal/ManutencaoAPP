@@ -137,20 +137,6 @@ export function Table() {
     }
   };
 
-  const handleAddTeam = (team: string): void => {
-    if (currentItem && !currentItem.equipes.includes(team)) {
-      setCurrentItem({ ...currentItem, equipes: [...currentItem.equipes, team] });
-    }
-  };
-
-  const handleRemoveTeam = (team: string): void => {
-    if (currentItem) {
-      setCurrentItem({
-        ...currentItem,
-        equipes: currentItem.equipes.filter((t: string) => t !== team),
-      });
-    }
-  };
 
   const handleChangePage = (event: unknown, newPage: number): void => {
     setPage(newPage);
@@ -306,7 +292,7 @@ export function Table() {
                     />
                     <Button
                       variant="contained"
-                      color="secondary"
+                      sx={{ backgroundColor: 'red', '&:hover': { backgroundColor: 'darkred' } }}
                       onClick={() => handleRemovePart(index)}
                     >
                       Remover
