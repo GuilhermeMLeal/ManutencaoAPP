@@ -91,6 +91,7 @@ export default function MainTools() {
                 description: `Fornecedor: ${row.supplier} - Quantidade: ${row.quantity} - Valor Unitário: R$${row.unitPrice.toFixed(2)}`,
                 image: row.imageUrl,
               }}
+              updatePath="/pages/tools/createTool"
               onSeeMore={() => handleSeeMore(row.name)}
             />
           ))}

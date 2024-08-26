@@ -6,7 +6,7 @@ import TitleCreate from "../titleCreate";
 export default function CreateMachine() {
   return (
     <main className="flex-1 p-6 pt-24 flex flex-col bg-white/90">
-      <TitleCreate title={"Cadastro de Máquinas"} />
+      <TitleCreate title={"Registro de Máquinas"} />
       <Box
         component="form"
         noValidate
@@ -104,7 +104,7 @@ export default function CreateMachine() {
           <Grid item xs={12}>
             <a href="/pages/machines">
               <Button variant="contained" color="primary" fullWidth>
-                Cadastrar Máquina
+                Registrar Máquina
               </Button>
             </a>
           </Grid>

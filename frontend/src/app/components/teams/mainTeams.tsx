@@ -74,6 +74,7 @@ export default function MainTeam() {
             <CardBox
               key={index}
               item={team}
+              updatePath = "/pages/teams/createTeam"
               onSeeMore={() => handleOpenDialog(team)}
             />
           ))}

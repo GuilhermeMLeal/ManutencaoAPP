@@ -40,7 +40,7 @@ export default function CreateMaintenance() {
 
   return (
     <main className="flex-1 p-6 pt-24 flex flex-col bg-white/90">
-      <TitleCreate title={"Cadastro de Solicitações de Manutenção"} />
+      <TitleCreate title={"Registro de Solicitações de Manutenção"} />
       <Box component="form" noValidate sx={{ maxWidth: 800, margin: "0 auto" }}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -221,7 +221,7 @@ export default function CreateMaintenance() {
             <Grid item xs={12}>
               <a href="/pages/index">
                 <Button variant="contained" color="primary" fullWidth>
-                  Cadastrar Solicitação
+                  Registrar Solicitação
                 </Button>
               </a>
             </Grid>

@@ -5,7 +5,7 @@ import { Box, Button, Grid, InputAdornment, TextField } from "@mui/material";
 export default function CreateTool() {
   return (
     <main className="flex-1 p-6 pt-24 flex flex-col bg-white/90">
-      <TitleCreate title={"Cadastro de Peças"} />
+      <TitleCreate title={"Registro de Peças"} />
       <Box
         component="form"
         noValidate
@@ -95,7 +95,7 @@ export default function CreateTool() {
           <Grid item xs={12}>
             <a href="/pages/tools">
               <Button variant="contained" color="primary" fullWidth>
-                Cadastrar Peça
+                Registrar Peça
               </Button>
             </a>
           </Grid>

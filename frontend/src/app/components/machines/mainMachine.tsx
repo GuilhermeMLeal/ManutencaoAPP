@@ -74,6 +74,7 @@ export default function MainMachine() {
             <CardBox
               key={index}
               item={machine}
+              updatePath = "/pages/machines/createMachine"
               onSeeMore={() => handleOpenDialog(machine)}
             />
           ))}
