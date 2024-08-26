@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { Box, Container, TablePagination } from "@mui/material";
-import CardBox from "../cardBox";
-import Title from "../titleMain";
-import { FindItemTextBox } from "../findItemTextBox";
-import PaginationComponent from "../paginationComponent";
+import CardBox from "../table/cardBox";
+import Title from "../titles/titleMain";
+import { FindItemTextBox } from "../create/findItemTextBox";
+import PaginationComponent from "../table/PaginationComponent";
 
 function createData(
   name: string,
@@ -14,7 +14,7 @@ function createData(
   quantity: number,
   unitPrice: number,
   imageUrl: string,
-  description: string,
+  description: string
 ) {
   return {
     name,
@@ -35,7 +35,7 @@ const rows = [
     100,
     15.0,
     "/image/parafuso.avif",
-    "Descrição da Peça A.",
+    "Descrição da Peça A."
   ),
   createData(
     "Peça B",
@@ -44,7 +44,7 @@ const rows = [
     200,
     22.0,
     "/image/parafuso.avif",
-    "Descrição da Peça B.",
+    "Descrição da Peça B."
   ),
   createData(
     "Peça C",
@@ -53,7 +53,7 @@ const rows = [
     150,
     18.0,
     "/image/parafuso.avif",
-    "Descrição da Peça C.",
+    "Descrição da Peça C."
   ),
 ];
 
@@ -61,13 +61,18 @@ export default function MainTools() {
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(3);
 
-  const handlePageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+  const handlePageChange = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
     setPage(newPage);
   };
 
-  const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRowsPerPageChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); 
+    setPage(0);
   };
 
   const handleSeeMore = (name: string) => {
@@ -80,10 +85,10 @@ export default function MainTools() {
         title="Sistema de Gestão de Peças"
         subtitle="Visualização Detalhada de Peças"
       />
-      <FindItemTextBox 
+      <FindItemTextBox
         textReport="Criar Relatório de Peças"
-        textButton="Cadastrar uma Peça" 
-        pageText="/pages/tools/createTool" 
+        textButton="Cadastrar uma Peça"
+        pageText="/pages/tools/createTool"
         nameTextSearch="Peça"
         typeTextField="Fornecedor"
       />
@@ -97,18 +102,20 @@ export default function MainTools() {
             mt: 4,
           }}
         >
-          {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
-            <CardBox
-              key={index}
-              item={{
-                title: `${row.name} (Código: ${row.code})`,
-                description: `Fornecedor: ${row.supplier} - Quantidade: ${row.quantity} - Valor Unitário: R$${row.unitPrice.toFixed(2)}`,
-                image: row.imageUrl,
-              }}
-              updatePath="/pages/tools/createTool"
-              onSeeMore={() => handleSeeMore(row.name)}
-            />
-          ))}
+          {rows
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map((row, index) => (
+              <CardBox
+                key={index}
+                item={{
+                  title: `${row.name} (Código: ${row.code})`,
+                  description: `Fornecedor: ${row.supplier} - Quantidade: ${row.quantity} - Valor Unitário: R$${row.unitPrice.toFixed(2)}`,
+                  image: row.imageUrl,
+                }}
+                updatePath="/pages/tools/createTool"
+                onSeeMore={() => handleSeeMore(row.name)}
+              />
+            ))}
         </Box>
         <PaginationComponent
           count={rows.length}

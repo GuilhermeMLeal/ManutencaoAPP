@@ -1,5 +1,5 @@
 import React from "react";
-import TitleCreate from "../titleCreate";
+import TitleCreate from "../titles/titleCreate";
 import { Box, Button, Grid, InputAdornment, TextField } from "@mui/material";
 
 export default function CreateTool() {

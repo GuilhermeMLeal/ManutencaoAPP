@@ -1,14 +1,8 @@
 "use client";
 
 import React from "react";
-import {
-  Container,
-  Box,
-  Typography,
-  Paper,
-  Grid,
-} from "@mui/material";
-import TitleMain from "../titleMain";
+import { Container, Box, Typography, Paper, Grid } from "@mui/material";
+import TitleMain from "../titles/titleMain";
 import { Line, Bar, Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -95,7 +89,11 @@ const avgResolutionTimeData = {
 };
 
 const maintenanceVolumeData = {
-  labels: ["Manutenção Preventiva", "Manutenção Corretiva", "Manutenção Predial"],
+  labels: [
+    "Manutenção Preventiva",
+    "Manutenção Corretiva",
+    "Manutenção Predial",
+  ],
   datasets: [
     {
       label: "Quantidade de Manutenções",
@@ -115,16 +113,20 @@ export default function DashboardPage() {
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
-            <Paper elevation={3} sx={{ p: 2, height: '100%' }}>
-              <Typography variant="h6">Manutenções ao Longo do Tempo</Typography>
+            <Paper elevation={3} sx={{ p: 2, height: "100%" }}>
+              <Typography variant="h6">
+                Manutenções ao Longo do Tempo
+              </Typography>
               <Box sx={{ height: 300 }}>
                 <Line data={maintenanceData} />
               </Box>
             </Paper>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Paper elevation={3} sx={{ p: 2, height: '100%' }}>
-              <Typography variant="h6">Distribuição das Falhas por Máquina</Typography>
+            <Paper elevation={3} sx={{ p: 2, height: "100%" }}>
+              <Typography variant="h6">
+                Distribuição das Falhas por Máquina
+              </Typography>
               <Box sx={{ height: 300 }}>
                 <Bar data={machineData} />
               </Box>
@@ -132,24 +134,51 @@ export default function DashboardPage() {
           </Grid>
           <Grid item xs={12} md={6} display="flex" justifyContent="center">
             <Paper elevation={3} sx={{ p: 2, height: 400 }}>
-              <Typography variant="h6" align="center">Quantidade de Peças em Estoque</Typography>
-              <Box sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <Typography variant="h6" align="center">
+                Quantidade de Peças em Estoque
+              </Typography>
+              <Box
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <Pie data={partsData} />
               </Box>
             </Paper>
           </Grid>
           <Grid item xs={12} md={6} display="flex" justifyContent="center">
             <Paper elevation={3} sx={{ p: 2, height: 400 }}>
-              <Typography variant="h6" align="center">Tempo Médio de Resolução de Solicitações</Typography>
-              <Box sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <Typography variant="h6" align="center">
+                Tempo Médio de Resolução de Solicitações
+              </Typography>
+              <Box
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <Line data={avgResolutionTimeData} />
               </Box>
             </Paper>
           </Grid>
           <Grid item xs={12} md={6} display="flex" justifyContent="center">
-            <Paper elevation={3} sx={{ p: 2, height: 400}}>
-              <Typography variant="h6" align="center">Desempenho dos Times</Typography>
-              <Box sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Paper elevation={3} sx={{ p: 2, height: 400 }}>
+              <Typography variant="h6" align="center">
+                Desempenho dos Times
+              </Typography>
+              <Box
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <Bar data={teamPerformanceData} />
               </Box>
             </Paper>
@@ -157,7 +186,7 @@ export default function DashboardPage() {
           <Grid item xs={12} md={6} display="flex" justifyContent="center">
             <Paper elevation={3} sx={{ p: 2, height: 400 }}>
               <Typography variant="h6">Volume de Manutenções</Typography>
-              <Box sx={{ height: '100%' }}>
+              <Box sx={{ height: "100%" }}>
                 <Pie data={maintenanceVolumeData} />
               </Box>
             </Paper>

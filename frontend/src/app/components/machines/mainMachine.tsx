@@ -12,10 +12,10 @@ import {
   CardMedia,
   DialogActions,
 } from "@mui/material";
-import Title from "../titleMain";
-import CardBox from "../cardBox";
-import { FindItemTextBox } from "../findItemTextBox";
-import PaginationComponent from "../paginationComponent";
+import Title from "../titles/titleMain";
+import CardBox from "../table/cardBox";
+import { FindItemTextBox } from "../create/findItemTextBox";
+import PaginationComponent from "../table/PaginationComponent";
 
 const machineData = [
   {
@@ -41,13 +41,18 @@ export default function MainMachine() {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
 
-  const handlePageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+  const handlePageChange = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
     setPage(newPage);
   };
 
-  const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRowsPerPageChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); 
+    setPage(0);
   };
 
   const handleOpenDialog = (item: any) => {
@@ -67,7 +72,7 @@ export default function MainMachine() {
         subtitle="Visualização Detalhada de Máquinas"
       />
       <FindItemTextBox
-        textReport = "Criar Relatório de Máquinas"
+        textReport="Criar Relatório de Máquinas"
         textButton="Cadastrar uma Máquina"
         pageText="/pages/machines/createMachine"
         nameTextSearch="Máquina"
@@ -87,7 +92,7 @@ export default function MainMachine() {
             <CardBox
               key={index}
               item={machine}
-              updatePath = "/pages/machines/createMachine"
+              updatePath="/pages/machines/createMachine"
               onSeeMore={() => handleOpenDialog(machine)}
             />
           ))}
@@ -107,9 +112,9 @@ export default function MainMachine() {
         fullWidth
         sx={{
           maxWidth: 800,
-          margin: "auto", 
+          margin: "auto",
           display: "flex",
-          alignItems: "center", 
+          alignItems: "center",
           justifyContent: "center",
         }}
       >

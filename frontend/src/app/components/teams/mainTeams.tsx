@@ -12,11 +12,10 @@ import {
   DialogTitle,
   CardMedia,
 } from "@mui/material";
-import Title from "../titleMain";
-import CardBox from "../cardBox";
-import { FindItemTextBox } from "../findItemTextBox";
-import PaginationComponent from "../paginationComponent";
-
+import Title from "../titles/titleMain";
+import CardBox from "../table/cardBox";
+import { FindItemTextBox } from "../create/findItemTextBox";
+import PaginationComponent from "../table/PaginationComponent";
 
 const teamData = [
   {
@@ -53,13 +52,18 @@ export default function MainTeam() {
     setSelectedItem(null);
   };
 
-  const handlePageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+  const handlePageChange = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
     setPage(newPage);
   };
 
-  const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRowsPerPageChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); 
+    setPage(0);
   };
 
   return (
@@ -85,14 +89,16 @@ export default function MainTeam() {
             mt: 4,
           }}
         >
-          {teamData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((team, index) => (
-            <CardBox
-              key={index}
-              item={team}
-              updatePath="/pages/teams/createTeam"
-              onSeeMore={() => handleOpenDialog(team)}
-            />
-          ))}
+          {teamData
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map((team, index) => (
+              <CardBox
+                key={index}
+                item={team}
+                updatePath="/pages/teams/createTeam"
+                onSeeMore={() => handleOpenDialog(team)}
+              />
+            ))}
         </Box>
         <PaginationComponent
           count={teamData.length}

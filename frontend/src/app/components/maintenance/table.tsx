@@ -18,8 +18,8 @@ import {
   TextField,
   TablePagination,
 } from "@mui/material";
-import { FindItemTextBox } from "../findItemTextBox";
-import PaginationComponent from "../paginationComponent";
+import { FindItemTextBox } from "../create/findItemTextBox";
+import PaginationComponent from "../table/PaginationComponent";
 
 interface Item {
   ambiente: string;
@@ -126,7 +126,11 @@ export function Table() {
     }
   };
 
-  const handlePartChange = (index: number, field: string, value: string | number): void => {
+  const handlePartChange = (
+    index: number,
+    field: string,
+    value: string | number
+  ): void => {
     if (currentItem) {
       const updatedParts = [...currentItem.pecas];
       updatedParts[index] = { ...updatedParts[index], [field]: value };
@@ -143,12 +147,13 @@ export function Table() {
     }
   };
 
-
   const handleChangePage = (event: unknown, newPage: number): void => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -164,43 +169,84 @@ export function Table() {
       />
       <div className="overflow-x-auto rounded-xl">
         <div className="max-h-64 overflow-y-auto">
-        <table className="min-w-full divide-y divide-gray-200 text-center">
-        <thead className="bg-gray-50 sticky top-0">
-          <tr>
-            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Ambiente</th>
-            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Equipamento</th>
-            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Solicitação</th>
-            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Atendimento</th>
-            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Status</th>
-            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Comentários</th>
-            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Arquivos</th>
-            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Gastos Totais</th> {/* Nova coluna */}
-            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Ações</th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {itemsList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
-            <tr key={index}>
-              <td className="p-3 whitespace-nowrap text-black">{item.ambiente}</td>
-              <td className="p-3 whitespace-nowrap text-black">{item.equipamento}</td>
-              <td className="p-3 whitespace-nowrap text-black">{item.solicitacao}</td>
-              <td className="p-3 whitespace-nowrap text-black">{item.atendimento}</td>
-              <td className="p-3 whitespace-nowrap text-black">{item.status}</td>
-              <td className="p-3 whitespace-nowrap text-black">{item.comentarios}</td>
-              <td className="p-3 whitespace-nowrap text-black">
-                {item.arquivos.length > 0 ? item.arquivos.join(", ") : "Nenhum arquivo"}
-              </td>
-              <td className="p-3 whitespace-nowrap text-black">{item.gastosTotais.toFixed(2)}</td> {/* Novo campo */}
-              <td className="p-3 whitespace-nowrap text-black">
-                <div className="flex justify-center items-center gap-x-2">
-                  <FaRegEdit onClick={() => handleOpenDialog(item)} className="cursor-pointer" />
-                  <BiSolidEraser className="cursor-pointer" />
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          <table className="min-w-full divide-y divide-gray-200 text-center">
+            <thead className="bg-gray-50 sticky top-0">
+              <tr>
+                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">
+                  Ambiente
+                </th>
+                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">
+                  Equipamento
+                </th>
+                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">
+                  Solicitação
+                </th>
+                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">
+                  Atendimento
+                </th>
+                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">
+                  Comentários
+                </th>
+                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">
+                  Arquivos
+                </th>
+                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">
+                  Gastos Totais
+                </th>{" "}
+                {/* Nova coluna */}
+                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">
+                  Ações
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {itemsList
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((item, index) => (
+                  <tr key={index}>
+                    <td className="p-3 whitespace-nowrap text-black">
+                      {item.ambiente}
+                    </td>
+                    <td className="p-3 whitespace-nowrap text-black">
+                      {item.equipamento}
+                    </td>
+                    <td className="p-3 whitespace-nowrap text-black">
+                      {item.solicitacao}
+                    </td>
+                    <td className="p-3 whitespace-nowrap text-black">
+                      {item.atendimento}
+                    </td>
+                    <td className="p-3 whitespace-nowrap text-black">
+                      {item.status}
+                    </td>
+                    <td className="p-3 whitespace-nowrap text-black">
+                      {item.comentarios}
+                    </td>
+                    <td className="p-3 whitespace-nowrap text-black">
+                      {item.arquivos.length > 0
+                        ? item.arquivos.join(", ")
+                        : "Nenhum arquivo"}
+                    </td>
+                    <td className="p-3 whitespace-nowrap text-black">
+                      {item.gastosTotais.toFixed(2)}
+                    </td>{" "}
+                    {/* Novo campo */}
+                    <td className="p-3 whitespace-nowrap text-black">
+                      <div className="flex justify-center items-center gap-x-2">
+                        <FaRegEdit
+                          onClick={() => handleOpenDialog(item)}
+                          className="cursor-pointer"
+                        />
+                        <BiSolidEraser className="cursor-pointer" />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </div>
         <PaginationComponent
           count={itemsList.length}
@@ -211,8 +257,15 @@ export function Table() {
         />
       </div>
 
-      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
-        <DialogTitle className="text-center mb-4">Editar Manutenção</DialogTitle>
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle className="text-center mb-4">
+          Editar Manutenção
+        </DialogTitle>
         <DialogContent>
           {currentItem && (
             <Grid container spacing={3} justifyContent="center">
@@ -221,7 +274,9 @@ export function Table() {
                   <InputLabel>Status</InputLabel>
                   <Select
                     value={currentItem.status}
-                    onChange={(e) => setCurrentItem({ ...currentItem, status: e.target.value })}
+                    onChange={(e) =>
+                      setCurrentItem({ ...currentItem, status: e.target.value })
+                    }
                     label="Status"
                   >
                     <MenuItem value="Pendente">Pendente</MenuItem>
@@ -240,7 +295,12 @@ export function Table() {
                   fullWidth
                   variant="outlined"
                   value={currentItem.comentarios}
-                  onChange={(e) => setCurrentItem({ ...currentItem, comentarios: e.target.value })}
+                  onChange={(e) =>
+                    setCurrentItem({
+                      ...currentItem,
+                      comentarios: e.target.value,
+                    })
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -249,11 +309,21 @@ export function Table() {
                   <Select
                     multiple
                     value={currentItem.equipes}
-                    onChange={(e) => setCurrentItem({ ...currentItem, equipes: e.target.value as string[] })}
+                    onChange={(e) =>
+                      setCurrentItem({
+                        ...currentItem,
+                        equipes: e.target.value as string[],
+                      })
+                    }
                     renderValue={(selected) => (
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                         {(selected as string[]).map((value) => (
-                          <Chip key={value} label={teams.find((team) => team.value === value)?.label} />
+                          <Chip
+                            key={value}
+                            label={
+                              teams.find((team) => team.value === value)?.label
+                            }
+                          />
                         ))}
                       </Box>
                     )}
@@ -267,7 +337,12 @@ export function Table() {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <Box display="flex" justifyContent="center" alignItems="center" mb={2}>
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  mb={2}
+                >
                   <Button variant="contained" onClick={handleAddPart}>
                     Adicionar Peça
                   </Button>
@@ -278,7 +353,13 @@ export function Table() {
                       <InputLabel>Peça</InputLabel>
                       <Select
                         value={peca.part}
-                        onChange={(e) => handlePartChange(index, "part", e.target.value as string)}
+                        onChange={(e) =>
+                          handlePartChange(
+                            index,
+                            "part",
+                            e.target.value as string
+                          )
+                        }
                         label="Peça"
                       >
                         {parts.map((part) => (
@@ -293,13 +374,22 @@ export function Table() {
                       label="Quantidade"
                       type="number"
                       value={peca.quantity}
-                      onChange={(e) => handlePartChange(index, "quantity", parseInt(e.target.value))}
+                      onChange={(e) =>
+                        handlePartChange(
+                          index,
+                          "quantity",
+                          parseInt(e.target.value)
+                        )
+                      }
                       className="mr-2"
                       variant="outlined"
                     />
                     <Button
                       variant="contained"
-                      sx={{ backgroundColor: 'red', '&:hover': { backgroundColor: 'darkred' } }}
+                      sx={{
+                        backgroundColor: "red",
+                        "&:hover": { backgroundColor: "darkred" },
+                      }}
                       onClick={() => handleRemovePart(index)}
                     >
                       Remover
@@ -308,10 +398,19 @@ export function Table() {
                 ))}
               </Grid>
               <Grid item xs={12} className="text-center">
-                <Button onClick={handleSave} variant="contained" color="primary">
+                <Button
+                  onClick={handleSave}
+                  variant="contained"
+                  color="primary"
+                >
                   Salvar
                 </Button>
-                <Button onClick={handleSave} variant="contained" color="primary" sx={{ marginLeft: '10px'}}>
+                <Button
+                  onClick={handleSave}
+                  variant="contained"
+                  color="primary"
+                  sx={{ marginLeft: "10px" }}
+                >
                   Cancelar
                 </Button>
               </Grid>

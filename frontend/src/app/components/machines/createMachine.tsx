@@ -1,7 +1,7 @@
 import React from "react";
 import { TextField, Button, Grid, Box } from "@mui/material";
 import Title from "@/app/components/title";
-import TitleCreate from "../titleCreate";
+import TitleCreate from "../titles/titleCreate";
 
 export default function CreateMachine() {
   return (

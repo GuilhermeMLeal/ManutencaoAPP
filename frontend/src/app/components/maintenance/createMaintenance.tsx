@@ -1,8 +1,18 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
-import { TextField, Button, Grid, Box, MenuItem, Select, InputLabel, FormControl, Chip } from "@mui/material";
-import TitleCreate from "../titleCreate";
+import {
+  TextField,
+  Button,
+  Grid,
+  Box,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  Chip,
+} from "@mui/material";
+import TitleCreate from "../titles/titleCreate";
 
 const teams = [
   { value: "team1", label: "Equipe 1" },
@@ -18,20 +28,29 @@ const parts = [
 
 export default function CreateMaintenance() {
   const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
-  const [selectedParts, setSelectedParts] = useState<{ part: string, quantity: number, supplier: string }[]>([]);
+  const [selectedParts, setSelectedParts] = useState<
+    { part: string; quantity: number; supplier: string }[]
+  >([]);
 
   const handleTeamChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelectedTeams(event.target.value as string[]);
   };
 
-  const handlePartChange = (index: number, field: string, value: string | number) => {
+  const handlePartChange = (
+    index: number,
+    field: string,
+    value: string | number
+  ) => {
     const newParts = [...selectedParts];
     newParts[index] = { ...newParts[index], [field]: value };
     setSelectedParts(newParts);
   };
 
   const addPart = () => {
-    setSelectedParts([...selectedParts, { part: '', quantity: 0, supplier: '' }]);
+    setSelectedParts([
+      ...selectedParts,
+      { part: "", quantity: 0, supplier: "" },
+    ]);
   };
 
   const removePart = (index: number) => {
@@ -94,11 +113,18 @@ export default function CreateMaintenance() {
                 name="teams"
                 label="Equipes"
                 value={selectedTeams}
-                onChange={(e) => handleTeamChange(e as React.ChangeEvent<{ value: unknown }>)}
+                onChange={(e) =>
+                  handleTeamChange(e as React.ChangeEvent<{ value: unknown }>)
+                }
                 renderValue={(selected) => (
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                     {(selected as string[]).map((value) => (
-                      <Chip key={value} label={teams.find(team => team.value === value)?.label} />
+                      <Chip
+                        key={value}
+                        label={
+                          teams.find((team) => team.value === value)?.label
+                        }
+                      />
                     ))}
                   </Box>
                 )}
@@ -160,7 +186,14 @@ export default function CreateMaintenance() {
           </Grid>
           {selectedParts.map((part, index) => (
             <Grid item xs={12} key={index}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, marginBottom: 2 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                  marginBottom: 2,
+                }}
+              >
                 <Grid container spacing={2} alignItems="center">
                   <Grid item xs={12} sm={4}>
                     <FormControl fullWidth variant="outlined">
@@ -170,11 +203,20 @@ export default function CreateMaintenance() {
                         name={`part-${index}`}
                         label="Peça"
                         value={part.part}
-                        onChange={(e) => handlePartChange(index, 'part', e.target.value as string)}
+                        onChange={(e) =>
+                          handlePartChange(
+                            index,
+                            "part",
+                            e.target.value as string
+                          )
+                        }
                         labelId={`part-label-${index}`}
                       >
                         {parts.map((partOption) => (
-                          <MenuItem key={partOption.value} value={partOption.value}>
+                          <MenuItem
+                            key={partOption.value}
+                            value={partOption.value}
+                          >
                             {partOption.label}
                           </MenuItem>
                         ))}
@@ -190,7 +232,13 @@ export default function CreateMaintenance() {
                       fullWidth
                       variant="outlined"
                       value={part.quantity}
-                      onChange={(e) => handlePartChange(index, 'quantity', Number(e.target.value))}
+                      onChange={(e) =>
+                        handlePartChange(
+                          index,
+                          "quantity",
+                          Number(e.target.value)
+                        )
+                      }
                     />
                   </Grid>
                   <Grid item xs={12} sm={4}>
@@ -203,11 +251,25 @@ export default function CreateMaintenance() {
                           fullWidth
                           variant="outlined"
                           value={part.supplier}
-                          onChange={(e) => handlePartChange(index, 'supplier', e.target.value as string)}
+                          onChange={(e) =>
+                            handlePartChange(
+                              index,
+                              "supplier",
+                              e.target.value as string
+                            )
+                          }
                         />
                       </Grid>
-                      <Grid item xs={3} sx={{ textAlign: 'right', paddingLeft:'5%'}}>
-                        <Button variant="contained" color="error" onClick={() => removePart(index)}>
+                      <Grid
+                        item
+                        xs={3}
+                        sx={{ textAlign: "right", paddingLeft: "5%" }}
+                      >
+                        <Button
+                          variant="contained"
+                          color="error"
+                          onClick={() => removePart(index)}
+                        >
                           Remover Peça
                         </Button>
                       </Grid>
