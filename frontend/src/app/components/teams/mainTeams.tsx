@@ -15,7 +15,7 @@ import {
 import Title from "../titleMain";
 import CardBox from "../cardBox";
 import { FindItemTextBox } from "../findItemTextBox";
-import PaginationComponent from "../PaginationComponent";
+import PaginationComponent from "../paginationComponent";
 
 
 const teamData = [
@@ -73,6 +73,7 @@ export default function MainTeam() {
         textButton="Cadastrar uma Equipe"
         pageText="/pages/teams/createTeam"
         nameTextSearch="Equipe"
+        typeTextField="Área do Time"
       />
       <Container maxWidth="lg">
         <Box

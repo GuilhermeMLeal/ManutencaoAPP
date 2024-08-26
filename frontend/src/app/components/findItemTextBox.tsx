@@ -6,10 +6,11 @@ interface TextBox{
     nameTextSearch: string;
     textReport: string;
     textButton: string;
-    pageText:string;
+    pageText:string; 
+    typeTextField:string;
 }
 
-export function FindItemTextBox({ nameTextSearch, textReport,textButton, pageText }: TextBox) {
+export function FindItemTextBox({ nameTextSearch, textReport,textButton, pageText , typeTextField}: TextBox) {
     return (
       <Box
         sx={{
@@ -19,7 +20,7 @@ export function FindItemTextBox({ nameTextSearch, textReport,textButton, pageTex
           paddingBottom: '3%',
         }}
       >
-        <CreateReport textButton={textReport} />
+        <CreateReport textButton={textReport}  typeTextField={typeTextField} />
         <CreateItem textButton={textButton} pageText={pageText} />
         <TextField
           id="outlined-basic"

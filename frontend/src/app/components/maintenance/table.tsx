@@ -19,7 +19,7 @@ import {
   TablePagination,
 } from "@mui/material";
 import { FindItemTextBox } from "../findItemTextBox";
-import PaginationComponent from "../PaginationComponent";
+import PaginationComponent from "../paginationComponent";
 
 interface Item {
   ambiente: string;
@@ -160,6 +160,7 @@ export function Table() {
         textButton="Cadastrar uma Manutenção"
         pageText="/pages/index/createMaintenance"
         nameTextSearch="Manutenção"
+        typeTextField="Tipo de Manutenção"
       />
       <div className="overflow-x-auto rounded-xl">
         <div className="max-h-64 overflow-y-auto">

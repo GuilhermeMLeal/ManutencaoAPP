@@ -15,7 +15,7 @@ import {
 import Title from "../titleMain";
 import CardBox from "../cardBox";
 import { FindItemTextBox } from "../findItemTextBox";
-import PaginationComponent from "../PaginationComponent";
+import PaginationComponent from "../paginationComponent";
 
 const machineData = [
   {
@@ -71,6 +71,7 @@ export default function MainMachine() {
         textButton="Cadastrar uma Máquina"
         pageText="/pages/machines/createMachine"
         nameTextSearch="Máquina"
+        typeTextField="Tipo de Máquina"
       />
       <Container maxWidth="lg">
         <Box
@@ -99,11 +100,23 @@ export default function MainMachine() {
           onRowsPerPageChange={handleRowsPerPageChange}
         />
       </Container>
-      <Dialog open={openDialog} onClose={handleCloseDialog}>
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        maxWidth="md"
+        fullWidth
+        sx={{
+          maxWidth: 800,
+          margin: "auto", 
+          display: "flex",
+          alignItems: "center", 
+          justifyContent: "center",
+        }}
+      >
         <DialogTitle>{selectedItem?.title}</DialogTitle>
         <DialogContent>
           <DialogContentText>{selectedItem?.description}</DialogContentText>
-          <CardMedia sx={{ height: 140 }} image={selectedItem?.image} />
+          <CardMedia sx={{ height: 300 }} image={selectedItem?.image} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog}>Fechar</Button>

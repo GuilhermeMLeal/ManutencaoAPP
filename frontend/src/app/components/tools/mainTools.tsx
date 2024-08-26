@@ -5,7 +5,7 @@ import { Box, Container, TablePagination } from "@mui/material";
 import CardBox from "../cardBox";
 import Title from "../titleMain";
 import { FindItemTextBox } from "../findItemTextBox";
-import PaginationComponent from "../PaginationComponent";
+import PaginationComponent from "../paginationComponent";
 
 function createData(
   name: string,
@@ -85,6 +85,7 @@ export default function MainTools() {
         textButton="Cadastrar uma Peça" 
         pageText="/pages/tools/createTool" 
         nameTextSearch="Peça"
+        typeTextField="Fornecedor"
       />
       <Container maxWidth="lg">
         <Box

@@ -23,7 +23,6 @@ import {
   PointElement,
 } from "chart.js";
 
-// Register Chart.js components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -82,7 +81,6 @@ const teamPerformanceData = {
   ],
 };
 
-// Mock data for additional metrics
 const avgResolutionTimeData = {
   labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
   datasets: [
