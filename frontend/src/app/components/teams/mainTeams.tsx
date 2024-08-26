@@ -15,6 +15,8 @@ import {
 import Title from "../title";
 import CardBox from "../cardBox";
 import { FindItemTextBox } from "../findItemTextBox";
+import PaginationComponent from "../PaginationComponent";
+
 
 const teamData = [
   {
@@ -38,6 +40,9 @@ export default function MainTeam() {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
 
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(3);
+
   const handleOpenDialog = (item: any) => {
     setSelectedItem(item);
     setOpenDialog(true);
@@ -48,6 +53,15 @@ export default function MainTeam() {
     setSelectedItem(null);
   };
 
+  const handlePageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0); 
+  };
+
   return (
     <main className="flex-1 flex flex-col p-6 pt-24 bg-white/90">
       <Title
@@ -55,7 +69,7 @@ export default function MainTeam() {
         subtitle="Visualização Detalhada de Equipe"
       />
       <FindItemTextBox
-        textReport = "Criar Relatório de Equipe"
+        textReport="Criar Relatório de Equipe"
         textButton="Cadastrar uma Equipe"
         pageText="/pages/teams/createTeam"
         nameTextSearch="Equipe"
@@ -70,15 +84,22 @@ export default function MainTeam() {
             mt: 4,
           }}
         >
-          {teamData.map((team, index) => (
+          {teamData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((team, index) => (
             <CardBox
               key={index}
               item={team}
-              updatePath = "/pages/teams/createTeam"
+              updatePath="/pages/teams/createTeam"
               onSeeMore={() => handleOpenDialog(team)}
             />
           ))}
         </Box>
+        <PaginationComponent
+          count={teamData.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={handleRowsPerPageChange}
+        />
       </Container>
       <Dialog open={openDialog} onClose={handleCloseDialog}>
         <DialogTitle>{selectedItem?.title}</DialogTitle>

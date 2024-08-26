@@ -15,6 +15,7 @@ import {
 import Title from "../title";
 import CardBox from "../cardBox";
 import { FindItemTextBox } from "../findItemTextBox";
+import PaginationComponent from "../PaginationComponent";
 
 const machineData = [
   {
@@ -35,8 +36,19 @@ const machineData = [
 ];
 
 export default function MainMachine() {
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(3);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedItem, setSelectedItem] = useState<any>(null);
+
+  const handlePageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0); 
+  };
 
   const handleOpenDialog = (item: any) => {
     setSelectedItem(item);
@@ -79,6 +91,13 @@ export default function MainMachine() {
             />
           ))}
         </Box>
+        <PaginationComponent
+          count={machineData.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={handleRowsPerPageChange}
+        />
       </Container>
       <Dialog open={openDialog} onClose={handleCloseDialog}>
         <DialogTitle>{selectedItem?.title}</DialogTitle>

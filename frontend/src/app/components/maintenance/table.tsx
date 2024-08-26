@@ -19,6 +19,7 @@ import {
   TablePagination,
 } from "@mui/material";
 import { FindItemTextBox } from "../findItemTextBox";
+import PaginationComponent from "../PaginationComponent";
 
 interface Item {
   ambiente: string;
@@ -200,9 +201,7 @@ export function Table() {
         </tbody>
       </table>
         </div>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
+        <PaginationComponent
           count={itemsList.length}
           rowsPerPage={rowsPerPage}
           page={page}

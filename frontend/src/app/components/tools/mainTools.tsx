@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
-import { Box, Container } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Container, TablePagination } from "@mui/material";
 import CardBox from "../cardBox";
 import Title from "../title";
 import { FindItemTextBox } from "../findItemTextBox";
+import PaginationComponent from "../PaginationComponent";
 
 function createData(
   name: string,
@@ -57,6 +58,18 @@ const rows = [
 ];
 
 export default function MainTools() {
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(3);
+
+  const handlePageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleRowsPerPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0); 
+  };
+
   const handleSeeMore = (name: string) => {
     console.log(`Ver mais sobre ${name}`);
   };
@@ -68,7 +81,7 @@ export default function MainTools() {
         subtitle="Visualização Detalhada de Peças"
       />
       <FindItemTextBox 
-        textReport = "Criar Relatório de Peças"
+        textReport="Criar Relatório de Peças"
         textButton="Cadastrar uma Peça" 
         pageText="/pages/tools/createTool" 
         nameTextSearch="Peça"
@@ -83,7 +96,7 @@ export default function MainTools() {
             mt: 4,
           }}
         >
-          {rows.map((row, index) => (
+          {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
             <CardBox
               key={index}
               item={{
@@ -96,6 +109,13 @@ export default function MainTools() {
             />
           ))}
         </Box>
+        <PaginationComponent
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handlePageChange}
+          onRowsPerPageChange={handleRowsPerPageChange}
+        />
       </Container>
     </main>
   );
