@@ -30,6 +30,7 @@ interface Item {
   arquivos: string[];
   equipes: string[];
   pecas: { part: string; quantity: number }[];
+  gastosTotais: number;
 }
 
 export function Table() {
@@ -49,6 +50,7 @@ export function Table() {
       arquivos: [],
       equipes: [],
       pecas: [],
+      gastosTotais: 100,
     },
     {
       ambiente: "Sala 1",
@@ -60,6 +62,7 @@ export function Table() {
       arquivos: [],
       equipes: [],
       pecas: [],
+      gastosTotais: 100,
     },
     {
       ambiente: "Sala 1",
@@ -71,6 +74,7 @@ export function Table() {
       arquivos: [],
       equipes: [],
       pecas: [],
+      gastosTotais: 100,
     },
     {
       ambiente: "Sala 1",
@@ -82,6 +86,7 @@ export function Table() {
       arquivos: [],
       equipes: [],
       pecas: [],
+      gastosTotais: 100,
     },
   ];
 
@@ -157,41 +162,43 @@ export function Table() {
       />
       <div className="overflow-x-auto rounded-xl">
         <div className="max-h-64 overflow-y-auto">
-          <table className="min-w-full divide-y divide-gray-200 text-center">
-            <thead className="bg-gray-50 sticky top-0">
-              <tr>
-                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Ambiente</th>
-                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Equipamento</th>
-                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Solicitação</th>
-                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Atendimento</th>
-                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Status</th>
-                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Comentários</th>
-                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Arquivos</th>
-                <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Ações</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {itemsList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
-                <tr key={index}>
-                  <td className="p-3 whitespace-nowrap text-black">{item.ambiente}</td>
-                  <td className="p-3 whitespace-nowrap text-black">{item.equipamento}</td>
-                  <td className="p-3 whitespace-nowrap text-black">{item.solicitacao}</td>
-                  <td className="p-3 whitespace-nowrap text-black">{item.atendimento}</td>
-                  <td className="p-3 whitespace-nowrap text-black">{item.status}</td>
-                  <td className="p-3 whitespace-nowrap text-black">{item.comentarios}</td>
-                  <td className="p-3 whitespace-nowrap text-black">
-                    {item.arquivos.length > 0 ? item.arquivos.join(", ") : "Nenhum arquivo"}
-                  </td>
-                  <td className="p-3 whitespace-nowrap text-black">
-                    <div className="flex justify-center items-center gap-x-2">
-                      <FaRegEdit onClick={() => handleOpenDialog(item)} className="cursor-pointer" />
-                      <BiSolidEraser className="cursor-pointer" />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <table className="min-w-full divide-y divide-gray-200 text-center">
+        <thead className="bg-gray-50 sticky top-0">
+          <tr>
+            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Ambiente</th>
+            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Equipamento</th>
+            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Solicitação</th>
+            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Atendimento</th>
+            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Status</th>
+            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Comentários</th>
+            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Arquivos</th>
+            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Gastos Totais</th> {/* Nova coluna */}
+            <th className="p-3 text-xs text-gray-600 uppercase tracking-wider">Ações</th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {itemsList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
+            <tr key={index}>
+              <td className="p-3 whitespace-nowrap text-black">{item.ambiente}</td>
+              <td className="p-3 whitespace-nowrap text-black">{item.equipamento}</td>
+              <td className="p-3 whitespace-nowrap text-black">{item.solicitacao}</td>
+              <td className="p-3 whitespace-nowrap text-black">{item.atendimento}</td>
+              <td className="p-3 whitespace-nowrap text-black">{item.status}</td>
+              <td className="p-3 whitespace-nowrap text-black">{item.comentarios}</td>
+              <td className="p-3 whitespace-nowrap text-black">
+                {item.arquivos.length > 0 ? item.arquivos.join(", ") : "Nenhum arquivo"}
+              </td>
+              <td className="p-3 whitespace-nowrap text-black">{item.gastosTotais.toFixed(2)}</td> {/* Novo campo */}
+              <td className="p-3 whitespace-nowrap text-black">
+                <div className="flex justify-center items-center gap-x-2">
+                  <FaRegEdit onClick={() => handleOpenDialog(item)} className="cursor-pointer" />
+                  <BiSolidEraser className="cursor-pointer" />
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
         </div>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
