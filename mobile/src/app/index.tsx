@@ -1,11 +1,23 @@
-import { StatusBar, Text, View } from "react-native";
-import Home from "./home";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from '@react-navigation/stack';
+import { HomeScreen } from "../components/home";
+import { DetailsScreen } from "../components/DetailsScreen";
+
+
+type RootStackParamList = {
+  Home: undefined;
+  Details: {name: string; email: string};
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 export default function Index() {
   return (
-    
-    <View className="flex-1 items-center justify-center bg-white">
-      <Home name="Aguina" />
-    </View>
-);
+    <NavigationContainer independent={true}>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
