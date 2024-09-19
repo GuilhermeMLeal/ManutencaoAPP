@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { SafeAreaView, FlatList, View, Text, StyleSheet } from 'react-native';
-import { ListItem, SearchBar, Button } from 'react-native-elements';
+import { SafeAreaView, FlatList, StyleSheet } from 'react-native';
+import { ListItem, SearchBar } from 'react-native-elements';
 
 interface StockItem {
   id: string;
@@ -57,11 +57,6 @@ export default function StockScreen() {
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
       />
-      <Button
-        title="Consultar Estoque"
-        containerStyle={styles.buttonContainer}
-        onPress={() => console.log('Consulta realizada')}
-      />
     </SafeAreaView>
   );
 }
@@ -73,8 +68,5 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     marginBottom: 10,
-  },
-  buttonContainer: {
-    margin: 20,
   },
 });

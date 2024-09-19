@@ -9,6 +9,7 @@ import { MachineDetailsScreen } from '../screens/MachineDetailsScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import MaintenanceScreen from '../screens/MaintenanceScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
+import StockScreen from '../screens/ProductList';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -36,6 +37,8 @@ export default function App() {
               iconName = 'wrench';
             } else if (route.name === 'Machines') {
               iconName = 'list';
+            } else if (route.name === 'Stock') { // Nova aba para Produtos
+              iconName = 'box';
             } else if (route.name === 'Profile') {
               iconName = 'user';
             }
@@ -50,6 +53,7 @@ export default function App() {
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Maintenance" component={MaintenanceScreen} />
         <Tab.Screen name="Machines" component={MachineStack} />
+        <Tab.Screen name="Stock" component={StockScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
     </NavigationContainer>
