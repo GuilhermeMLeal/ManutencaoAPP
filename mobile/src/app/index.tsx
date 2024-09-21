@@ -10,9 +10,19 @@ import { HomeScreen } from '../screens/HomeScreen';
 import MaintenanceScreen from '../screens/MaintenanceScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import StockScreen from '../screens/ProductList';
+import CreateMaintenanceScreen from '../screens/CreateMaintenanceScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
+function MaintenanceStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="MaintenanceList" component={MaintenanceScreen} />
+      <Stack.Screen name="CreateMaintenance" component={CreateMaintenanceScreen} />
+    </Stack.Navigator>
+  );
+}
 
 function MachineStack() {
   return (
@@ -33,28 +43,28 @@ export default function App() {
 
             if (route.name === 'Home') {
               iconName = 'home';
-            } else if (route.name === 'Maintenance') {
+            } else if (route.name === 'Manutenções') {
               iconName = 'wrench';
-            } else if (route.name === 'Machines') {
+            } else if (route.name === 'Máquinas') {
               iconName = 'list';
-            } else if (route.name === 'Stock') { // Nova aba para Produtos
+            } else if (route.name === 'Estoque de Peças') { 
               iconName = 'box';
-            } else if (route.name === 'Profile') {
+            } else if (route.name === 'Perfil do Usuário') {
               iconName = 'user';
             }
 
             // Retorna o ícone com base no nome da rota
-            return <Icon name={iconName} type="font-awesome" color={color} size={size} />;
+            return <Icon name={iconName} type="font-awesome-5" color={color} size={size} />;
           },
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: 'gray',
         })}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Maintenance" component={MaintenanceScreen} />
-        <Tab.Screen name="Machines" component={MachineStack} />
-        <Tab.Screen name="Stock" component={StockScreen} />
-        <Tab.Screen name="Profile" component={ProfileScreen} />
+        <Tab.Screen name="Manutenções" component={MaintenanceScreen} />
+        <Tab.Screen name="Máquinas" component={MachineStack} />
+        <Tab.Screen name="Estoque de Peças" component={StockScreen} />
+        <Tab.Screen name="Perfil do Usuário" component={ProfileScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

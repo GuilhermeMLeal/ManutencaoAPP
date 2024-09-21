@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { Button, ListItem } from 'react-native-elements';
 
-// Dados mockados
 const machines = [
   { id: '1', name: 'Máquina 1', type: 'Tipo A', location: 'Fábrica A', status: 'Verde', model: 'Modelo A', fabricationDate: '01/01/2020', serialNumber: '123456' },
   { id: '2', name: 'Máquina 2', type: 'Tipo B', location: 'Fábrica B', status: 'Amarela', model: 'Modelo B', fabricationDate: '02/02/2021', serialNumber: '789012' },
@@ -21,6 +20,12 @@ const getStatusColor = (status: string) => {
 export function MachineListScreen({ navigation }: { navigation: any }) {
   return (
     <View style={styles.container}>
+      <View style={styles.buttonContainer}>
+        <Button 
+          title="Criar Máquina" 
+          buttonStyle={styles.button} 
+        />
+      </View>
       <FlatList
         data={machines}
         keyExtractor={item => item.id}
@@ -43,6 +48,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+  },
+  buttonContainer: {
+    alignItems: 'flex-end',
+    marginBottom: 10,
+  },
+  button: {
+    paddingVertical: 5,
+    paddingHorizontal: 10, 
   },
   statusCircle: {
     width: 20,

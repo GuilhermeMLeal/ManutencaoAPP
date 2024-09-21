@@ -1,8 +1,23 @@
 import React, { useState } from 'react';
-import { SafeAreaView, FlatList, View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { SafeAreaView, FlatList, View, Text, Button, StyleSheet } from 'react-native';
+import { ListItem, Icon } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
 
-const initialData = [
+interface Maintenance {
+  id: number;
+  description: string;
+  priority: string;
+  responsible: string;
+  status: string;
+  materials: string[];
+  date: string;
+}
+
+interface NavigationProps {
+  addMaintenance: (newMaintenance: Omit<Maintenance, 'id' | 'date' | 'status' | 'materials'>) => void;
+}
+
+const initialData: Maintenance[] = [
   {
     id: 1,
     description: 'Troca de filtro de óleo',
@@ -24,53 +39,22 @@ const initialData = [
 ];
 
 export default function MaintenanceScreen() {
-  const [maintenances, setMaintenances] = useState(initialData);
-  const [newMaintenance, setNewMaintenance] = useState({
-    description: '',
-    priority: '',
-    responsible: '',
-  });
-  const [materialInput, setMaterialInput] = useState('');
-  const [nextId, setNextId] = useState(initialData.length + 1);
+  const navigation = useNavigation<NavigationProps>();
+  const [maintenances, setMaintenances] = useState<Maintenance[]>(initialData);
 
-  const createMaintenance = () => {
-    if (newMaintenance.description && newMaintenance.priority && newMaintenance.responsible) {
-      const newEntry = {
-        id: nextId, 
-        description: newMaintenance.description,
-        priority: newMaintenance.priority,
-        responsible: newMaintenance.responsible,
-        status: 'Pendente',
-        materials: [],
-        date: new Date().toISOString().split('T')[0], 
-      };
-      setMaintenances([...maintenances, newEntry]);
-      setNewMaintenance({ description: '', priority: '', responsible: '' });
-      setNextId(nextId + 1); 
-    } else {
-      Alert.alert('Erro', 'Preencha todos os campos para criar uma manutenção.');
-    }
+  const addMaintenance = (newMaintenance: Omit<Maintenance, 'id' | 'date' | 'status' | 'materials'>) => {
+    const nextId = maintenances.length + 1;
+    const newEntry: Maintenance = {
+      id: nextId,
+      ...newMaintenance,
+      status: 'Pendente',
+      materials: [],
+      date: new Date().toISOString().split('T')[0],
+    };
+    setMaintenances([...maintenances, newEntry]);
   };
 
-  const addMaterial = (maintenanceId: number) => {
-    if (materialInput) {
-      const updatedMaintenances = maintenances.map((m) => {
-        if (m.id === maintenanceId) {
-          return {
-            ...m,
-            materials: [...m.materials, materialInput],
-          };
-        }
-        return m;
-      });
-      setMaintenances(updatedMaintenances);
-      setMaterialInput('');
-    } else {
-      Alert.alert('Erro', 'Preencha o nome do material.');
-    }
-  };
-
-  const renderMaintenanceItem = ({ item, navigation }: { item: any , navigation: any}) => (
+  const renderMaintenanceItem = ({ item }: { item: Maintenance }) => (
     <ListItem bottomDivider>
       <ListItem.Content>
         <ListItem.Title>{item.description}</ListItem.Title>
@@ -79,19 +63,15 @@ export default function MaintenanceScreen() {
         </ListItem.Subtitle>
         <Text>Data: {item.date}</Text>
         <Text>Materiais usados: {item.materials.join(', ') || 'Nenhum material registrado'}</Text>
-        <TextInput
-          placeholder="Registrar novo material"
-          value={materialInput}
-          onChangeText={setMaterialInput}
-          style={styles.input}
-        />
-        <Button title="Adicionar Material" onPress={() => addMaterial(item.id)} />
+        <View style={styles.buttonContainer}>
+          <Icon name="edit" onPress={() => {/* abrir modal de edição */}} />
+          <Icon name="delete" onPress={() => {/* excluir manutenção */}} />
+        </View>
       </ListItem.Content>
     </ListItem>
   );
 
   return (
-    
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Lista de Manutenções</Text>
       <FlatList
@@ -99,29 +79,7 @@ export default function MaintenanceScreen() {
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderMaintenanceItem}
       />
-
-      <View style={styles.form}>
-        <Text style={styles.title}>Criar Nova Manutenção</Text>
-        <TextInput
-          placeholder="Descrição do problema"
-          value={newMaintenance.description}
-          onChangeText={(text) => setNewMaintenance({ ...newMaintenance, description: text })}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Prioridade (Alta, Média, Baixa)"
-          value={newMaintenance.priority}
-          onChangeText={(text) => setNewMaintenance({ ...newMaintenance, priority: text })}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Responsável"
-          value={newMaintenance.responsible}
-          onChangeText={(text) => setNewMaintenance({ ...newMaintenance, responsible: text })}
-          style={styles.input}
-        />
-        <Button title="Criar Manutenção" onPress={createMaintenance} />
-      </View>
+      <Button title="Cadastrar Nova Manutenção" onPress={() => navigation.navigate('CreateMaintenance', { addMaintenance })} />
     </SafeAreaView>
   );
 }
@@ -137,14 +95,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  form: {
-    marginTop: 20,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 5,
+  buttonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
   },
 });

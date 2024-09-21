@@ -8,3 +8,9 @@ interface Maintenance {
     date: string;
   }
   
+  interface StockItem {
+    id: string;
+    name: string;
+    quantity: number;
+    price: string;
+  }

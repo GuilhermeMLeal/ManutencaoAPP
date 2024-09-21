@@ -2,13 +2,6 @@ import React, { useState } from 'react';
 import { SafeAreaView, FlatList, StyleSheet } from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
 
-interface StockItem {
-  id: string;
-  name: string;
-  quantity: number;
-  price: string;
-}
-
 const stockData: StockItem[] = [
   { id: '1', name: 'Peça A', quantity: 10, price: 'R$ 100,00' },
   { id: '2', name: 'Peça B', quantity: 5, price: 'R$ 150,00' },
@@ -47,10 +40,11 @@ export default function StockScreen() {
     <SafeAreaView style={styles.container}>
       <SearchBar
         placeholder="Buscar peça..."
-        onChangeText={(text: string) => updateSearch(text)}
+        onChangeText={updateSearch} 
         value={search}
         lightTheme
         containerStyle={styles.searchBar}
+        inputContainerStyle={styles.inputContainer}
       />
       <FlatList
         data={filteredData}
@@ -67,6 +61,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   searchBar: {
+    marginTop:10,
     marginBottom: 10,
+    backgroundColor: 'white',
+  },
+  inputContainer: {
+    backgroundColor: 'white',
   },
 });
