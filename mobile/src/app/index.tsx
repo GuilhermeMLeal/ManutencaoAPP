@@ -53,7 +53,6 @@ export default function App() {
               iconName = 'user';
             }
 
-            // Retorna o ícone com base no nome da rota
             return <Icon name={iconName} type="font-awesome-5" color={color} size={size} />;
           },
           tabBarActiveTintColor: 'tomato',
