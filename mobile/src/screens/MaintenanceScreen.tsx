@@ -64,8 +64,8 @@ export default function MaintenanceScreen() {
         <Text>Data: {item.date}</Text>
         <Text>Materiais usados: {item.materials.join(', ') || 'Nenhum material registrado'}</Text>
         <View style={styles.buttonContainer}>
-          <Icon name="edit" onPress={() => {/* abrir modal de edição */}} />
-          <Icon name="delete" onPress={() => {/* excluir manutenção */}} />
+          <Icon name="edit" onPress={() => {}} />
+          <Icon name="delete" onPress={() => {}} />
         </View>
       </ListItem.Content>
     </ListItem>
