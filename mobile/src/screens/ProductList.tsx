@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet, Button } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import StockList from '../components/Stock/StockList';
+import AddStockModal from '../components/Stock/AddStockModal';
 
 const stockData: StockItem[] = [
   { id: '1', name: 'Peça A', quantity: 10, price: 'R$ 100,00' },
@@ -14,6 +15,7 @@ const stockData: StockItem[] = [
 const StockScreen = () => {
   const [search, setSearch] = useState<string>('');
   const [filteredData, setFilteredData] = useState<StockItem[]>(stockData);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const updateSearch = (search: string): void => {
     setSearch(search);
@@ -27,10 +29,22 @@ const StockScreen = () => {
     }
   };
 
+  const handleAddStockItem = (newItem: StockItem) => {
+    stockData.push(newItem);
+    setFilteredData([...stockData]); // Update the filtered data to include the new item
+    setModalVisible(false); // Close the modal
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <SearchComponent search={search} onSearchChange={updateSearch} />
+      <Button title="Adicionar Peça" onPress={() => setModalVisible(true)} />
       <StockList data={filteredData} />
+      <AddStockModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onAddItem={handleAddStockItem}
+      />
     </SafeAreaView>
   );
 };
