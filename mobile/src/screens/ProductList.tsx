@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { SafeAreaView, FlatList, StyleSheet } from 'react-native';
-import { ListItem, SearchBar } from 'react-native-elements';
+import { SafeAreaView, StyleSheet } from 'react-native';
+import { SearchBar } from 'react-native-elements';
+import StockList from '../components/Stock/StockList';
 
 const stockData: StockItem[] = [
   { id: '1', name: 'Peça A', quantity: 10, price: 'R$ 100,00' },
@@ -10,7 +11,7 @@ const stockData: StockItem[] = [
   { id: '5', name: 'Peça E', quantity: 3, price: 'R$ 50,00' },
 ];
 
-export default function StockScreen() {
+const StockScreen = () => {
   const [search, setSearch] = useState<string>('');
   const [filteredData, setFilteredData] = useState<StockItem[]>(stockData);
 
@@ -26,34 +27,26 @@ export default function StockScreen() {
     }
   };
 
-  const renderItem = ({ item }: { item: StockItem }) => (
-    <ListItem bottomDivider>
-      <ListItem.Content>
-        <ListItem.Title>{item.name}</ListItem.Title>
-        <ListItem.Subtitle>Quantidade: {item.quantity}</ListItem.Subtitle>
-        <ListItem.Subtitle>Preço: {item.price}</ListItem.Subtitle>
-      </ListItem.Content>
-    </ListItem>
-  );
-
   return (
     <SafeAreaView style={styles.container}>
-      <SearchBar
-        placeholder="Buscar peça..."
-        onChangeText={updateSearch} 
-        value={search}
-        lightTheme
-        containerStyle={styles.searchBar}
-        inputContainerStyle={styles.inputContainer}
-      />
-      <FlatList
-        data={filteredData}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-      />
+      <SearchComponent search={search} onSearchChange={updateSearch} />
+      <StockList data={filteredData} />
     </SafeAreaView>
   );
-}
+};
+
+const SearchComponent = ({ search, onSearchChange }: { search: string; onSearchChange: (text: string) => void }) => (
+  <SearchBar
+    placeholder="Buscar peça..."
+    onChangeText={onSearchChange}
+    value={search}
+    lightTheme
+    containerStyle={styles.searchBar}
+    inputContainerStyle={styles.inputContainer}
+  />
+);
+
+export default StockScreen;
 
 const styles = StyleSheet.create({
   container: {

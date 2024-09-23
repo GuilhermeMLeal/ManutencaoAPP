@@ -135,8 +135,8 @@ export default function MaintenanceScreen() {
 
   const handleAddMaterialClick = (id: number) => {
     setCurrentMaintenanceId(id);
-    setMaterialInput(''); // Limpa o campo de entrada
-    setAddMaterialModalVisible(true); // Abre o modal para adicionar material
+    setMaterialInput('');
+    setAddMaterialModalVisible(true); 
   };
 
   return (

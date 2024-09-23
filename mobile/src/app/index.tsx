@@ -5,11 +5,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { Icon } from 'react-native-elements';
 import { MachineListScreen } from '../screens/MachineListScreen';
-import { MachineDetailsScreen } from '../screens/MachineDetailsScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import MaintenanceScreen from '../screens/MaintenanceScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import StockScreen from '../screens/ProductList';
+import MachineDetailsScreen from '../screens/MachineDetailsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();

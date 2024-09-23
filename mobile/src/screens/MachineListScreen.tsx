@@ -1,12 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, FlatList, StyleSheet, Modal, Text, TextInput } from 'react-native';
 import { Button, ListItem } from 'react-native-elements';
-
-const initialMachines = [
-  { id: '1', name: 'Máquina 1', type: 'Tipo A', location: 'Fábrica A', status: 'Verde', model: 'Modelo A', fabricationDate: '01/01/2020', serialNumber: '123456' },
-  { id: '2', name: 'Máquina 2', type: 'Tipo B', location: 'Fábrica B', status: 'Amarela', model: 'Modelo B', fabricationDate: '02/02/2021', serialNumber: '789012' },
-  { id: '3', name: 'Máquina 3', type: 'Tipo C', location: 'Fábrica C', status: 'Vermelho', model: 'Modelo C', fabricationDate: '03/03/2022', serialNumber: '345678' },
-];
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -17,35 +11,57 @@ const getStatusColor = (status: string) => {
   }
 };
 
+const initialMachines = [
+  { id: '1', name: 'Máquina 1', type: 'Tipo A', location: 'Fábrica A', status: 'Verde' },
+  { id: '2', name: 'Máquina 2', type: 'Tipo B', location: 'Fábrica B', status: 'Amarela' },
+  { id: '3', name: 'Máquina 3', type: 'Tipo C', location: 'Fábrica C', status: 'Vermelho' },
+];
+
+const MachineList = ({ machines, navigation }: { machines: any[], navigation: any }) => (
+  <FlatList
+    data={machines}
+    keyExtractor={item => item.id}
+    renderItem={({ item }) => (
+      <ListItem bottomDivider onPress={() => navigation.navigate('MachineDetails', { machine: item })}>
+        <ListItem.Content>
+          <ListItem.Title>{item.name}</ListItem.Title>
+          <ListItem.Subtitle>{item.type} - {item.location}</ListItem.Subtitle>
+        </ListItem.Content>
+        <View style={[styles.statusCircle, { backgroundColor: getStatusColor(item.status) }]} />
+        <ListItem.Chevron />
+      </ListItem>
+    )}
+  />
+);
+
+const MachineModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => (
+  <Modal
+    transparent={true}
+    animationType="slide"
+    visible={isVisible}
+    onRequestClose={onClose}
+  >
+    <View style={styles.modalContainer}>
+      <View style={styles.modalContent}>
+        <Text style={styles.modalTitle}>Criar Máquina</Text>
+        <TextInput style={styles.input} placeholder="Nome da Máquina" />
+        <TextInput style={styles.input} placeholder="Tipo" />
+        <TextInput style={styles.input} placeholder="Localização" />
+        <TextInput style={styles.input} placeholder="Status" />
+        <TextInput style={styles.input} placeholder="Modelo" />
+        <TextInput style={styles.input} placeholder="Data de Fabricação" />
+        <TextInput style={styles.input} placeholder="Número Serial" />
+
+        <Button title="Salvar" buttonStyle={styles.saveButton} onPress={() => {}} />
+        <Button title="Cancelar" buttonStyle={styles.cancelButton} onPress={onClose} />
+      </View>
+    </View>
+  </Modal>
+);
+
 export function MachineListScreen({ navigation }: { navigation: any }) {
-  const [machines, setMachines] = useState(initialMachines);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [newMachine, setNewMachine] = useState({
-    id: '',
-    name: '',
-    type: '',
-    location: '',
-    status: '',
-    model: '',
-    fabricationDate: '',
-    serialNumber: '',
-  });
-
-  const handleSaveMachine = () => {
-    setMachines([...machines, { ...newMachine, id: (machines.length + 1).toString() }]);
-    setIsModalVisible(false);
-    setNewMachine({
-      id: '',
-      name: '',
-      type: '',
-      location: '',
-      status: '',
-      model: '',
-      fabricationDate: '',
-      serialNumber: '',
-    });
-  };
-
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
+  
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
@@ -56,88 +72,8 @@ export function MachineListScreen({ navigation }: { navigation: any }) {
         />
       </View>
 
-      <FlatList
-        data={machines}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => (
-          <ListItem bottomDivider onPress={() => navigation.navigate('MachineDetails', { machine: item })}>
-            <ListItem.Content>
-              <ListItem.Title>{item.name}</ListItem.Title>
-              <ListItem.Subtitle>{item.type} - {item.location}</ListItem.Subtitle>
-            </ListItem.Content>
-            <View style={[styles.statusCircle, { backgroundColor: getStatusColor(item.status) }]} />
-            <ListItem.Chevron />
-          </ListItem>
-        )}
-      />
-
-      <Modal
-        transparent={true}
-        animationType="slide"
-        visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Criar Máquina</Text>
-
-            <TextInput
-              style={styles.input}
-              placeholder="Nome da Máquina"
-              value={newMachine.name}
-              onChangeText={(text) => setNewMachine({ ...newMachine, name: text })}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Tipo"
-              value={newMachine.type}
-              onChangeText={(text) => setNewMachine({ ...newMachine, type: text })}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Localização"
-              value={newMachine.location}
-              onChangeText={(text) => setNewMachine({ ...newMachine, location: text })}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Status"
-              value={newMachine.status}
-              onChangeText={(text) => setNewMachine({ ...newMachine, status: text })}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Modelo"
-              value={newMachine.model}
-              onChangeText={(text) => setNewMachine({ ...newMachine, model: text })}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Data de Fabricação"
-              value={newMachine.fabricationDate}
-              onChangeText={(text) => setNewMachine({ ...newMachine, fabricationDate: text })}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Número Serial"
-              value={newMachine.serialNumber}
-              onChangeText={(text) => setNewMachine({ ...newMachine, serialNumber: text })}
-            />
-
-            <Button
-              title="Salvar"
-              buttonStyle={styles.saveButton}
-              onPress={handleSaveMachine}
-            />
-
-            <Button
-              title="Cancelar"
-              buttonStyle={styles.cancelButton}
-              onPress={() => setIsModalVisible(false)}
-            />
-          </View>
-        </View>
-      </Modal>
+      <MachineList machines={initialMachines} navigation={navigation} />
+      <MachineModal isVisible={isModalVisible} onClose={() => setIsModalVisible(false)} />
     </View>
   );
 }
