@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import BackButton from '../components/Maintenance/BackButton';
-import MachineInfo from '../components/Maintenance/MachineInfo';
-import ActionButtons from '../components/Maintenance/ActionButtons';
-import EditMachineModal from '../components/Maintenance/EditMachineModal';
-import StatusModal from '../components/Maintenance/StatusModal';
-import MaintenanceModal from '../components/Maintenance/MaintenanceModal';
+import BackButton from '../components/Machine/BackButton';
+import MachineInfo from '../components/Machine/MachineInfo';
+import ActionButtons from '../components/Machine/ActionButtons';
+import EditMachineModal from '../components/Machine/EditMachineModal';
+import StatusModal from '../components/Machine/StatusModal';
+import MaintenanceModal from '../components/Machine/MaintenanceModal';
 
 const MachineDetailsScreen = ({ navigation, route }: any) => {
   const { machine } = route.params;
