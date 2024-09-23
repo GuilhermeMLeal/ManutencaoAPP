@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert, Image, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert, Image, Modal, TouchableOpacity, FlatList } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Picker } from '@react-native-picker/picker';
 
@@ -10,6 +10,13 @@ export function MachineDetailsScreen({ route, navigation }: { route: any, naviga
   const [modalVisible, setModalVisible] = useState(false);
   const [statusModalVisible, setStatusModalVisible] = useState(false);
   const [status, setStatus] = useState(machine.status);
+  const [maintenanceModalVisible, setMaintenanceModalVisible] = useState(false);
+
+  const maintenanceData = [
+    { id: '1', date: '2023-09-01', description: 'Troca de peças', status: 'Concluída' },
+    { id: '2', date: '2023-08-15', description: 'Reparo no motor', status: 'Em andamento' },
+    { id: '3', date: '2023-07-10', description: 'Manutenção preventiva', status: 'Concluída' },
+  ];
 
   const handleDeleteMachine = () => {
     Alert.alert(
@@ -35,7 +42,7 @@ export function MachineDetailsScreen({ route, navigation }: { route: any, naviga
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Icon name="arrow-left" type="font-awesome" color="black" size={32} />
+        <Icon name="arrow-left" type="font-awesome" color="black" size={28} />
       </TouchableOpacity>
 
       <View style={styles.titleContainer}>
@@ -59,7 +66,12 @@ export function MachineDetailsScreen({ route, navigation }: { route: any, naviga
           <Text>Comentário: {comment}</Text>
         </>
       )}
-
+      <TouchableOpacity onPress={() => setMaintenanceModalVisible(true)}>
+        <View style={styles.buttonWrapper}>
+          <Icon name="file-text" type="font-awesome" color="black" size={24} />
+          <Text style={styles.buttonText}>Exibir Manutenções</Text>
+        </View>
+      </TouchableOpacity>
       <View style={styles.iconsRow}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Icon name="edit" type="font-awesome" color="black" size={24} />
@@ -130,15 +142,15 @@ export function MachineDetailsScreen({ route, navigation }: { route: any, naviga
           <View style={styles.modalView}>
             <Text style={styles.modalTitle}>Alterar Status da Máquina</Text>
             <Picker
-              selectedValue={status}
               style={styles.picker}
+              selectedValue={status}
               onValueChange={(itemValue) => setStatus(itemValue)}
             >
               <Picker.Item label="Operável" value="Operável" />
               <Picker.Item label="Em Manutenção" value="Em Manutenção" />
               <Picker.Item label="Quebrada" value="Quebrada" />
             </Picker>
-            <Text style={styles.commentTitle}>Comentário para Alteração de Status:</Text>
+            <Text >Comentário para Alteração de Status:</Text>
             <TextInput
               style={styles.input}
               placeholder="Comentário"
@@ -152,6 +164,36 @@ export function MachineDetailsScreen({ route, navigation }: { route: any, naviga
               }}
             >
               <Text style={styles.textStyle}>Salvar Status</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={maintenanceModalVisible}
+        onRequestClose={() => setMaintenanceModalVisible(!maintenanceModalVisible)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalTitle}>Relatórios de Manutenção</Text>
+            <FlatList
+              data={maintenanceData}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <View style={styles.maintenanceItem}>
+                  <Text>Data: {item.date}</Text>
+                  <Text>Descrição: {item.description}</Text>
+                  <Text>Status: {item.status}</Text>
+                </View>
+              )}
+            />
+            <TouchableOpacity
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setMaintenanceModalVisible(!maintenanceModalVisible)}
+            >
+              <Text style={styles.textStyle}>Fechar</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -196,6 +238,7 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     alignItems: 'center',
+    paddingBottom:30
   },
   buttonText: {
     color: 'black',
@@ -205,8 +248,8 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 200,
-    marginTop: 20,
     resizeMode: 'contain',
+    marginTop: 20,
   },
   modalContainer: {
     flex: 1,
@@ -234,27 +277,29 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 15,
   },
-  commentTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginTop: 15,
-  },
   button: {
-    borderRadius: 10,
     padding: 10,
+    borderRadius: 5,
     elevation: 2,
+    backgroundColor: '#2196F3',
+    marginTop: 10,
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
-    marginTop: 15,
+    backgroundColor: '#0099cc',
   },
   textStyle: {
     color: 'white',
-    fontWeight: 'bold',
     textAlign: 'center',
   },
+  maintenanceItem: {
+    marginBottom: 10,
+  },
   picker: {
-    height: 50,
-    width: 150,
+    height: 50, 
+    width: '100%',
+    marginVertical: 10,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 5,
   },
 });

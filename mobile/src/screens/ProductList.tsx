@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   searchBar: {
-    marginTop:10,
+    marginTop: 10,
     marginBottom: 10,
     backgroundColor: 'white',
   },

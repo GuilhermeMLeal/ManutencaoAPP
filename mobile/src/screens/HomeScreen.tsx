@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 
-const screens = [
+const screens: ScreenItem[] = [
   { name: "Manutenções", icon: "wrench" },
   { name: "Máquinas", icon: "list" },
   { name: "Estoque de Peças", icon: "box" },
