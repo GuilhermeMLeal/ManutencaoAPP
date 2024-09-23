@@ -34,6 +34,10 @@ export function MachineDetailsScreen({ route, navigation }: { route: any, naviga
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Icon name="arrow-left" type="font-awesome" color="black" size={32} />
+      </TouchableOpacity>
+
       <View style={styles.titleContainer}>
         <Icon name="cogs" type="font-awesome" color="blue" />
         <Text style={styles.title}>{machine.name}</Text>
@@ -161,10 +165,17 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
+  backButton: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    zIndex: 1,
+  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
+    marginTop: 50,
   },
   title: {
     fontSize: 24,
