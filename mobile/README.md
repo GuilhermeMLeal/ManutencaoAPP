@@ -1,9 +1,14 @@
 # Documentação do Projeto: Maintenance App Mobile
-
 ## Introdução
 
 O **Maintenance App Mobile** é uma aplicação desenvolvida para gerenciar eficientemente a manutenção de máquinas e o estoque de peças em um ambiente industrial. Através de uma interface amigável, o aplicativo permite que os usuários monitorem manutenções, gerenciem máquinas e peças, e atualizem informações relevantes em tempo real, facilitando a operação e a tomada de decisões.
 
+### Funcionalidades Principais
+- Gestão de Máquinas: Criação, visualização, e edição de detalhes das máquinas.
+- Controle de Manutenções: Gerenciamento de relatórios de manutenção.
+- Estoque de Peças: Controle e adição de peças ao estoque.
+- Perfil de Usuário: Visualização e edição de informações do usuário.
+- 
 ## Estrutura do Aplicativo
 
 ### 1. Tela Inicial
@@ -11,18 +16,24 @@ O **Maintenance App Mobile** é uma aplicação desenvolvida para gerenciar efic
 
 ---
 
-### 2. Tela de Máquinas
+#### Tela de Máquinas
 
-#### MachineDetailsScreen
-**Função**: Exibe informações detalhadas sobre uma máquina específica. Permite ao usuário editar informações da máquina, alterar seu status e visualizar relatórios de manutenção. Contém botões de ação para facilitar a interação e modais para edição e exibição de status e manutenção.
+1. **MachineListScreen**
+   - **Função**: Exibe a lista de máquinas registradas, mostrando informações básicas como nome, tipo, localização e status. A tela permite que o usuário navegue para os detalhes de uma máquina específica ou crie uma nova máquina através de um modal.
+   - **Componentes**:
+     - **MachineList**: Componente que renderiza a lista de máquinas com um indicador de status (verde, amarelo ou vermelho).
+     - **CreateMachineButton**: Botão que permite abrir o modal para criar uma nova máquina.
+     - **MachineModal**: Modal que contém o formulário para inserir os dados de uma nova máquina (nome, tipo, localização, status, modelo, data de fabricação, número serial).
 
-- **BackButton**: Permite voltar à tela anterior.
-- **MachineInfo**: Mostra informações detalhadas sobre a máquina.
-- **ActionButtons**: Conjunto de botões para ações como editar, deletar, mudar status e visualizar manutenção.
-- **EditMachineModal**: Modal para editar os dados da máquina.
-- **StatusModal**: Modal para alterar o status da máquina e adicionar comentários.
-- **MaintenanceModal**: Modal que exibe os relatórios de manutenção da máquina.
-
+2. **MachineDetailsScreen**
+   - **Função**: Exibe informações detalhadas sobre uma máquina específica, permitindo ao usuário editar suas informações, alterar seu status e visualizar relatórios de manutenção.
+   - **Componentes**:
+     - **BackButton**: Botão que permite voltar à tela anterior.
+     - **MachineInfo**: Componente que exibe as informações detalhadas da máquina.
+     - **ActionButtons**: Botões de ação para editar, deletar, alterar o status e visualizar manutenções.
+     - **EditMachineModal**: Modal que permite editar os dados da máquina.
+     - **StatusModal**: Modal para alterar o status da máquina e adicionar comentários.
+     - **MaintenanceModal**: Modal que exibe relatórios de manutenção associados à máquina.
 ---
 
 ### 3. Tela de Estoque
