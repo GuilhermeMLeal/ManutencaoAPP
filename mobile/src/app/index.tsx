@@ -10,19 +10,9 @@ import { HomeScreen } from '../screens/HomeScreen';
 import MaintenanceScreen from '../screens/MaintenanceScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import StockScreen from '../screens/ProductList';
-import CreateMaintenanceScreen from '../screens/CreateMaintenanceScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
-function MaintenanceStack() {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="MaintenanceList" component={MaintenanceScreen} />
-      <Stack.Screen name="CreateMaintenance" component={CreateMaintenanceScreen} />
-    </Stack.Navigator>
-  );
-}
 
 function MachineStack() {
   return (
@@ -55,7 +45,7 @@ export default function App() {
 
             return <Icon name={iconName} type="font-awesome-5" color={color} size={size} />;
           },
-          tabBarActiveTintColor: 'tomato',
+          tabBarActiveTintColor: '#0099cc',
           tabBarInactiveTintColor: 'gray',
         })}
       >
