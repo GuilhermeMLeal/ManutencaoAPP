@@ -1,4 +1,3 @@
-import Footer from "../../components/footer";
 import Aside from "@/app/components/asideBar";
 import MainTeam from "@/app/components/teams/mainTeams";
 
@@ -9,7 +8,6 @@ export default function Teams() {
         <Aside />
         <MainTeam />
       </div>
-      <Footer />
     </div>
   );
 }

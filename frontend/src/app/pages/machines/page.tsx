@@ -1,4 +1,3 @@
-import Footer from "../../components/footer";
 import Aside from "@/app/components/asideBar";
 import MainMachine from "@/app/components/machines/mainMachine";
 
@@ -9,7 +8,6 @@ export default function Machines() {
         <Aside />
         <MainMachine />
       </div>
-      <Footer />
     </div>
   );
 }

@@ -1,4 +1,3 @@
-import Footer from "../../components/footer";
 import Aside from "@/app/components/asideBar";
 import MainTools from "@/app/components/tools/mainTools";
 
@@ -9,7 +8,6 @@ export default function Tools() {
         <Aside />
         <MainTools />
       </div>
-      <Footer />
     </div>
   );
 }
