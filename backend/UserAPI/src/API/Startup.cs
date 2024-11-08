@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using UserAuth.Infrastructure.Repositories;
+using AuthUser.Infrastructure.Repositories;
+using AuthUser.Domain.Interfaces;
+using UserAuth.Infrastructure.Services;
 
 public class Startup
 {
@@ -26,11 +29,13 @@ public class Startup
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRoleRepository, RoleRepository>();
+        services.AddScoped<ISquadRepository, SquadRepository>(); 
 
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<ISquadService, SquadService>();
 
 
         services.AddCors(options =>
