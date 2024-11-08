@@ -15,13 +15,13 @@ namespace MachineAPI.Application.Services
             _machineRepository = machineRepository;
         }
 
-        public async Task<IEnumerable<MachineDTO>> GetAllMachines()
+        public async Task<IEnumerable<UpdateMachineDTO>> GetAllMachines()
         {
             var machines = await _machineRepository.GetAllAsync();
             return machines.Select(m => m.ToDto());
         }
 
-        public async Task<MachineDTO> AddMachine(MachineDTO machineDto)
+        public async Task<UpdateMachineDTO> AddMachine(UpdateMachineDTO machineDto)
         {
             var machine = machineDto.ToEntity();
             await _machineRepository.AddAsync(machine);

@@ -1,8 +1,8 @@
 using MachineAPI.src.Domain.Enums;
 
-namespace MachineAPI.Domain.Entities
+namespace MachineAPI.API.DTOs
 {
-    public class Machine
+    public class UpdateMachineDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -11,10 +11,7 @@ namespace MachineAPI.Domain.Entities
         public DateTime ManufactureDate { get; set; }
         public string SerialNumber { get; set; }
         public string Status { get; set; }
-        
         public int PlaceId { get; set; }
-        public Place Place { get; set; }
-
         public string ImageUrl { get; set; }
 
     }
