@@ -66,7 +66,7 @@ export default function MainMachine() {
   };
 
   return (
-    <main className="flex-1 flex flex-col p-6 pt-24 bg-white/90">
+    <main className="flex-1 flex flex-col bg-white/90">
       <Title
         title="Sistema de Gestão de Máquinas"
         subtitle="Visualização Detalhada de Máquinas"

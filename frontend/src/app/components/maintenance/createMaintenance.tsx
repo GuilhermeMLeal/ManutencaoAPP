@@ -58,9 +58,9 @@ export default function CreateMaintenance() {
   };
 
   return (
-    <main className="flex-1 p-6 pt-24 flex flex-col bg-white/90">
+    <main className="flex-1 flex flex-col bg-white/90">
       <TitleCreate title={"Registro de Solicitações de Manutenção"} />
-      <Box component="form" noValidate sx={{ maxWidth: 800, margin: "0 auto" }}>
+      <Box component="form" noValidate sx={{ maxWidth: 800, margin: "0 auto" }} className="pt-4">
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <TextField
@@ -280,10 +280,10 @@ export default function CreateMaintenance() {
             </Grid>
           ))}
           <Grid container item xs={12} justifyContent="center">
-            <Grid item xs={12}>
+            <Grid item xs={12} className="flex justify-center items-center">
               <a href="/pages/index">
-                <Button variant="contained" color="primary" fullWidth>
-                  Registrar Solicitação
+                <Button variant="contained" color="primary">
+                  Registrar Manutenção
                 </Button>
               </a>
             </Grid>

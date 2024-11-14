@@ -105,7 +105,7 @@ const maintenanceVolumeData = {
 
 export default function DashboardPage() {
   return (
-    <main className="flex-1 flex flex-col p-6 pt-24 bg-white/90">
+    <main className="flex-1 flex flex-col bg-white/90">
       <TitleMain
         title={"Sistema de Gestão de Manutenção"}
         subtitle="Dashboard de Manutenção e Recursos"

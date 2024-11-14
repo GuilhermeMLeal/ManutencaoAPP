@@ -23,6 +23,7 @@ export function FindItemTextBox({
         display: "flex",
         justifyContent: "flex-end",
         paddingRight: "8%",
+        paddingLeft:"8%",
         paddingBottom: "3%",
       }}
     >
