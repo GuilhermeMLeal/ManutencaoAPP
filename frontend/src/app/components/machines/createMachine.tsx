@@ -5,7 +5,7 @@ import TitleCreate from "../titles/titleCreate";
 
 export default function CreateMachine() {
   return (
-    <main className="flex-1 flex flex-col bg-white/90">
+    <main className="flex-1 flex flex-col bg-white/90 overflow-y-auto max-h-svh">
       <TitleCreate title={"Registro de Máquinas"} />
       <Box
         component="form"

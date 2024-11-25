@@ -80,7 +80,7 @@ export default function MainTools() {
   };
 
   return (
-    <main className="flex-1 flex flex-col bg-white/90">
+    <main className="flex-1 flex flex-col bg-white/90 overflow-y-auto max-h-svh">
       <Title
         title="Sistema de Gestão de Peças"
         subtitle="Visualização Detalhada de Peças"

@@ -4,7 +4,7 @@ import { Box, Button, Grid, InputAdornment, TextField } from "@mui/material";
 
 export default function CreateTool() {
   return (
-    <main className="flex-1 flex flex-col bg-white/90">
+    <main className="flex-1 flex flex-col bg-white/90 overflow-y-auto max-h-svh">
       <TitleCreate title={"Registro de Peças"} />
       <Box
         component="form"
