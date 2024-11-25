@@ -36,16 +36,16 @@ services:
     networks:
       - gateway_network
 
-  machineapi:
-    build:
-      context: .
-      dockerfile: ./MachineAPI/src/Infrastructure/Docker/Dockerfile
-    ports:
-      - "3001:8080"
-    depends_on:
-      - db
-    networks:
-      - gateway_network
+  # machineapi:
+  #   build:
+  #     context: .
+  #     dockerfile: ./MachineAPI/src/Infrastructure/Docker/Dockerfile
+  #   ports:
+  #     - "3001:8080"
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - gateway_network
 
   apigateway:
     build:
@@ -55,9 +55,10 @@ services:
       - "3002:8080"
     depends_on:
       - userapi
-      - machineapi
+      # - machineapi
     networks:
-      - gateway_network
+      []
+    #   - gateway_network
 
 volumes:
   db_data:
