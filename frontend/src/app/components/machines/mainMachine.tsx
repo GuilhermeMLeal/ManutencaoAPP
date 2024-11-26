@@ -78,7 +78,7 @@ export default function MainMachine() {
         nameTextSearch="Máquina"
         typeTextField="Tipo de Máquina"
       />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" className="mb-4">
         <Box
           sx={{
             display: "flex",
@@ -97,13 +97,13 @@ export default function MainMachine() {
             />
           ))}
         </Box>
-        <PaginationComponent
+        {/* <PaginationComponent
           count={machineData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
-        />
+        /> */}
       </Container>
       <Dialog
         open={openDialog}

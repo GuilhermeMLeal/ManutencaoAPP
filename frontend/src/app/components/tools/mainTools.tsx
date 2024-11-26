@@ -92,7 +92,7 @@ export default function MainTools() {
         nameTextSearch="Peça"
         typeTextField="Fornecedor"
       />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" className="mb-4">
         <Box
           sx={{
             display: "flex",
@@ -117,13 +117,13 @@ export default function MainTools() {
               />
             ))}
         </Box>
-        <PaginationComponent
+        {/* <PaginationComponent
           count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
-        />
+        /> */}
       </Container>
     </main>
   );

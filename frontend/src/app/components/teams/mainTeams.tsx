@@ -79,7 +79,7 @@ export default function MainTeam() {
         nameTextSearch="Equipe"
         typeTextField="Área do Time"
       />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" className="mb-4">
         <Box
           sx={{
             display: "flex",
@@ -100,13 +100,13 @@ export default function MainTeam() {
               />
             ))}
         </Box>
-        <PaginationComponent
+        {/* <PaginationComponent
           count={teamData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
-        />
+        /> */}
       </Container>
       <Dialog open={openDialog} onClose={handleCloseDialog}>
         <DialogTitle>{selectedItem?.title}</DialogTitle>
