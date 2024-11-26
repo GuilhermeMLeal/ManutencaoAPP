@@ -24,7 +24,8 @@ export function FindItemTextBox({
         justifyContent: "flex-end",
         paddingRight: "8%",
         paddingLeft:"8%",
-        paddingBottom: "3%",
+        paddingBottom: "1%",
+        paddingTop: "2%",
       }}
     >
       <CreateReport textButton={textReport} typeTextField={typeTextField} />

@@ -552,7 +552,7 @@ export function Table() {
         typeTextField="Tipo de Manutenção"
       />
       <div className="overflow-x-auto rounded-xl">
-        <div className="max-h-64 overflow-y-auto">
+        <div className="max-h-96 overflow-y-auto">
           <table className="min-w-full divide-y divide-gray-200 text-center">
             <thead className="bg-gray-50 sticky top-0">
               <tr>
