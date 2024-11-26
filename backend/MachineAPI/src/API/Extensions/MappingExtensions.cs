@@ -5,9 +5,9 @@ namespace MachineAPI.API.Extensions
 {
     public static class MappingExtensions
     {
-        public static UpdateMachineDTO ToDto(this Machine machine)
+        public static MachineDTO ToDto(this Machine machine)
         {
-            return new UpdateMachineDTO
+            return new MachineDTO
             {
                 Id = machine.Id,
                 Name = machine.Name,
@@ -16,8 +16,7 @@ namespace MachineAPI.API.Extensions
                 ManufactureDate = machine.ManufactureDate,
                 SerialNumber = machine.SerialNumber,
                 Status = machine.Status,
-                PlaceId = machine.PlaceId,
-                ImageUrl = machine.ImageUrl,
+                PlaceId = machine.PlaceId
             };
         }
 
@@ -33,7 +32,7 @@ namespace MachineAPI.API.Extensions
             };
         }
 
-        public static Machine ToEntity(this UpdateMachineDTO machineDto)
+        public static Machine ToEntity(this MachineDTO machineDto)
         {
             return new Machine
             {
@@ -44,8 +43,7 @@ namespace MachineAPI.API.Extensions
                 ManufactureDate = machineDto.ManufactureDate,
                 SerialNumber = machineDto.SerialNumber,
                 Status = machineDto.Status,
-                PlaceId = machineDto.PlaceId,
-                ImageUrl= machineDto.ImageUrl,
+                PlaceId = machineDto.PlaceId
             };
         }
 

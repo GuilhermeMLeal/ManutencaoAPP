@@ -3,7 +3,6 @@ using MachineAPI.API.DTOs;
 using MachineAPI.API.Extensions;
 using MachineAPI.Domain.Entities;
 using MachineAPI.Domain.Interfaces;
-using MachineAPI.src.API.DTOs;
 
 namespace MachineAPI.Application.Services
 {
@@ -16,22 +15,17 @@ namespace MachineAPI.Application.Services
             _machineRepository = machineRepository;
         }
 
-        public async Task<IEnumerable<UpdateMachineDTO>> GetAllMachines()
+        public async Task<IEnumerable<MachineDTO>> GetAllMachines()
         {
             var machines = await _machineRepository.GetAllAsync();
             return machines.Select(m => m.ToDto());
         }
 
-        public async Task<Machine> AddMachine(CreateMachineDto machineDto)
+        public async Task<MachineDTO> AddMachine(MachineDTO machineDto)
         {
             var machine = machineDto.ToEntity();
             await _machineRepository.AddAsync(machine);
             return machine.ToDto();
-        }
-
-        public Task<Machine> UpdateMachine(UpdateMachineDTO machineDto)
-        {
-            throw new NotImplementedException();
         }
     }
 }

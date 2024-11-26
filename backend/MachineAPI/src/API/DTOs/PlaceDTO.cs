@@ -6,6 +6,6 @@ namespace MachineAPI.API.DTOs
         public string Name { get; set; }
         public string Description { get; set; }
         public string Observation { get; set; }
-        public List<UpdateMachineDTO>? Machines { get; set; }
+        public List<MachineDTO>? Machines { get; set; }
     }
 }
