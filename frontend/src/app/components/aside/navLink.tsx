@@ -17,7 +17,7 @@ export default function NavLink() {
     { target: "/pages/teams", text: "Times", icon: <GroupsIcon fontSize="large" /> },
     {
       target: "/pages/controlStock",
-      text: "Controle de Estoque de Peças",
+      text: "Relatórios",
       icon: <ChecklistIcon fontSize="large" />,
     },
     { target: "#", text: "Usuário", icon: <ManageAccountsIcon fontSize="large" /> },
