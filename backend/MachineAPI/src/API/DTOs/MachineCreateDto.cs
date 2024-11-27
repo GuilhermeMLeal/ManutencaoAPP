@@ -8,6 +8,6 @@
         public DateTime ManufactureDate { get; set; }
         public string SerialNumber { get; set; }
         public string Status { get; set; }
-        public int PlaceId { get; set; }
+        public int? PlaceId { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace MachineAPI.Domain.Entities
         public string SerialNumber { get; set; }
         public string Status { get; set; }
         
-        public int PlaceId { get; set; }
+        public int? PlaceId { get; set; }
         public Place Place { get; set; }
     }
 }

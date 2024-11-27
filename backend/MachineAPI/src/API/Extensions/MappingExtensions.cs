@@ -16,7 +16,7 @@ namespace MachineAPI.API.Extensions
                 ManufactureDate = createDto.ManufactureDate,
                 SerialNumber = createDto.SerialNumber,
                 Status = createDto.Status,
-                PlaceId = createDto.PlaceId
+                PlaceId = createDto.PlaceId != null ? createDto.PlaceId.Value : null
             };
         }
         public static Machine ToEntity(this MachineUpdateDto updateDto)
@@ -43,7 +43,7 @@ namespace MachineAPI.API.Extensions
                 ManufactureDate = machine.ManufactureDate,
                 SerialNumber = machine.SerialNumber,
                 Status = machine.Status,
-                PlaceId = machine.PlaceId
+                PlaceId = machine.PlaceId != null ? machine.PlaceId.Value : null
             };
         }
 

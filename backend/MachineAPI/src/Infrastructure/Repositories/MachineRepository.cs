@@ -2,6 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using MachineAPI.Domain.Entities;
 using MachineAPI.Domain.Interfaces;
 using MachineAPI.Infrastructure.Data;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Linq;
+using System;
 
 namespace MachineAPI.Infrastructure.Repositories
 {
@@ -26,17 +30,41 @@ namespace MachineAPI.Infrastructure.Repositories
 
         public async Task AddAsync(Machine machine)
         {
-            await _context.Set<Machine>().AddAsync(machine);
-            await _context.SaveChangesAsync();
-        }
-        public async Task UpdateAsync(Machine machine)
-        {
-            var existingMachine = await _context.Set<Machine>().FindAsync(machine.Id);
-            if (existingMachine == null)
+            // Verificar se PlaceId é válido, se o PlaceId foi fornecido
+            if (machine.PlaceId.HasValue)
             {
-                throw new KeyNotFoundException($"Machine with ID {machine.Id} not found.");
+                var place = await _context.Places.FindAsync(machine.PlaceId.Value);
+                if (place == null)
+                {
+                    throw new ArgumentException($"O PlaceId {machine.PlaceId} fornecido não existe.");
+                }
             }
 
+            // Adicionar máquina ao banco
+            await _context.Machines.AddAsync(machine);
+            await _context.SaveChangesAsync();
+        }
+
+
+        public async Task UpdateAsync(Machine machine)
+        {
+            var existingMachine = await _context.Machines.FindAsync(machine.Id);
+            if (existingMachine == null)
+            {
+                throw new KeyNotFoundException($"Máquina com ID {machine.Id} não encontrada.");
+            }
+
+            // Verificar se PlaceId é válido
+            if (machine.PlaceId != null)
+            {
+                var place = await _context.Places.FindAsync(machine.PlaceId);
+                if (place == null)
+                {
+                    throw new ArgumentException("O PlaceId fornecido não existe.");
+                }
+            }
+
+            // Atualizar as propriedades da máquina
             existingMachine.Name = machine.Name;
             existingMachine.Type = machine.Type;
             existingMachine.Model = machine.Model;
@@ -44,9 +72,9 @@ namespace MachineAPI.Infrastructure.Repositories
             existingMachine.Status = machine.Status;
             existingMachine.PlaceId = machine.PlaceId;
 
-            _context.Set<Machine>().Update(existingMachine);
+            // Marcar a máquina para atualização
+            _context.Machines.Update(existingMachine);
             await _context.SaveChangesAsync();
         }
-
     }
 }
