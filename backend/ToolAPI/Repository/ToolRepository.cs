@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ToolAPI.Data;
 using ToolAPI.Models;
@@ -21,11 +22,10 @@ namespace ToolAPI.Repository
         {
             try
             {
-                return await _dbSet.ToListAsync();
+                return await _dbSet.AsNoTracking().ToListAsync();
             }
             catch (Exception ex)
             {
-                // Log the exception (e.g., using a logging framework like Serilog)
                 throw new Exception("An error occurred while retrieving tools.", ex);
             }
         }
@@ -34,16 +34,15 @@ namespace ToolAPI.Repository
         {
             try
             {
-                var tool = await _dbSet.FindAsync(id);
+                var tool = await _dbSet.AsNoTracking().FirstOrDefaultAsync(t => t.Id == id);
                 if (tool == null)
                 {
                     throw new KeyNotFoundException($"Tool with ID {id} not found.");
                 }
                 return tool;
             }
-            catch (KeyNotFoundException ex)
+            catch (KeyNotFoundException)
             {
-                // Log the exception if necessary
                 throw;
             }
             catch (Exception ex)
@@ -89,7 +88,7 @@ namespace ToolAPI.Repository
                     throw new KeyNotFoundException($"Tool with ID {entity.Id} not found.");
                 }
 
-                _dbSet.Update(entity);
+                _context.Entry(existingTool).CurrentValues.SetValues(entity);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException ex)
