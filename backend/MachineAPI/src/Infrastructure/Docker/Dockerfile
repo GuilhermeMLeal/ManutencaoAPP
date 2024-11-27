@@ -3,10 +3,10 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY MachineAPI/MachineAPI.csproj .
+COPY MachineAPI.csproj .
 RUN dotnet restore
 COPY . .
-RUN dotnet publish -c release -o /app MachineAPI/MachineAPI.csproj
+RUN dotnet publish -c release -o /app MachineAPI.csproj
 
 FROM base AS final
 WORKDIR /app
