@@ -1,13 +1,40 @@
 using MachineAPI.API.DTOs;
 using MachineAPI.Domain.Entities;
+using MachineAPI.src.API.DTOs;
 
 namespace MachineAPI.API.Extensions
 {
     public static class MappingExtensions
     {
-        public static UpdateMachineDTO ToDto(this Machine machine)
+        public static Machine ToEntity(this MachineCreateDto createDto)
         {
-            return new UpdateMachineDTO
+            return new Machine
+            {
+                Name = createDto.Name,
+                Type = createDto.Type,
+                Model = createDto.Model,
+                ManufactureDate = createDto.ManufactureDate,
+                SerialNumber = createDto.SerialNumber,
+                Status = createDto.Status,
+                PlaceId = createDto.PlaceId
+            };
+        }
+        public static Machine ToEntity(this MachineUpdateDto updateDto)
+        {
+            return new Machine
+            {
+                Id = updateDto.Id,
+                Name = updateDto.Name,
+                Type = updateDto.Type,
+                Model = updateDto.Model,
+                ManufactureDate = updateDto.ManufactureDate,
+                Status = updateDto.Status,
+                PlaceId = updateDto.PlaceId
+            };
+        }
+        public static MachineDTO ToDto(this Machine machine)
+        {
+            return new MachineDTO
             {
                 Id = machine.Id,
                 Name = machine.Name,
@@ -16,8 +43,7 @@ namespace MachineAPI.API.Extensions
                 ManufactureDate = machine.ManufactureDate,
                 SerialNumber = machine.SerialNumber,
                 Status = machine.Status,
-                PlaceId = machine.PlaceId,
-                ImageUrl = machine.ImageUrl,
+                PlaceId = machine.PlaceId
             };
         }
 
@@ -33,7 +59,7 @@ namespace MachineAPI.API.Extensions
             };
         }
 
-        public static Machine ToEntity(this UpdateMachineDTO machineDto)
+        public static Machine ToEntity(this MachineDTO machineDto)
         {
             return new Machine
             {
@@ -44,8 +70,7 @@ namespace MachineAPI.API.Extensions
                 ManufactureDate = machineDto.ManufactureDate,
                 SerialNumber = machineDto.SerialNumber,
                 Status = machineDto.Status,
-                PlaceId = machineDto.PlaceId,
-                ImageUrl= machineDto.ImageUrl,
+                PlaceId = machineDto.PlaceId
             };
         }
 

@@ -3,12 +3,12 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY MachineAPI.csproj .
+COPY AuthService.csproj .
 RUN dotnet restore
 COPY . .
-RUN dotnet publish -c release -o /app MachineAPI.csproj
+RUN dotnet publish -c release -o /app AuthService.csproj
 
 FROM base AS final
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["dotnet", "MachineAPI.dll"]
+ENTRYPOINT ["dotnet", "AuthService.dll"]
