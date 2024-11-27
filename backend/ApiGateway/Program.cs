@@ -67,6 +67,7 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Gateway");
     c.SwaggerEndpoint("http://localhost:3000/swagger/v1/swagger.json", "User API");
     c.SwaggerEndpoint("http://localhost:3001/swagger/v1/swagger.json", "Machine API");
+    c.SwaggerEndpoint("http://localhost:3002/swagger/v1/swagger.json", "Tool API");
     c.RoutePrefix = string.Empty; 
 });
 

@@ -1,6 +1,8 @@
-
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using ToolAPI.Business;
 using ToolAPI.Data;
+using ToolAPI.Repository;
 
 namespace ToolAPI
 {
@@ -13,12 +15,35 @@ namespace ToolAPI
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
 
+            // Swagger configuration
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Machines API",
+                    Version = "v1"
+                });
+            });
+            builder.Services.AddScoped<IToolBusiness, ToolBusiness>();
+            builder.Services.AddScoped<IToolRepository, ToolRepository>();
+
+            // Database configuration
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // CORS configuration
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAPIGateway",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:3002")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    });
+            });
 
             var app = builder.Build();
 
@@ -29,10 +54,12 @@ namespace ToolAPI
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            // Uncomment the next line if HTTPS redirection is required.
+            // app.UseHttpsRedirection();
+
+            app.UseCors("AllowAPIGateway");
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

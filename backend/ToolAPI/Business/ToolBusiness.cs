@@ -5,11 +5,11 @@ using ToolAPI.Repository;
 
 namespace ToolAPI.Business
 {
-    public class ToolService
+    public class ToolBusiness : IToolBusiness
     {
         private readonly IToolRepository _toolRepository;
 
-        public ToolService(IToolRepository toolRepository)
+        public ToolBusiness(IToolRepository toolRepository)
         {
             _toolRepository = toolRepository;
         }

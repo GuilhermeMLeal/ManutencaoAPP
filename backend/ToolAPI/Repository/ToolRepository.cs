@@ -1,16 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ToolAPI.Data;
 using ToolAPI.Models;
 
 namespace ToolAPI.Repository
 {
     public class ToolRepository : IToolRepository
     {
-        private readonly DbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly DbSet<Tool> _dbSet;
 
-        public ToolRepository(DbContext context)
+        public ToolRepository(ApplicationDbContext context)
         {
             _context = context;
             _dbSet = _context.Set<Tool>();
