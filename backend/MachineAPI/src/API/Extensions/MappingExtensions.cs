@@ -1,10 +1,37 @@
 using MachineAPI.API.DTOs;
 using MachineAPI.Domain.Entities;
+using MachineAPI.src.API.DTOs;
 
 namespace MachineAPI.API.Extensions
 {
     public static class MappingExtensions
     {
+        public static Machine ToEntity(this MachineCreateDto createDto)
+        {
+            return new Machine
+            {
+                Name = createDto.Name,
+                Type = createDto.Type,
+                Model = createDto.Model,
+                ManufactureDate = createDto.ManufactureDate,
+                SerialNumber = createDto.SerialNumber,
+                Status = createDto.Status,
+                PlaceId = createDto.PlaceId
+            };
+        }
+        public static Machine ToEntity(this MachineUpdateDto updateDto)
+        {
+            return new Machine
+            {
+                Id = updateDto.Id,
+                Name = updateDto.Name,
+                Type = updateDto.Type,
+                Model = updateDto.Model,
+                ManufactureDate = updateDto.ManufactureDate,
+                Status = updateDto.Status,
+                PlaceId = updateDto.PlaceId
+            };
+        }
         public static MachineDTO ToDto(this Machine machine)
         {
             return new MachineDTO

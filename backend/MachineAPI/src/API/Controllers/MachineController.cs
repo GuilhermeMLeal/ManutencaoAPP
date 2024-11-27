@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MachineAPI.Application.Interfaces;
 using MachineAPI.API.DTOs;
+using MachineAPI.src.API.DTOs;
 
 namespace MachineAPI.API.Controllers
 {
@@ -22,11 +23,48 @@ namespace MachineAPI.API.Controllers
             return Ok(machines);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddMachine([FromBody] MachineDTO machineDto)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetMachineById(int id)
         {
-            var machine = await _machineService.AddMachine(machineDto);
-            return CreatedAtAction(nameof(GetAllMachines), new { id = machine.Id }, machine);
+            try
+            {
+                var machine = await _machineService.GetMachineById(id);
+                return Ok(machine);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddMachine([FromBody] MachineCreateDto machineCreateDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var machine = await _machineService.AddMachine(machineCreateDto);
+            return CreatedAtAction(nameof(GetMachineById), new { id = machine.Id }, machine);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateMachine(int id, [FromBody] MachineUpdateDto machineUpdateDto)
+        {
+            if (id != machineUpdateDto.Id)
+                return BadRequest("ID mismatch.");
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var updatedMachine = await _machineService.UpdateMachine(machineUpdateDto);
+                return Ok(updatedMachine);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }
