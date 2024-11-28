@@ -19,8 +19,19 @@ namespace MachineAPI.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllMachines()
         {
-            var machines = await _machineService.GetAllMachines();
-            return Ok(machines);
+            try
+            {
+                var machines = await _machineService.GetAllMachines();
+                return Ok(machines);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while retrieving the machines.", details = ex.Message });
+            }
         }
 
         [HttpGet("{id}")]
@@ -31,9 +42,13 @@ namespace MachineAPI.API.Controllers
                 var machine = await _machineService.GetMachineById(id);
                 return Ok(machine);
             }
-            catch (KeyNotFoundException)
+            catch (KeyNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while retrieving the machine.", details = ex.Message });
             }
         }
 
@@ -43,16 +58,24 @@ namespace MachineAPI.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var machine = await _machineService.AddMachine(machineCreateDto);
-            return CreatedAtAction(nameof(GetMachineById), new { id = machine.Id }, machine);
+            try
+            {
+                var machine = await _machineService.AddMachine(machineCreateDto);
+                return CreatedAtAction(nameof(GetMachineById), new { id = machine.Id }, machine);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while adding the machine.", details = ex.Message });
+            }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateMachine(int id, [FromBody] MachineUpdateDto machineUpdateDto)
+        [HttpPut]
+        public async Task<IActionResult> UpdateMachine([FromBody] MachineUpdateDto machineUpdateDto)
         {
-            if (id != machineUpdateDto.Id)
-                return BadRequest("ID mismatch.");
-
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
@@ -61,9 +84,17 @@ namespace MachineAPI.API.Controllers
                 var updatedMachine = await _machineService.UpdateMachine(machineUpdateDto);
                 return Ok(updatedMachine);
             }
-            catch (KeyNotFoundException)
+            catch (KeyNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(new { message = ex.Message });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while updating the machine.", details = ex.Message });
             }
         }
     }

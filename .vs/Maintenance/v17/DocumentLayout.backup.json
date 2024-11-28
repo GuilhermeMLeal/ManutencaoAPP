@@ -3,20 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\GuilhermeMartinsLeal\\Documents\\apresenta\u00E7\u00E3oAndre\\manu back\\ManutencaoAPP\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\guilhermemartinsleal\\documents\\apresenta\u00E7\u00E3oandre\\manu back\\manutencaoapp\\backend\\machineapi\\src\\api\\controllers\\machinecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\api\\controllers\\machinecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\guilhermemartinsleal\\documents\\apresenta\u00E7\u00E3oandre\\manu back\\manutencaoapp\\backend\\machineapi\\src\\api\\controllers\\placescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\api\\controllers\\placescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\guilhermemartinsleal\\documents\\apresenta\u00E7\u00E3oandre\\manu back\\manutencaoapp\\backend\\machineapi\\src\\domain\\interfaces\\iplacerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\domain\\interfaces\\iplacerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\guilhermemartinsleal\\documents\\apresenta\u00E7\u00E3oandre\\manu back\\manutencaoapp\\backend\\machineapi\\src\\application\\services\\placeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\application\\services\\placeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\guilhermemartinsleal\\documents\\apresenta\u00E7\u00E3oandre\\manu back\\manutencaoapp\\backend\\machineapi\\src\\api\\controllers\\placescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\api\\controllers\\placescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\guilhermemartinsleal\\documents\\apresenta\u00E7\u00E3oandre\\manu back\\manutencaoapp\\backend\\machineapi\\src\\application\\interfaces\\iplaceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,6 +25,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\guilhermemartinsleal\\documents\\apresenta\u00E7\u00E3oandre\\manu back\\manutencaoapp\\backend\\machineapi\\src\\application\\services\\machineservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\application\\services\\machineservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\guilhermemartinsleal\\documents\\apresenta\u00E7\u00E3oandre\\manu back\\manutencaoapp\\backend\\machineapi\\src\\api\\controllers\\machinecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\api\\controllers\\machinecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\guilhermemartinsleal\\documents\\apresenta\u00E7\u00E3oandre\\manu back\\manutencaoapp\\backend\\machineapi\\src\\api\\dtos\\machinedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -74,37 +74,29 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 0,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "IPlaceRepository.cs",
               "DocumentMoniker": "C:\\Users\\GuilhermeMartinsLeal\\Documents\\apresenta\u00E7\u00E3oAndre\\manu back\\ManutencaoAPP\\backend\\MachineAPI\\src\\Domain\\Interfaces\\IPlaceRepository.cs",
               "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\Domain\\Interfaces\\IPlaceRepository.cs",
-              "ToolTip": "C:\\Users\\GuilhermeMartinsLeal\\Documents\\apresenta\u00E7\u00E3oAndre\\manu back\\ManutencaoAPP\\backend\\MachineAPI\\src\\Domain\\Interfaces\\IPlaceRepository.cs",
-              "RelativeToolTip": "backend\\MachineAPI\\src\\Domain\\Interfaces\\IPlaceRepository.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAqwBYAAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\GuilhermeMartinsLeal\\Documents\\apresenta\u00E7\u00E3oAndre\\manu back\\ManutencaoAPP\\backend\\MachineAPI\\src\\Domain\\Interfaces\\IPlaceRepository.cs*",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\Domain\\Interfaces\\IPlaceRepository.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-28T00:32:54.212Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "IPlaceService.cs",
               "DocumentMoniker": "C:\\Users\\GuilhermeMartinsLeal\\Documents\\apresenta\u00E7\u00E3oAndre\\manu back\\ManutencaoAPP\\backend\\MachineAPI\\src\\Application\\Interfaces\\IPlaceService.cs",
               "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\Application\\Interfaces\\IPlaceService.cs",
-              "ToolTip": "C:\\Users\\GuilhermeMartinsLeal\\Documents\\apresenta\u00E7\u00E3oAndre\\manu back\\ManutencaoAPP\\backend\\MachineAPI\\src\\Application\\Interfaces\\IPlaceService.cs",
-              "RelativeToolTip": "backend\\MachineAPI\\src\\Application\\Interfaces\\IPlaceService.cs",
+              "ToolTip": "C:\\Users\\GuilhermeMartinsLeal\\Documents\\apresenta\u00E7\u00E3oAndre\\manu back\\ManutencaoAPP\\backend\\MachineAPI\\src\\Application\\Interfaces\\IPlaceService.cs*",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\Application\\Interfaces\\IPlaceService.cs*",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-28T00:32:26.335Z",
@@ -112,7 +104,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "PlaceRepository.cs",
               "DocumentMoniker": "C:\\Users\\GuilhermeMartinsLeal\\Documents\\apresenta\u00E7\u00E3oAndre\\manu back\\ManutencaoAPP\\backend\\MachineAPI\\src\\Infrastructure\\Repositories\\PlaceRepository.cs",
               "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\Infrastructure\\Repositories\\PlaceRepository.cs",
@@ -125,7 +117,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "PlaceService.cs",
               "DocumentMoniker": "C:\\Users\\GuilhermeMartinsLeal\\Documents\\apresenta\u00E7\u00E3oAndre\\manu back\\ManutencaoAPP\\backend\\MachineAPI\\src\\Application\\Services\\PlaceService.cs",
               "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\Application\\Services\\PlaceService.cs",
@@ -137,27 +129,35 @@
               "EditorCaption": ""
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "PlacesController.cs",
               "DocumentMoniker": "C:\\Users\\GuilhermeMartinsLeal\\Documents\\apresenta\u00E7\u00E3oAndre\\manu back\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\Controllers\\PlacesController.cs",
               "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\API\\Controllers\\PlacesController.cs",
               "ToolTip": "C:\\Users\\GuilhermeMartinsLeal\\Documents\\apresenta\u00E7\u00E3oAndre\\manu back\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\Controllers\\PlacesController.cs",
               "RelativeToolTip": "backend\\MachineAPI\\src\\API\\Controllers\\PlacesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAMwCkAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-28T00:28:43.62Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "MachineController.cs",
               "DocumentMoniker": "C:\\Users\\GuilhermeMartinsLeal\\Documents\\apresenta\u00E7\u00E3oAndre\\manu back\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\Controllers\\MachineController.cs",
               "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\API\\Controllers\\MachineController.cs",
-              "ToolTip": "C:\\Users\\GuilhermeMartinsLeal\\Documents\\apresenta\u00E7\u00E3oAndre\\manu back\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\Controllers\\MachineController.cs*",
-              "RelativeToolTip": "backend\\MachineAPI\\src\\API\\Controllers\\MachineController.cs*",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAkwE0AAAAJAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\GuilhermeMartinsLeal\\Documents\\apresenta\u00E7\u00E3oAndre\\manu back\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\Controllers\\MachineController.cs",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\API\\Controllers\\MachineController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-27T23:42:32.957Z",
               "EditorCaption": ""
@@ -213,7 +213,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "MachineService.cs",
               "DocumentMoniker": "C:\\Users\\GuilhermeMartinsLeal\\Documents\\apresenta\u00E7\u00E3oAndre\\manu back\\ManutencaoAPP\\backend\\MachineAPI\\src\\Application\\Services\\MachineService.cs",
               "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\Application\\Services\\MachineService.cs",
