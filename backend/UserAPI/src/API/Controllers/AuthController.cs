@@ -45,5 +45,23 @@ namespace UserAuth.API.Controllers
             return Ok(newToken);
         }
 
+        [HttpGet("validate-token")]
+        public IActionResult ValidateToken()
+        {
+            var authHeader = Request.Headers["Authorization"].ToString();
+            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+                return Unauthorized("Token não fornecido ou inválido.");
+
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+            var isValid = _tokenService.ValidateToken(token);
+
+            if (!isValid)
+                return Unauthorized("Token inválido ou expirado.");
+
+            return Ok("Token válido.");
+        }
+
+
+
     }
 }

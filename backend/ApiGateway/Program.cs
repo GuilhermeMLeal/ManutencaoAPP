@@ -1,13 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Ocelot.DependencyInjection;
-using Ocelot.Middleware;
 using System.Text;
-using MMLib.SwaggerForOcelot.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configuração de autenticação JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer("JwtBearer", options =>
     {
@@ -23,12 +21,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddOcelot();
-builder.Services.AddSwaggerForOcelot(builder.Configuration);
+// Adiciona suporte a controladores e endpoints
+builder.Services.AddControllers();
+builder.Services.AddHttpClient(); // Adiciona suporte para chamadas HTTP
 
-builder.Services.AddEndpointsApiExplorer();
-
-
+// Configuração do Swagger para documentação
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -37,12 +34,12 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1",
         Description = "API Gateway para rotear requisições para as APIs downstream"
     });
-    
-    // Configurações adicionais podem ser adicionadas aqui, como esquemas de segurança, se necessário.
+
+    // Configuração de segurança para JWT
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
-        Description = "Insira o token JWT",
+        Description = "Insira o token JWT no formato: Bearer {seu token}",
         Name = "Authorization",
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
@@ -61,24 +58,20 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+// Configuração do Swagger
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Gateway");
-    c.SwaggerEndpoint("http://localhost:3000/swagger/v1/swagger.json", "User API");
-    c.SwaggerEndpoint("http://localhost:3001/swagger/v1/swagger.json", "Machine API");
-    c.SwaggerEndpoint("http://localhost:3002/swagger/v1/swagger.json", "Tool API");
-    c.RoutePrefix = string.Empty; 
+    c.RoutePrefix = string.Empty; // Define o Swagger na raiz
 });
 
-app.UseSwaggerForOcelotUI(options =>
-{
-    options.PathToSwaggerGenerator = "/swagger/docs";
-});
+// Middleware de autenticação e autorização
+app.UseAuthentication();
+app.UseAuthorization();
 
-// app.UseHttpsRedirection();
+// Configuração dos endpoints dos controladores
+app.MapControllers();
 
-
-await app.UseOcelot();
-
+// Inicializa o aplicativo
 app.Run();

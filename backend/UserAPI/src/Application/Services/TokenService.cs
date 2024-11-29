@@ -107,5 +107,34 @@ namespace UserAuth.Application.Services
             }
         }
 
+        // Método para validar o token
+        public bool ValidateToken(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+                return false;
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var secretKey = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"] ?? string.Empty);
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(secretKey),
+                ValidateIssuer = true,
+                ValidIssuer = _configuration["Jwt:Issuer"],
+                ValidateAudience = true,
+                ValidAudience = _configuration["Jwt:Audience"],
+                ValidateLifetime = true // Valida a expiração
+            };
+
+            try
+            {
+                tokenHandler.ValidateToken(token, tokenValidationParameters, out _);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

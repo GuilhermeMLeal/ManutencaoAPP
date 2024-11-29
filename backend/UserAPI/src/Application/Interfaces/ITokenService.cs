@@ -9,5 +9,6 @@ namespace UserAuth.Application.Interfaces
         public string GenerateToken(UserDTO userDTO);
 
         public string RefreshToken(string authorizationHeader);
+        public bool ValidateToken(string authorizationHeader);
     }
 }

@@ -8,7 +8,7 @@ COPY ApiGateway.csproj .
 RUN dotnet restore
 COPY . .
 RUN dotnet publish -c release -o /app ApiGateway.csproj
-
+RUN apt-get update && apt-get install -y curl
 FROM base AS final
 WORKDIR /app
 COPY --from=build /app .
