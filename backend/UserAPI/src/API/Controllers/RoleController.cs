@@ -2,9 +2,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserAuth.API.DTOs;
 using UserAuth.Application.Interfaces;
-
+using UserAuth.API.Controllers.Validation;
 namespace UserAuth.API.Controllers
 {
+    [ServiceFilter(typeof(VerifyToken))]
     [ApiController]
     [Route("api/[controller]")]
     //[Authorize(Roles = "users:admin")]

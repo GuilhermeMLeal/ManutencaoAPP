@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ToolAPI.Business;
+using ToolAPI.Controllers.Validation;
 using ToolAPI.Models;
 
 namespace ToolAPI.Controllers
 {
+    [ServiceFilter(typeof(VerifyToken))]
     [ApiController]
     [Route("api/[controller]")]
     public class ToolController : ControllerBase
@@ -17,6 +19,7 @@ namespace ToolAPI.Controllers
             _toolService = toolService;
         }
 
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -27,6 +30,7 @@ namespace ToolAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
+
             try
             {
                 var tool = await _toolService.GetToolById(id);

@@ -12,6 +12,7 @@ using UserAuth.Infrastructure.Repositories;
 using AuthUser.Infrastructure.Repositories;
 using AuthUser.Domain.Interfaces;
 using UserAuth.Infrastructure.Services;
+using UserAuth.API.Controllers.Validation;
 
 public class Startup
 {
@@ -36,6 +37,9 @@ public class Startup
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<ISquadService, SquadService>();
+        services.AddHttpClient();
+        services.AddHttpContextAccessor();
+        services.AddScoped<VerifyToken>();
 
 
         services.AddCors(options =>

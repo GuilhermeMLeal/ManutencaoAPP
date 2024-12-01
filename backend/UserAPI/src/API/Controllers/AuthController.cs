@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using UserAuth.API.Controllers.Validation;
 using UserAuth.API.DTOs;
 using UserAuth.Application.Helpers;
 using UserAuth.Application.Interfaces;
@@ -6,6 +7,7 @@ using UserAuth.Application.Services;
 
 namespace UserAuth.API.Controllers
 {
+    [ServiceFilter(typeof(VerifyToken))]
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
