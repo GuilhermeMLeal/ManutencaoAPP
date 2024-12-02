@@ -79,6 +79,8 @@ namespace ToolAPI
             // Uncomment the next line if HTTPS redirection is required.
             // app.UseHttpsRedirection();
 
+            // Garante que as migrações sejam aplicadas automaticamente
+            app.ApplyMigrations();
             app.UseCors("AllowAPIGateway");
 
             app.UseAuthorization();
