@@ -5,8 +5,6 @@ import { getAccessToken, getTokens, storeAccessToken, storeTokens } from '../uti
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  accessToken: string | null;
-  refreshToken: string | null;
   login: (username: string, password: string) => Promise<void>;
   logout: () => void;
 }
@@ -81,7 +79,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (username: string, password: string) => {
     try {
-      const response = await axios.post('http://192.168.0.11:3001/api/Auth', { username, password });
+      //192.168.0.11
+      const response = await axios.post('http://localhost:3001/api/Auth', { username, password });
   
       console.log(response);
   
