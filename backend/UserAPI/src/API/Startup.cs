@@ -42,14 +42,24 @@ public class Startup
         services.AddScoped<VerifyToken>();
 
 
+        //services.AddCors(options =>
+        //{
+        //    options.AddPolicy("AllowAPIGateway",
+        //        builder =>
+        //        {
+        //            builder.WithOrigins("http://localhost:3002") 
+        //                .AllowAnyMethod()
+        //                .AllowAnyHeader();
+        //        });
+        //});
         services.AddCors(options =>
         {
-            options.AddPolicy("AllowAPIGateway",
+            options.AddPolicy("AllowAll",
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:3002") 
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
                 });
         });
 
@@ -112,7 +122,8 @@ public class Startup
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
 
-        app.UseCors("AllowAPIGateway");
+        //app.UseCors("AllowAPIGateway");
+        app.UseCors("AllowAll");
 
         app.UseSwagger();
         app.UseSwaggerUI(c =>
