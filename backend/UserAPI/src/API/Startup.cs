@@ -13,6 +13,8 @@ using AuthUser.Infrastructure.Repositories;
 using AuthUser.Domain.Interfaces;
 using UserAuth.Infrastructure.Services;
 using UserAuth.API.Controllers.Validation;
+using UserAuth.Domain.Entities;
+using UserAuth.Application.Helpers;
 
 public class Startup
 {
@@ -117,6 +119,7 @@ public class Startup
         services.AddAuthorization();
 
         services.AddSingleton<IConfiguration>(_configuration);
+
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -145,5 +148,96 @@ public class Startup
         {
             endpoints.MapControllers();
         });
+
+        using (var scope = app.ApplicationServices.CreateScope())
+        {
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            context.Database.Migrate();
+
+            // Seed de Users
+            if (!context.Users.Any())
+            {
+                var user = new User
+                {
+                    Name = "Admin User",
+                    Email = "admin@example.com",
+                    Username = "admin",
+                    Password = PasswordHelper.HashPassword("admin")
+                };
+                context.Users.Add(user);
+                context.SaveChanges();
+                Console.WriteLine("Usuário salvo.");
+            }
+
+            // Seed de Roles
+            if (!context.Roles.Any())
+            {
+                var role = new Role
+                {
+                    Id = 1,
+                    Name = "Admin 1"
+                };
+                context.Roles.Add(role);
+                context.SaveChanges();
+                Console.WriteLine("Role salva.");
+            }
+
+            // Relacionamento entre User e Role
+            if (!context.UserRoles.Any())
+            {
+                var user = context.Users.FirstOrDefault(u => u.Username == "admin");
+                var role = context.Roles.FirstOrDefault(r => r.Name == "Admin 1");
+
+                if (user != null && role != null)
+                {
+                    context.UserRoles.Add(new UserRole
+                    {
+                        UserId = user.Id,
+                        RoleId = role.Id
+                    });
+                    context.SaveChanges();
+                    Console.WriteLine("Relacionamento User-Role salvo.");
+                }
+            }
+
+            // Seed de Squads
+            if (!context.Squads.Any())
+            {
+                var squad = new UserAuth.Domain.Entities.Squad
+                {
+                    Id = -1,
+                    Name = "Manutencao 1",
+                    Description = "Manutenção no Place 1"
+                };
+                context.Squads.Add(squad);
+                context.SaveChanges();
+                Console.WriteLine("Squad salvo.");
+            }
+
+            //Relacionamento entre User e Squad
+            if (!context.UserSquads.Any())
+            {
+                var user = context.Users.FirstOrDefault(u => u.Username == "admin");
+                var squad = context.Squads.FirstOrDefault(s => s.Name == "Manutencao 1");
+
+                if (user != null && squad != null)
+                {
+                    context.UserSquads.Add(new UserSquad
+                    {
+                        UserId = user.Id,
+                        SquadId = squad.Id
+                    });
+                    context.SaveChanges();
+                    Console.WriteLine("Relacionamento User-Squad salvo.");
+                }
+                else
+                {
+                    Console.WriteLine("Erro: Usuário ou Squad não encontrado.");
+                }
+            }
+        }
+
+
     }
+
 }

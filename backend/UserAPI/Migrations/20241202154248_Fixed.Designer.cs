@@ -11,8 +11,8 @@ using UserAuth.Infrastructure.Data;
 namespace AuthMicroservice.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241105184328_CreateUserRoleTable")]
-    partial class CreateUserRoleTable
+    [Migration("20241202154248_Fixed")]
+    partial class Fixed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,27 @@ namespace AuthMicroservice.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("UserAuth.Domain.Entities.Squad", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Squads");
                 });
 
             modelBuilder.Entity("UserAuth.Domain.Entities.User", b =>
@@ -85,6 +106,21 @@ namespace AuthMicroservice.Migrations
                     b.ToTable("UserRoles");
                 });
 
+            modelBuilder.Entity("UserAuth.Domain.Entities.UserSquad", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SquadId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("UserId", "SquadId");
+
+                    b.HasIndex("SquadId");
+
+                    b.ToTable("UserSquads");
+                });
+
             modelBuilder.Entity("UserAuth.Domain.Entities.UserRole", b =>
                 {
                     b.HasOne("UserAuth.Domain.Entities.Role", "Role")
@@ -104,14 +140,40 @@ namespace AuthMicroservice.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("UserAuth.Domain.Entities.UserSquad", b =>
+                {
+                    b.HasOne("UserAuth.Domain.Entities.Squad", "Squad")
+                        .WithMany("UserSquads")
+                        .HasForeignKey("SquadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UserAuth.Domain.Entities.User", "User")
+                        .WithMany("UserSquads")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Squad");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("UserAuth.Domain.Entities.Role", b =>
                 {
                     b.Navigation("UserRoles");
                 });
 
+            modelBuilder.Entity("UserAuth.Domain.Entities.Squad", b =>
+                {
+                    b.Navigation("UserSquads");
+                });
+
             modelBuilder.Entity("UserAuth.Domain.Entities.User", b =>
                 {
                     b.Navigation("UserRoles");
+
+                    b.Navigation("UserSquads");
                 });
 #pragma warning restore 612, 618
         }
