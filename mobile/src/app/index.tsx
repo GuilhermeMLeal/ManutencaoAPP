@@ -1,60 +1,36 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from '@react-navigation/stack';
+import { LoginScreen } from "../components/login";
+import { DetailsScreen } from "../components/details";
+import { HomeScreen } from "../components/home";
+import MachineDetailsScreen from "../components/machine/machineDetails";
+import RegisterPartsScreen from "../components/registerParts";
+import MachineMaintenanceHistoryScreen from "../components/machine/machineMaintenanceHistory";
+import CreateMachine from "../components/machine/machineCreate";
+import CreateMaintenance from "../components/maintenance/maintenanceCreate";
+import { AuthProvider, useAuth } from "../context/authService";
 
-import { Icon } from 'react-native-elements';
-import { MachineListScreen } from '../screens/MachineListScreen';
-import { HomeScreen } from '../screens/HomeScreen';
-import MaintenanceScreen from '../screens/MaintenanceScreen';
-import { ProfileScreen } from '../screens/ProfileScreen';
-import StockScreen from '../screens/ProductList';
-import MachineDetailsScreen from '../screens/MachineDetailsScreen';
+type RootStackParamList = {
+  Home: undefined;
+  Login: undefined;
+  Details: {name: string; email: string};
+};
 
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
-function MachineStack() {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="MachineList" component={MachineListScreen} />
-      <Stack.Screen name="MachineDetails" component={MachineDetailsScreen} />
-    </Stack.Navigator>
-  );
-}
-
-export default function App() {
+export default function Index() {
+  const {isAuthenticated } = useAuth();
   return (
     <NavigationContainer independent={true}>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, size }) => {
-            let iconName;
-
-            if (route.name === 'Home') {
-              iconName = 'home';
-            } else if (route.name === 'Manutenções') {
-              iconName = 'wrench';
-            } else if (route.name === 'Máquinas') {
-              iconName = 'list';
-            } else if (route.name === 'Estoque de Peças') { 
-              iconName = 'box';
-            } else if (route.name === 'Perfil do Usuário') {
-              iconName = 'user';
-            }
-
-            return <Icon name={iconName} type="font-awesome-5" color={color} size={size} />;
-          },
-          tabBarActiveTintColor: '#0099cc',
-          tabBarInactiveTintColor: 'gray',
-        })}
-      >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Manutenções" component={MaintenanceScreen} />
-        <Tab.Screen name="Máquinas" component={MachineStack} />
-        <Tab.Screen name="Estoque de Peças" component={StockScreen} />
-        <Tab.Screen name="Perfil do Usuário" component={ProfileScreen} />
-      </Tab.Navigator>
+      <Stack.Navigator initialRouteName={isAuthenticated ?  "Home" : "Login" } screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Home"  options={{ headerShown: false }} component={HomeScreen}/>
+        <Stack.Screen name="MachineDetails" options={{ headerShown: false }} component={MachineDetailsScreen} />
+        <Stack.Screen name="RegisterParts" options={{ headerShown: false }} component={RegisterPartsScreen}/>
+        <Stack.Screen name="MachineMaintenanceHistoryScreen" options={{ headerShown: false }} component={MachineMaintenanceHistoryScreen}/>
+        <Stack.Screen name="CreateMachine" options={{ headerShown: false }} component={CreateMachine} />
+        <Stack.Screen name="CreateMaintenance" options={{ headerShown: false }} component={CreateMaintenance} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

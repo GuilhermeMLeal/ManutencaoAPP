@@ -1,49 +1,43 @@
-# Documentação do Projeto: Maintenance App Mobile
+# Versão Light Mobile - Requisitos e Critérios
 
-## Introdução
+Oferecer uma versão simplificada do sistema para dispositivos móveis, focando em funcionalidades essenciais para o gerenciamento de máquinas e manutenções no campo.
 
-O **Maintenance App Mobile** é uma aplicação desenvolvida para gerenciar eficientemente a manutenção de máquinas e o estoque de peças em um ambiente industrial. Através de uma interface amigável, o aplicativo permite que os usuários monitorem manutenções, gerenciem máquinas e peças, e atualizem informações relevantes em tempo real, facilitando a operação e a tomada de decisões.
+## Requisitos Funcionais:
 
-## Estrutura do Aplicativo
+### Gerenciamento de Máquinas:
+ - Lista de máquinas com informações básicas (nome, tipo, localização).
+ - Acesso a informações detalhadas de uma máquina (modelo, data de fabricação, número de série).
 
-### 1. Tela Inicial
-**Função**: A tela inicial do aplicativo, a HomeScreen, apresenta uma saudação ao usuário e um grid de opções de navegação. Cada opção é representada por um ícone e um texto, permitindo que o usuário navegue facilmente para diferentes seções do aplicativo, como Manutenções, Máquinas, Estoque de Peças e Perfil do Usuário.
+### Manutenção: 
+ - Visualizar o histórico de manutenções recentes.
+ - Marcar uma máquina como "em manutenção" e adicionar comentários.
 
----
+### Solicitação:
+ - Criar solicitações de manutenção (descrição do problema, prioridade, responsável).
+ - Visualizar o status da manutenção (pendente, em andamento, concluída).
+ - Adicionar comentários e fotos à solicitação.
 
-### 2. Tela de Máquinas
+### Registro:
+ - Registrar as peças e materiais utilizados durante a manutenção.
 
-#### MachineDetailsScreen
-**Função**: Exibe informações detalhadas sobre uma máquina específica. Permite ao usuário editar informações da máquina, alterar seu status e visualizar relatórios de manutenção. Contém botões de ação para facilitar a interação e modais para edição e exibição de status e manutenção.
+### Relatórios:
+ - Visualizar relatórios de manutenções recentes da máquina (data, descrição, status).
+ - Visualizar o estoque de peças disponíveis (nome, quantidade) em um menu simplificado.
+ - Consultar a disponibilidade de peças específicas para uma manutenção.
 
-- **BackButton**: Permite voltar à tela anterior.
-- **MachineInfo**: Mostra informações detalhadas sobre a máquina.
-- **ActionButtons**: Conjunto de botões para ações como editar, deletar, mudar status e visualizar manutenção.
-- **EditMachineModal**: Modal para editar os dados da máquina.
-- **StatusModal**: Modal para alterar o status da máquina e adicionar comentários.
-- **MaintenanceModal**: Modal que exibe os relatórios de manutenção da máquina.
+### Gerenciamento de Equipes:
+ - Visualizar a lista de equipes disponíveis e seus membros.
+ - Verificar a disponibilidade de equipes para uma determinada manutenção.
 
----
+### Autenticação e Autorização:
+ - Login:
+Autenticação via login e senha.
 
-### 3. Tela de Estoque
+## Critérios de Design:
+- Ter design =)
+- Interface amigável e intuitiva: Priorizar navegação simples e fácil de usar.
+- Funcionalidades essenciais: Foco em funcionalidades mais usadas no campo.
+- Minimizar consumo de dados: Otimizar o uso de dados para minimizar o consumo da bateria do dispositivo.
 
-**Função**: A tela de Estoque gerencia a exibição do estoque de peças, permitindo ao usuário buscar por itens específicos através de uma barra de pesquisa. A tela também oferece a funcionalidade de adicionar novas peças ao estoque por meio de um modal. Os dados do estoque são filtrados com base na pesquisa, e a interface é projetada para facilitar a visualização e a gestão das peças disponíveis.
-
-- **StockScreen**: Exibe a lista de peças em estoque e permite buscar e adicionar novas peças.
-- **SearchComponent**: Campo de busca para filtrar as peças na lista de estoque.
-- **StockList**: Renderiza a lista de itens de estoque filtrados.
-- **AddStockModal**: Modal para adicionar uma nova peça ao estoque.
-
----
-
-### 4. Tela de Perfil de Usuário
-
-**Função**: A ProfileScreen exibe as informações do perfil do usuário, incluindo nome, email e setor. A tela apresenta uma imagem de perfil e um botão que permite ao usuário navegar para a tela de edição do perfil. É uma interface intuitiva que facilita a visualização e atualização dos dados do usuário.
-
----
-
-### 5. Tela sobre as Manutenções
-
-**Função**: A MaintenanceScreen é uma tela central para gerenciar e registrar manutenções de máquinas, proporcionando uma interface interativa para adicionar, visualizar e editar informações sobre as atividades de manutenção. Os usuários podem cadastrar novas manutenções, adicionar materiais e fotos, e acompanhar o status de cada atividade, tudo de forma simplificada e acessível.
-
----
+## Considerações importantes para a versão light mobile:
+- A versão light deve oferecer uma experiência de usuário otimizada para dispositivos móveis, com foco em usabilidade e performance.
