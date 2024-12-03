@@ -20,7 +20,7 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }: any) => {
   const [expiresIn, setExpiresIn] = useState<number | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
@@ -80,7 +80,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = async (username: string, password: string) => {
     try {
       //192.168.0.11
-      const response = await axios.post('http://localhost:3001/api/Auth', { username, password });
+      const response = await axios.post('http://192.168.0.11:3001/api/Auth', { username, password });
   
       console.log(response);
   

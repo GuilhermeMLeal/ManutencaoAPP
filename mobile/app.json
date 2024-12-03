@@ -1,5 +1,6 @@
 {
   "expo": {
+    "newArchEnabled": true,
     "name": "Web Maintenance",
     "slug": "web_maintenance",
     "version": "1.0.0",
@@ -29,7 +30,8 @@
       "favicon": ""
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true

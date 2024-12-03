@@ -27,4 +27,4 @@ const maintenanceStyle = StyleSheet.create({
 
 
 
-export default maintenanceStyles;
+export default maintenanceStyle;
