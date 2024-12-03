@@ -9,6 +9,7 @@ export const storeTokens = async ({accessToken, refreshToken}: any) => {
     console.error('Erro ao armazenar os tokens', error);
   }
 };
+
 export const storeAccessToken = async ({accessToken}: any) => {
   try {
     await SecureStore.setItemAsync('accessToken', accessToken);

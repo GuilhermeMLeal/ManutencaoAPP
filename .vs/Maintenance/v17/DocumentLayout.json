@@ -3,8 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\userapi\\src\\api\\controllers\\validation\\verifytoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|solutionrelative:backend\\userapi\\src\\api\\controllers\\validation\\verifytoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\userapi\\src\\api\\controllers\\squadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|solutionrelative:backend\\userapi\\src\\api\\controllers\\squadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\userapi\\src\\api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|solutionrelative:backend\\userapi\\src\\api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\userapi\\src\\api\\controllers\\rolecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|solutionrelative:backend\\userapi\\src\\api\\controllers\\rolecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\userapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|solutionrelative:backend\\userapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\userapi\\src\\api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,14 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\machineapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\userapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|solutionrelative:backend\\userapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\userapi\\src\\api\\controllers\\rolecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|solutionrelative:backend\\userapi\\src\\api\\controllers\\rolecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\userapi\\src\\infrastructure\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -70,7 +78,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -78,7 +86,33 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "VerifyToken.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\API\\Controllers\\Validation\\VerifyToken.cs",
+              "RelativeDocumentMoniker": "backend\\UserAPI\\src\\API\\Controllers\\Validation\\VerifyToken.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\API\\Controllers\\Validation\\VerifyToken.cs",
+              "RelativeToolTip": "backend\\UserAPI\\src\\API\\Controllers\\Validation\\VerifyToken.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAwAAABdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-03T17:26:36.039Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "SquadController.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\API\\Controllers\\SquadController.cs",
+              "RelativeDocumentMoniker": "backend\\UserAPI\\src\\API\\Controllers\\SquadController.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\API\\Controllers\\SquadController.cs",
+              "RelativeToolTip": "backend\\UserAPI\\src\\API\\Controllers\\SquadController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-03T17:26:33.418Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\API\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "backend\\UserAPI\\src\\API\\Controllers\\UserController.cs",
@@ -86,12 +120,11 @@
               "RelativeToolTip": "backend\\UserAPI\\src\\API\\Controllers\\UserController.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T17:21:39.448Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-02T17:21:39.448Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\ToolAPI\\appsettings.json",
               "RelativeDocumentMoniker": "backend\\ToolAPI\\appsettings.json",
@@ -103,7 +136,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\appsettings.json",
               "RelativeDocumentMoniker": "backend\\MachineAPI\\appsettings.json",
@@ -115,7 +148,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\appsettings.json",
               "RelativeDocumentMoniker": "backend\\UserAPI\\appsettings.json",
@@ -123,36 +156,38 @@
               "RelativeToolTip": "backend\\UserAPI\\appsettings.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-12-02T15:36:56.014Z"
+              "WhenOpened": "2024-12-02T15:36:56.014Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "RoleController.cs",
               "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\API\\Controllers\\RoleController.cs",
               "RelativeDocumentMoniker": "backend\\UserAPI\\src\\API\\Controllers\\RoleController.cs",
               "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\API\\Controllers\\RoleController.cs",
               "RelativeToolTip": "backend\\UserAPI\\src\\API\\Controllers\\RoleController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAlAAAA",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAAAcAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T15:23:26.458Z"
+              "WhenOpened": "2024-12-02T15:23:26.458Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\API\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "backend\\UserAPI\\src\\API\\Controllers\\AuthController.cs",
               "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\API\\Controllers\\AuthController.cs",
               "RelativeToolTip": "backend\\UserAPI\\src\\API\\Controllers\\AuthController.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-02T15:36:30.842Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Infrastructure\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\Infrastructure\\Data\\ApplicationDbContext.cs",
@@ -164,7 +199,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "SquadService.cs",
               "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\Application\\Services\\SquadService.cs",
               "RelativeDocumentMoniker": "backend\\UserAPI\\src\\Application\\Services\\SquadService.cs",
@@ -176,7 +211,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "TokenService.cs",
               "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\Application\\Services\\TokenService.cs",
               "RelativeDocumentMoniker": "backend\\UserAPI\\src\\Application\\Services\\TokenService.cs",
@@ -188,7 +223,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\Domain\\Entities\\User.cs",
               "RelativeDocumentMoniker": "backend\\UserAPI\\src\\Domain\\Entities\\User.cs",
@@ -200,7 +235,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "UserSquad.cs",
               "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\Domain\\Entities\\UserSquad.cs",
               "RelativeDocumentMoniker": "backend\\UserAPI\\src\\Domain\\Entities\\UserSquad.cs",
@@ -212,7 +247,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "UserRole.cs",
               "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\Domain\\Entities\\UserRole.cs",
               "RelativeDocumentMoniker": "backend\\UserAPI\\src\\Domain\\Entities\\UserRole.cs",
@@ -224,7 +259,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "Startup.cs",
               "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\API\\Startup.cs",
               "RelativeDocumentMoniker": "backend\\UserAPI\\src\\API\\Startup.cs",
@@ -232,12 +267,11 @@
               "RelativeToolTip": "backend\\UserAPI\\src\\API\\Startup.cs",
               "ViewState": "AQIAAMgAAAAAAAAAAAAQwOkAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T14:07:57.084Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-02T14:07:57.084Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "Squad.cs",
               "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\Domain\\Entities\\Squad.cs",
               "RelativeDocumentMoniker": "backend\\UserAPI\\src\\Domain\\Entities\\Squad.cs",
@@ -249,7 +283,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\Infrastructure\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "backend\\UserAPI\\src\\Infrastructure\\Data\\ApplicationDbContext.cs",

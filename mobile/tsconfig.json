@@ -4,11 +4,13 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@components/*": ["app/components/*"],
-      "@services/*": ["app/services/*"],
-      "@styles/*": ["app/styles/*"]
-    }
+      "@/*": ["./*"]
+    },
+    "types": ["nativewind/types"], // Suporte para NativeWind
+    "jsx": "react",
+    "lib": ["dom", "esnext"],
+    "skipLibCheck": true,
+    "esModuleInterop": true
   },
   "include": [
     "**/*.ts",

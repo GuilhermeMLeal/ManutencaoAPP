@@ -1,5 +1,5 @@
 import React from "react";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import Icon from "react-native-vector-icons/MaterialIcons"; // Verifique a instalação correta
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MachineScreen from "./machine/machine";
 import MaintenanceHistoryScreen from "./maintenance/maintenance";
@@ -13,6 +13,7 @@ export function HomeScreen() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
+          // Mapeamento de ícones para as abas
           const iconMap: Record<string, string> = {
             Machine: "build",
             Maintenance: "handyman",
@@ -26,7 +27,7 @@ export function HomeScreen() {
         },
         tabBarActiveTintColor: "tomato",
         tabBarInactiveTintColor: "gray",
-        headerShown: false, // Aplica a todos os cabeçalhos por padrão
+        headerShown: false,
       })}
     >
       <Tab.Screen

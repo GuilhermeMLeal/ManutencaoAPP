@@ -1,8 +1,11 @@
+import React from "react";
 import Index from "./index";
-//mport  {AuthProvider}  from "./context/authService";
+import { AuthProvider } from "./context/authService";
 
 export default function RootLayout() {
   return (
+    <AuthProvider>
       <Index />
+    </AuthProvider>
   );
 }

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { View, Text, TextInput, Button } from "react-native";
-import { useAuth } from "../context/authService";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useAuth } from "../context/authService";
+import React from "react";
 
-export function LoginScreen({ navigation }: { navigation: any }) {
+const LoginScreen = ({ navigation }: { navigation: any }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { login, isAuthenticated } = useAuth();
@@ -30,7 +31,6 @@ export function LoginScreen({ navigation }: { navigation: any }) {
         value={username}
         onChangeText={setUsername}
       />
-      
       <TextInput
         className="w-full h-12 border border-gray-300 rounded-lg px-4 mb-6 bg-white text-lg shadow-sm"
         placeholder="Senha"
@@ -39,13 +39,14 @@ export function LoginScreen({ navigation }: { navigation: any }) {
         onChangeText={setPassword}
         secureTextEntry
       />
-      
       <TouchableOpacity 
         className="w-full bg-purple-600 py-3 rounded-lg items-center shadow-lg"
         onPress={handleLogin}
       >
-      <Text className="text-white text-lg font-semibold">Entrar</Text>
-    </TouchableOpacity>
-  </View>
-  )
-}
+        <Text className="text-white text-lg font-semibold">Entrar</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+export default LoginScreen;
