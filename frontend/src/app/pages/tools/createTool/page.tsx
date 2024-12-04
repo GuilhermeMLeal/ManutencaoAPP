@@ -1,5 +1,4 @@
 import Aside from "@/app/components/asideBar";
-import Footer from "@/app/components/footer";
 import CreateTool from "@/app/components/tools/createTool";
 
 export default function CreateToolPage() {
@@ -9,7 +8,6 @@ export default function CreateToolPage() {
         <Aside />
         <CreateTool />
       </div>
-      <Footer />
     </div>
   );
 }

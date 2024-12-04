@@ -1,4 +1,3 @@
-import Footer from "../../components/footer";
 import Aside from "@/app/components/asideBar";
 import DashboardPage from "@/app/components/controlStock/mainControlStock";
 
@@ -9,7 +8,6 @@ export default function ControlStock() {
         <Aside />
         <DashboardPage/>
       </div>
-      <Footer />
     </div>
   );
 }

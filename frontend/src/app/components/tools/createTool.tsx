@@ -4,7 +4,7 @@ import { Box, Button, Grid, InputAdornment, TextField } from "@mui/material";
 
 export default function CreateTool() {
   return (
-    <main className="flex-1 p-6 pt-24 flex flex-col bg-white/90">
+    <main className="flex-1 flex flex-col bg-white/90 overflow-y-auto max-h-svh">
       <TitleCreate title={"Registro de Peças"} />
       <Box
         component="form"
@@ -77,7 +77,7 @@ export default function CreateTool() {
               variant="outlined"
             />
           </Grid>
-          <Grid container item xs={12} justifyContent="center">
+          <Grid container item xs={12} justifyContent="center" className="pb-4">
             <Grid item>
               <input
                 accept="image/*"
@@ -92,9 +92,9 @@ export default function CreateTool() {
               </label>
             </Grid>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className="flex justify-center items-center">
             <a href="/pages/tools">
-              <Button variant="contained" color="primary" fullWidth>
+              <Button variant="contained" color="primary">
                 Registrar Peça
               </Button>
             </a>

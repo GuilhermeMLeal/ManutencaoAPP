@@ -89,6 +89,390 @@ export function Table() {
       pecas: [],
       gastosTotais: 100,
     },
+    {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
+      {
+        ambiente: "Sala 1",
+        equipamento: "Computador",
+        solicitacao: "Reparar",
+        atendimento: "Em andamento",
+        status: "Pendente",
+        comentarios: "",
+        arquivos: [],
+        equipes: [],
+        pecas: [],
+        gastosTotais: 100,
+      },
   ];
 
   const teams = [
@@ -147,16 +531,16 @@ export function Table() {
     }
   };
 
-  const handleChangePage = (event: unknown, newPage: number): void => {
-    setPage(newPage);
-  };
+//   const handleChangePage = (event: unknown, newPage: number): void => {
+//     setPage(newPage);
+//   };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+//   const handleChangeRowsPerPage = (
+//     event: React.ChangeEvent<HTMLInputElement>
+//   ): void => {
+//     setRowsPerPage(parseInt(event.target.value, 10));
+//     setPage(0);
+//   };
 
   return (
     <>
@@ -168,7 +552,7 @@ export function Table() {
         typeTextField="Tipo de Manutenção"
       />
       <div className="overflow-x-auto rounded-xl">
-        <div className="max-h-64 overflow-y-auto">
+        <div className="max-h-96 overflow-y-auto">
           <table className="min-w-full divide-y divide-gray-200 text-center">
             <thead className="bg-gray-50 sticky top-0">
               <tr>
@@ -202,9 +586,9 @@ export function Table() {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-gray-200 ">
               {itemsList
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((item, index) => (
                   <tr key={index}>
                     <td className="p-3 whitespace-nowrap text-black">
@@ -248,13 +632,13 @@ export function Table() {
             </tbody>
           </table>
         </div>
-        <PaginationComponent
+        {/* <PaginationComponent
           count={itemsList.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        /> */}
       </div>
 
       <Dialog
