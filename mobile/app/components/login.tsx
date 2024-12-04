@@ -1,19 +1,23 @@
-import { useEffect, useState } from "react";
-import { View, Text, TextInput, Button } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { useAuth } from "../context/authService";
-import React from "react";
 
 const LoginScreen = ({ navigation }: { navigation: any }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const { login, isAuthenticated } = useAuth();
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigation.navigate('Home'); // Redireciona para "Home" se autenticado
+      navigation.navigate("Home"); // Redireciona para "Home" se autenticado
     } else {
-      navigation.navigate('Login'); // Retorna à tela de Login se não autenticado
+      navigation.navigate("Login"); // Retorna à tela de Login se não autenticado
     }
   }, [isAuthenticated, navigation]);
 
@@ -22,31 +26,68 @@ const LoginScreen = ({ navigation }: { navigation: any }) => {
   };
 
   return (
-    <View className="flex-1 justify-center items-center bg-gray-100 p-5">
-      <Text className="text-4xl font-bold text-gray-800 mb-8">Bem-vindo!</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Bem-vindo!</Text>
       <TextInput
-        className="w-full h-12 border border-gray-300 rounded-lg px-4 mb-4 bg-white text-lg shadow-sm"
+        style={styles.input}
         placeholder="Usuário"
         placeholderTextColor="#aaa"
         value={username}
         onChangeText={setUsername}
       />
       <TextInput
-        className="w-full h-12 border border-gray-300 rounded-lg px-4 mb-6 bg-white text-lg shadow-sm"
+        style={styles.input}
         placeholder="Senha"
         placeholderTextColor="#aaa"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
-      <TouchableOpacity 
-        className="w-full bg-purple-600 py-3 rounded-lg items-center shadow-lg"
-        onPress={handleLogin}
-      >
-        <Text className="text-white text-lg font-semibold">Entrar</Text>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f5f5f5",
+    padding: 20,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 20,
+  },
+  input: {
+    width: "100%",
+    height: 50,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 8,
+    backgroundColor: "#fff",
+    paddingHorizontal: 16,
+    fontSize: 16,
+    marginBottom: 16,
+  },
+  button: {
+    width: "100%",
+    backgroundColor: "#6a1b9a",
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    elevation: 3,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+});
 
 export default LoginScreen;

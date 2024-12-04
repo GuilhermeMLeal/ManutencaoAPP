@@ -1,39 +1,38 @@
-// CreateMaintenance.tsx
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
-import { useNavigation } from 'expo-router'; // Importação do useNavigation
+import React, { useState } from "react";
+import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { useNavigation } from "expo-router";
 
 const CreateMaintenance: React.FC = () => {
-    const navigation = useNavigation(); // Use o hook para navegação
-  const [description, setDescription] = useState('');
-  const [date, setDate] = useState('');
-  const [machineId, setMachineId] = useState('');
+  const navigation = useNavigation(); // Hook para navegação
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState("");
+  const [machineId, setMachineId] = useState("");
 
   const handleSubmit = () => {
     // Lógica para salvar a nova manutenção
-    console.log('Manutenção criada:', { description, date, machineId });
+    console.log("Manutenção criada:", { description, date, machineId });
 
     // Retornar à página anterior
     navigation.goBack(); // Navegar de volta
   };
 
   return (
-    <View className="flex-1 bg-gray-100 p-4 mt-12">
-      <Text className="text-xl font-bold mb-4">Cadastrar Manutenção</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Cadastrar Manutenção</Text>
       <TextInput
-        className="border border-gray-300 p-2 rounded mb-4"
+        style={styles.input}
         placeholder="Descrição"
         value={description}
         onChangeText={setDescription}
       />
       <TextInput
-        className="border border-gray-300 p-2 rounded mb-4"
+        style={styles.input}
         placeholder="Data (YYYY-MM-DD)"
         value={date}
         onChangeText={setDate}
       />
       <TextInput
-        className="border border-gray-300 p-2 rounded mb-4"
+        style={styles.input}
         placeholder="ID da Máquina"
         value={machineId}
         onChangeText={setMachineId}
@@ -42,5 +41,29 @@ const CreateMaintenance: React.FC = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+    padding: 16,
+    paddingTop: 24,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 16,
+    color: "#333",
+  },
+  input: {
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 8,
+    backgroundColor: "#fff",
+    padding: 12,
+    marginBottom: 16,
+    fontSize: 16,
+  },
+});
 
 export default CreateMaintenance;

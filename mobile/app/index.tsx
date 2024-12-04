@@ -10,6 +10,7 @@ import MachineMaintenanceHistoryScreen from "./components/machine/machineMainten
 import CreateMachine from "./components/machine/machineCreate";
 import CreateMaintenance from "./components/maintenance/maintenanceCreate";
 import { AuthProvider, useAuth } from "./context/authService";
+import PrivateRoute from "./privateRoute";
 
 type RootStackParamList = {
   Home: undefined;
@@ -29,22 +30,63 @@ export default function Index()  {
   const { isAuthenticated } = useAuth(); // Controle de autenticação
 
   return (
-   
     <Stack.Navigator
-      initialRouteName={isAuthenticated ? "Home" : "Login"} // Define a rota inicial com base na autenticação
-      screenOptions={{ headerShown: false }} // Oculta os cabeçalhos das telas
-    >
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="MachineDetails" component={MachineDetailsScreen} />
-      <Stack.Screen name="RegisterParts" component={RegisterPartsScreen} />
-      <Stack.Screen
-        name="MachineMaintenanceHistoryScreen"
-        component={MachineMaintenanceHistoryScreen}
-      />
-      <Stack.Screen name="CreateMachine" component={CreateMachine} />
-      <Stack.Screen name="CreateMaintenance" component={CreateMaintenance} />
-    </Stack.Navigator>
+        initialRouteName={isAuthenticated ? "Home" : "Login"} // Define a rota inicial com base na autenticação
+        screenOptions={{ headerShown: false }} // Oculta os cabeçalhos das telas
+      >
+        {/* Tela de Login (Acessível sem autenticação) */}
+        <Stack.Screen name="Login" component={LoginScreen} />
+
+        {/* Rotas protegidas */}
+        <Stack.Screen
+          name="Home"
+          component={() => (
+            <PrivateRoute>
+              <HomeScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="MachineDetails"
+          component={() => (
+            <PrivateRoute>
+              <MachineDetailsScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="RegisterParts"
+          component={() => (
+            <PrivateRoute>
+              <RegisterPartsScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="MachineMaintenanceHistoryScreen"
+          component={() => (
+            <PrivateRoute>
+              <MachineMaintenanceHistoryScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="CreateMachine"
+          component={() => (
+            <PrivateRoute>
+              <CreateMachine />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="CreateMaintenance"
+          component={() => (
+            <PrivateRoute>
+              <CreateMaintenance />
+            </PrivateRoute>
+          )}
+        />
+      </Stack.Navigator>
 
   );
 }

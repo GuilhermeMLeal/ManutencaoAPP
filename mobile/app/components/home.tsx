@@ -1,6 +1,7 @@
 import React from "react";
-import Icon from "react-native-vector-icons/MaterialIcons"; // Verifique a instalação correta
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { View, Text, StyleSheet } from "react-native";
 import MachineScreen from "./machine/machine";
 import MaintenanceHistoryScreen from "./maintenance/maintenance";
 import MaintenanceRequestScreen from "./maintenance/maintenanceRequest";
@@ -13,7 +14,6 @@ export function HomeScreen() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
-          // Mapeamento de ícones para as abas
           const iconMap: Record<string, string> = {
             Machine: "build",
             Maintenance: "handyman",
@@ -25,8 +25,9 @@ export function HomeScreen() {
 
           return <Icon name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "tomato",
-        tabBarInactiveTintColor: "gray",
+        tabBarActiveTintColor: styles.tabBarActiveTintColor.color,
+        tabBarInactiveTintColor: styles.tabBarInactiveTintColor.color,
+        tabBarStyle: styles.tabBar,
         headerShown: false,
       })}
     >
@@ -53,3 +54,20 @@ export function HomeScreen() {
     </Tab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: "#f8f8f8",
+    borderTopWidth: 1,
+    borderTopColor: "#ccc",
+    height: 60,
+    paddingBottom: 5,
+    paddingTop: 5,
+  },
+  tabBarActiveTintColor: {
+    color: "tomato",
+  },
+  tabBarInactiveTintColor: {
+    color: "gray",
+  },
+});

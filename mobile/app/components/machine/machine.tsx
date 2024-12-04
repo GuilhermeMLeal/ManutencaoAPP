@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, FlatList, TouchableOpacity } from 'react-native';
-import { useNavigation } from 'expo-router';
-import Card from '../card'; 
-import FloatingButton from '../floatingButton';
+import React from "react";
+import { View, FlatList, TouchableOpacity, StyleSheet } from "react-native";
+import { useNavigation } from "expo-router";
+import Card from "../card";
+import FloatingButton from "../floatingButton";
 
 type Machine = {
   id: string;
@@ -12,20 +12,20 @@ type Machine = {
 };
 
 const mockMachines: Machine[] = [
-  { id: '1', name: 'Máquina A', type: '1', location: 'Setor 1' },
-  { id: '2', name: 'Máquina B', type: '2', location: 'Setor 2' },
-  { id: '3', name: 'Máquina C', type: '3', location: 'Setor 3' },
-  { id: '4', name: 'Máquina D', type: '4', location: 'Setor 4' },
-  { id: '5', name: 'Máquina E', type: '5', location: 'Setor 5' },
+  { id: "1", name: "Máquina A", type: "1", location: "Setor 1" },
+  { id: "2", name: "Máquina B", type: "2", location: "Setor 2" },
+  { id: "3", name: "Máquina C", type: "3", location: "Setor 3" },
+  { id: "4", name: "Máquina D", type: "4", location: "Setor 4" },
+  { id: "5", name: "Máquina E", type: "5", location: "Setor 5" },
 ];
 
 const MachineScreen: React.FC = () => {
   const navigation = useNavigation<any>();
-  
+
   const handlePress = (itemId: string) => {
-    navigation.navigate('MachineDetails', {
+    navigation.navigate("MachineDetails", {
       itemId: itemId,
-      otherParam: 'any value',
+      otherParam: "any value",
     });
   };
 
@@ -37,14 +37,14 @@ const MachineScreen: React.FC = () => {
           Tipo: item.type,
           Localização: item.location,
         }}
-        icons={[]} 
-        onIconPress={() => {}} 
+        icons={[]} // Ícones desativados para o exemplo
+        onIconPress={() => {}} // Nenhuma ação definida para ícones
       />
     </TouchableOpacity>
   );
 
   return (
-    <View className="flex-1 bg-gray-100 p-4 mt-12">
+    <View style={styles.container}>
       <FlatList
         data={mockMachines}
         renderItem={renderItem}
@@ -54,5 +54,14 @@ const MachineScreen: React.FC = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+    padding: 16,
+    paddingTop: 24,
+  },
+});
 
 export default MachineScreen;

@@ -1,72 +1,133 @@
-import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import MachineMaintenanceHistoryScreen from './machineMaintenanceHistory';
-import { useNavigation } from '@react-navigation/native';
+import React from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { useNavigation } from "@react-navigation/native";
 
 const mockMachineDetails = {
-  model: 'XYZ-1234',
-  manufactureDate: '2022-06-15',
-  serialNumber: 'SN1234567890',
-  description: 'Fresa',
-  location: 'Setor A',
-  condiction: 'Bom',
-  lastMaintenance: '2023-08-01',
-  status: 'Em Operação',
-
+  model: "XYZ-1234",
+  manufactureDate: "2022-06-15",
+  serialNumber: "SN1234567890",
+  description: "Fresa",
+  location: "Setor A",
+  condiction: "Bom",
+  lastMaintenance: "2023-08-01",
+  status: "Em Operação",
 };
 
 const MachineDetailsScreen: React.FC = () => {
   const navigation = useNavigation();
 
   const handleOpenMachineDetails = () => {
-    navigation.navigate('MachineMaintenanceHistoryScreen'); // Navega para a tela de histórico de manutenção
+    navigation.navigate("MachineMaintenanceHistoryScreen"); // Navega para a tela de histórico de manutenção
   };
 
   return (
-    <ScrollView className="flex-1 bg-gray-100 p-4 mt-12">
-      <View className="flex-row items-center mb-5">
+    <ScrollView style={styles.container}>
+      <View style={styles.header}>
         <Icon name="info" size={30} color="#333" />
-        <Text className="text-2xl font-bold ml-3">Detalhes da Máquina</Text>
+        <Text style={styles.title}>Detalhes da Máquina</Text>
       </View>
-      <View className="bg-white rounded-lg p-4 shadow-md">
-        <View className="mb-4">
-          <Text className="text-lg font-semibold text-gray-700">Modelo:</Text>
-          <Text className="text-lg text-gray-600">{mockMachineDetails.model}</Text>
+      <View style={styles.card}>
+        <View style={styles.detail}>
+          <Text style={styles.label}>Modelo:</Text>
+          <Text style={styles.value}>{mockMachineDetails.model}</Text>
         </View>
-        <View className="mb-4">
-          <Text className="text-lg font-semibold text-gray-700">Data de Fabricação:</Text>
-          <Text className="text-lg text-gray-600">{mockMachineDetails.manufactureDate}</Text>
+        <View style={styles.detail}>
+          <Text style={styles.label}>Data de Fabricação:</Text>
+          <Text style={styles.value}>
+            {mockMachineDetails.manufactureDate}
+          </Text>
         </View>
-        <View className="mb-4">
-          <Text className="text-lg font-semibold text-gray-700">Número de Série:</Text>
-          <Text className="text-lg text-gray-600">{mockMachineDetails.serialNumber}</Text>
+        <View style={styles.detail}>
+          <Text style={styles.label}>Número de Série:</Text>
+          <Text style={styles.value}>{mockMachineDetails.serialNumber}</Text>
         </View>
-        <View className="mb-4">
-          <Text className="text-lg font-semibold text-gray-700">Descrição:</Text>
-          <Text className="text-lg text-gray-600">{mockMachineDetails.description}</Text>
+        <View style={styles.detail}>
+          <Text style={styles.label}>Descrição:</Text>
+          <Text style={styles.value}>{mockMachineDetails.description}</Text>
         </View>
-        <View className="mb-4">
-          <Text className="text-lg font-semibold text-gray-700">Localização:</Text>
-          <Text className="text-lg text-gray-600">{mockMachineDetails.location}</Text>
+        <View style={styles.detail}>
+          <Text style={styles.label}>Localização:</Text>
+          <Text style={styles.value}>{mockMachineDetails.location}</Text>
         </View>
-        <View className="mb-4">
-          <Text className="text-lg font-semibold text-gray-700">Status:</Text>
-          <Text className="text-lg text-gray-600">{mockMachineDetails.status}</Text>
+        <View style={styles.detail}>
+          <Text style={styles.label}>Status:</Text>
+          <Text style={styles.value}>{mockMachineDetails.status}</Text>
         </View>
-        <View className="mb-4">
-          <Text className="text-lg font-semibold text-gray-700">Última Manutenção:</Text>
-          <Text className="text-lg text-gray-600">{mockMachineDetails.lastMaintenance}</Text>
+        <View style={styles.detail}>
+          <Text style={styles.label}>Última Manutenção:</Text>
+          <Text style={styles.value}>
+            {mockMachineDetails.lastMaintenance}
+          </Text>
         </View>
       </View>
-      <TouchableOpacity 
-        className="bg-blue-500 p-3 rounded mt-5"
-        onPress={handleOpenMachineDetails}
-      >
-        <Text className="text-white text-center text-lg">Visualizar histórico de manutenção da máquina</Text>
+      <TouchableOpacity style={styles.button} onPress={handleOpenMachineDetails}>
+        <Text style={styles.buttonText}>
+          Visualizar histórico de manutenção da máquina
+        </Text>
       </TouchableOpacity>
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+    padding: 16,
+    paddingTop: 24,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginLeft: 8,
+    color: "#333",
+  },
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    padding: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  detail: {
+    marginBottom: 16,
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#555",
+  },
+  value: {
+    fontSize: 16,
+    color: "#777",
+  },
+  button: {
+    backgroundColor: "#007bff",
+    padding: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 24,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+});
 
 export default MachineDetailsScreen;

@@ -1,178 +1,176 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Button, Modal } from 'react-native';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  Button,
+  Modal,
+  StyleSheet,
+} from "react-native";
 
 const RegisterPartsScreen = () => {
-  // Dados mockados para peças e materiais
   const mockData = [
-    { id: '1', name: 'Peça A', quantity: '10', price: '$15.00' },
-    { id: '2', name: 'Material B', quantity: '5', price: '$7.00' },
-    { id: '3', name: 'Peça C', quantity: '8', price: '$20.00' },
+    { id: "1", name: "Peça A", quantity: "10", price: "$15.00" },
+    { id: "2", name: "Material B", quantity: "5", price: "$7.00" },
+    { id: "3", name: "Peça C", quantity: "8", price: "$20.00" },
   ];
 
   const [maintenanceData, setMaintenanceData] = useState({
-    machineId: '123',
-    status: '1', // Pode ser 1, 2 ou 3
-    maintenanceDate: '2024-09-22',
+    machineId: "123",
+    status: "1",
+    maintenanceDate: "2024-09-22",
   });
 
   const [editedField, setEditedField] = useState<any>({});
-  const [selectedItem, setSelectedItem] = useState<any>(null); // Item selecionado para edição
-  const [isModalVisible, setModalVisible] = useState(false); // Controle do modal
+  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const handleMaintenanceChange = (key: string, value: string | number) => {
     setMaintenanceData({ ...maintenanceData, [key]: value });
   };
 
   const handleSave = () => {
-    console.log('Dados da manutenção salvos:', maintenanceData);
+    console.log("Dados da manutenção salvos:", maintenanceData);
   };
 
-  // Função para lidar com o ícone de edição
   const handleIconPress = (icon: string, item: any) => {
-    if (icon === 'pencil') {
-      // Ação de edição
-      setSelectedItem(item); // Seleciona o item para edição
-      setEditedField(item); // Popula o modal com os dados do item
-      setModalVisible(true); // Abre o modal
-    } else if (icon === 'trash') {
-      // Ação de exclusão
-      console.log('Excluir item', item);
+    if (icon === "pencil") {
+      setSelectedItem(item);
+      setEditedField(item);
+      setModalVisible(true);
+    } else if (icon === "trash") {
+      console.log("Excluir item", item);
     }
   };
 
   const handleEditSave = () => {
-    console.log('Item editado:', editedField);
-    setModalVisible(false); // Fecha o modal
+    console.log("Item editado:", editedField);
+    setModalVisible(false);
   };
 
   return (
-    <ScrollView className="flex-1 bg-gray-100 p-5">
+    <ScrollView style={styles.container}>
       {/* Dados de Manutenção */}
-      <View className="flex-1 justify-center items-center">
-        <View className="bg-white p-4 rounded-lg w-full m-12">
-          <Text className="text-lg font-bold mb-4">Manutenção da Máquina</Text>
-          
-          <View className="mb-4">
-            <Text>ID da Máquina:</Text>
-            <TextInput
-              style={{ borderWidth: 1, padding: 8, borderColor: '#ccc', borderRadius: 4 }}
-              value={maintenanceData.machineId}
-              onChangeText={(text) => handleMaintenanceChange('machineId', text)}
-              keyboardType="numeric"
-            />
-          </View>
-
-          <View className="mb-4">
-            <Text>Status da Manutenção:</Text>
-            <TextInput
-              style={{ borderWidth: 1, padding: 8, borderColor: '#ccc', borderRadius: 4 }}
-              value={maintenanceData.status}
-              onChangeText={(text) => handleMaintenanceChange('status', text)}
-              keyboardType="numeric"
-              placeholder="1: Pendente, 2: Em Andamento, 3: Concluída"
-            />
-          </View>
-
-          <View className="mb-4">
-            <Text>Data da Manutenção:</Text>
-            <TextInput
-              style={{ borderWidth: 1, padding: 8, borderColor: '#ccc', borderRadius: 4 }}
-              value={maintenanceData.maintenanceDate}
-              onChangeText={(text) => handleMaintenanceChange('maintenanceDate', text)}
-              placeholder="YYYY-MM-DD"
-            />
-          </View>
-
-          <View className="mt-4">
-            <Button title="Salvar" onPress={handleSave} />
-          </View>
+      <View style={styles.card}>
+        <Text style={styles.title}>Manutenção da Máquina</Text>
+        <View style={styles.inputContainer}>
+          <Text>ID da Máquina:</Text>
+          <TextInput
+            style={styles.input}
+            value={maintenanceData.machineId}
+            onChangeText={(text) => handleMaintenanceChange("machineId", text)}
+            keyboardType="numeric"
+          />
         </View>
+        <View style={styles.inputContainer}>
+          <Text>Status da Manutenção:</Text>
+          <TextInput
+            style={styles.input}
+            value={maintenanceData.status}
+            onChangeText={(text) => handleMaintenanceChange("status", text)}
+            keyboardType="numeric"
+            placeholder="1: Pendente, 2: Em Andamento, 3: Concluída"
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text>Data da Manutenção:</Text>
+          <TextInput
+            style={styles.input}
+            value={maintenanceData.maintenanceDate}
+            onChangeText={(text) =>
+              handleMaintenanceChange("maintenanceDate", text)
+            }
+            placeholder="YYYY-MM-DD"
+          />
+        </View>
+        <Button title="Salvar" onPress={handleSave} />
       </View>
 
-      <Text className="text-2xl font-bold mb-4">Registrar Peças e Materiais</Text>
-
-      {/* Formulário de Registro de Peças */}
-      <View className="mb-6">
-        <Text className="text-lg font-semibold mb-2">Nome da Peça ou Material:</Text>
+      {/* Registro de Peças */}
+      <Text style={styles.sectionTitle}>Registrar Peças e Materiais</Text>
+      <View style={styles.inputContainer}>
+        <Text>Nome da Peça ou Material:</Text>
+        <TextInput style={styles.input} placeholder="Digite o nome" />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text>Quantidade:</Text>
         <TextInput
-          className="border border-gray-300 p-3 rounded mb-4"
-          placeholder="Digite o nome"
-        />
-
-        <Text className="text-lg font-semibold mb-2">Quantidade:</Text>
-        <TextInput
-          className="border border-gray-300 p-3 rounded mb-4"
+          style={styles.input}
           placeholder="Digite a quantidade"
           keyboardType="numeric"
         />
-
-        <Text className="text-lg font-semibold mb-2">Preço:</Text>
+      </View>
+      <View style={styles.inputContainer}>
+        <Text>Preço:</Text>
         <TextInput
-          className="border border-gray-300 p-3 rounded mb-4"
+          style={styles.input}
           placeholder="Digite o preço"
           keyboardType="numeric"
         />
-
-        <TouchableOpacity
-          className="bg-blue-500 py-3 px-5 rounded"
-          onPress={() => alert('Registro enviado!')}
-        >
-          <Text className="text-white text-center text-lg">Registrar</Text>
-        </TouchableOpacity>
       </View>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => alert("Registro enviado!")}
+      >
+        <Text style={styles.buttonText}>Registrar</Text>
+      </TouchableOpacity>
 
       {/* Lista de Itens Registrados */}
-      <View>
-        <Text className="text-xl font-bold mb-4">Itens Registrados</Text>
-        {mockData.map((item) => (
-          <View key={item.id} className="bg-white border border-gray-300 p-4 rounded mb-4">
-            <Text className="text-lg font-semibold">{item.name}</Text>
-            <Text>Quantidade: {item.quantity}</Text>
-            <Text>Preço: {item.price}</Text>
-            <View className="flex-row mt-2">
-              {/* Ícone de edição */}
-              <TouchableOpacity onPress={() => handleIconPress('pencil', item)}>
-                <Text className="text-blue-500 mr-4">✏️ Editar</Text>
-              </TouchableOpacity>
-              {/* Ícone de exclusão */}
-              <TouchableOpacity onPress={() => handleIconPress('trash', item)}>
-                <Text className="text-red-500">🗑️ Excluir</Text>
-              </TouchableOpacity>
-            </View>
+      <Text style={styles.sectionTitle}>Itens Registrados</Text>
+      {mockData.map((item) => (
+        <View key={item.id} style={styles.itemCard}>
+          <Text style={styles.itemTitle}>{item.name}</Text>
+          <Text>Quantidade: {item.quantity}</Text>
+          <Text>Preço: {item.price}</Text>
+          <View style={styles.iconRow}>
+            <TouchableOpacity onPress={() => handleIconPress("pencil", item)}>
+              <Text style={styles.editText}>✏️ Editar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleIconPress("trash", item)}>
+              <Text style={styles.deleteText}>🗑️ Excluir</Text>
+            </TouchableOpacity>
           </View>
-        ))}
-      </View>
+        </View>
+      ))}
 
-      {/* Modal de edição */}
+      {/* Modal de Edição */}
       <Modal visible={isModalVisible} transparent={true} animationType="slide">
-        <View className="flex-1 justify-center items-center bg-black bg-opacity-50">
-          <View className="bg-white p-6 rounded-lg w-80">
-            <Text className="text-lg font-bold mb-4">Editar Item</Text>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Editar Item</Text>
             {selectedItem && (
               <>
                 <Text>Nome:</Text>
                 <TextInput
-                  style={{ borderWidth: 1, padding: 8, borderColor: '#ccc', borderRadius: 4 }}
+                  style={styles.input}
                   value={editedField.name}
-                  onChangeText={(text) => setEditedField({ ...editedField, name: text })}
+                  onChangeText={(text) =>
+                    setEditedField({ ...editedField, name: text })
+                  }
                 />
                 <Text>Quantidade:</Text>
                 <TextInput
-                  style={{ borderWidth: 1, padding: 8, borderColor: '#ccc', borderRadius: 4 }}
+                  style={styles.input}
                   value={editedField.quantity}
-                  onChangeText={(text) => setEditedField({ ...editedField, quantity: text })}
+                  onChangeText={(text) =>
+                    setEditedField({ ...editedField, quantity: text })
+                  }
                   keyboardType="numeric"
                 />
                 <Text>Preço:</Text>
                 <TextInput
-                  style={{ borderWidth: 1, padding: 8, borderColor: '#ccc', borderRadius: 4 }}
+                  style={styles.input}
                   value={editedField.price}
-                  onChangeText={(text) => setEditedField({ ...editedField, price: text })}
+                  onChangeText={(text) =>
+                    setEditedField({ ...editedField, price: text })
+                  }
                   keyboardType="numeric"
                 />
               </>
             )}
-            <View className="mt-4 flex-row justify-between">
+            <View style={styles.modalButtons}>
               <Button title="Salvar" onPress={handleEditSave} />
               <Button title="Cancelar" onPress={() => setModalVisible(false)} />
             </View>
@@ -182,5 +180,97 @@ const RegisterPartsScreen = () => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+    padding: 16,
+  },
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  inputContainer: {
+    marginBottom: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 12,
+    backgroundColor: "#fff",
+  },
+  button: {
+    backgroundColor: "#007bff",
+    padding: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    marginVertical: 16,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  itemCard: {
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 16,
+  },
+  itemTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  iconRow: {
+    flexDirection: "row",
+    marginTop: 8,
+  },
+  editText: {
+    color: "#007bff",
+    marginRight: 16,
+  },
+  deleteText: {
+    color: "#ff4d4d",
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    padding: 16,
+    width: "80%",
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  modalButtons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 16,
+  },
+});
 
 export default RegisterPartsScreen;

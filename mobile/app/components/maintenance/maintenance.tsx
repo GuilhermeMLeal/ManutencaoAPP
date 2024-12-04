@@ -1,9 +1,7 @@
 import React from "react";
-import { Button, View, Text, FlatList } from "react-native";
-import { useTailwind } from "nativewind";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "expo-router";
-import Icon from 'react-native-vector-icons/FontAwesome'; // Exemplo com FontAwesome
+import Icon from "react-native-vector-icons/FontAwesome";
 import FloatingButton from "../floatingButton";
 
 type MaintenanceRecord = {
@@ -12,6 +10,7 @@ type MaintenanceRecord = {
   date: string;
   status: number;
 };
+
 /* Status:
  0- Concluído 
  1- Em Andamento 
@@ -26,11 +25,11 @@ const transformStringStatus = (status: number): string => {
 
 const transformColorStatus = (status: number): string => {
   if (status === 0) {
-    return "custom-green";
+    return "#4CAF50"; // Verde para "Concluído"
   } else if (status === 1) {
-    return "custom-yellow";
+    return "#FFC107"; // Amarelo para "Em Andamento"
   } else {
-    return "custom-red";
+    return "#F44336"; // Vermelho para "Pendente"
   }
 };
 
@@ -47,29 +46,25 @@ const mockMaintenanceRecords: MaintenanceRecord[] = [
 
 const MaintenanceHistoryScreen: React.FC = () => {
   const navigation = useNavigation<any>(); // Idealmente, defina um tipo específico para a navegação
+
   const handlePress = () => {
     navigation.navigate("RegisterParts");
   };
 
   const renderItem = ({ item }: { item: MaintenanceRecord }) => {
-    const bgColor =
-      item.status === 0
-        ? "bg-custom-green"
-        : item.status === 1
-        ? "bg-custom-yellow"
-        : "bg-custom-red";
+    const bgColor = transformColorStatus(item.status);
     return (
       <TouchableOpacity onPress={handlePress}>
-        <View className={`rounded mb-2 ${bgColor}`}>
-          <View className="bg-white p-4 ml-2 rounded flex-row justify-between ">
+        <View style={[styles.card, { backgroundColor: bgColor }]}>
+          <View style={styles.cardContent}>
             <View>
-              <Text className="text-lg font-bold mb-1">{item.date}</Text>
-              <Text className="text-bold-600">Máquina: {item.machine_id}</Text>
-              <Text className="text-gray-600">
+              <Text style={styles.date}>{item.date}</Text>
+              <Text style={styles.machine}>Máquina: {item.machine_id}</Text>
+              <Text style={styles.status}>
                 Status: {transformStringStatus(item.status)}
               </Text>
             </View>
-            <Icon name="pencil" size={20} />
+            <Icon name="pencil" size={20} color="#333" />
           </View>
         </View>
       </TouchableOpacity>
@@ -77,7 +72,7 @@ const MaintenanceHistoryScreen: React.FC = () => {
   };
 
   return (
-    <View className="flex-1 bg-gray-100 p-4 mt-12">
+    <View style={styles.container}>
       <FlatList
         data={mockMaintenanceRecords}
         renderItem={renderItem}
@@ -87,5 +82,42 @@ const MaintenanceHistoryScreen: React.FC = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+    padding: 16,
+    paddingTop: 24,
+  },
+  card: {
+    borderRadius: 8,
+    marginBottom: 12,
+    padding: 8,
+  },
+  cardContent: {
+    backgroundColor: "#fff",
+    padding: 16,
+    borderRadius: 8,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  date: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 4,
+    color: "#333",
+  },
+  machine: {
+    fontSize: 16,
+    color: "#555",
+    marginBottom: 4,
+  },
+  status: {
+    fontSize: 16,
+    color: "#777",
+  },
+});
 
 export default MaintenanceHistoryScreen;
