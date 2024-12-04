@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using MachineAPI.Application.Interfaces;
 using MachineAPI.API.DTOs;
 using MachineAPI.src.API.DTOs;
+using MachineAPI.API.Controllers.Validation;
 
 namespace MachineAPI.API.Controllers
 {
+    [ServiceFilter(typeof(VerifyToken))]
     [Route("api/[controller]")]
     [ApiController]
     public class MachinesController : ControllerBase

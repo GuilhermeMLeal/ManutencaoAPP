@@ -2,7 +2,9 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using ApiGateway.Controllers.Validation;
 
+[ServiceFilter(typeof(VerifyToken))]
 [ApiController]
 [Route("api/[controller]")]
 public class GatewayController : ControllerBase

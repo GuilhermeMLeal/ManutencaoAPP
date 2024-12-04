@@ -41,7 +41,7 @@ namespace MachineAPI.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("PlaceId")
+                    b.Property<int?>("PlaceId")
                         .HasColumnType("integer");
 
                     b.Property<string>("SerialNumber")
@@ -60,7 +60,7 @@ namespace MachineAPI.Infrastructure.Migrations
 
                     b.HasIndex("PlaceId");
 
-                    b.ToTable("Machines");
+                    b.ToTable("Machines", (string)null);
                 });
 
             modelBuilder.Entity("MachineAPI.Domain.Entities.Place", b =>
@@ -85,7 +85,7 @@ namespace MachineAPI.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Places");
+                    b.ToTable("Places", (string)null);
                 });
 
             modelBuilder.Entity("MachineAPI.Domain.Entities.Machine", b =>
@@ -93,8 +93,7 @@ namespace MachineAPI.Infrastructure.Migrations
                     b.HasOne("MachineAPI.Domain.Entities.Place", "Place")
                         .WithMany("Machines")
                         .HasForeignKey("PlaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Place");
                 });
