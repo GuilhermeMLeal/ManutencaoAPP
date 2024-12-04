@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\backend",
+    "\\backend\\ToolAPI",
+    "\\backend\\ToolAPI\\Repository"
+  ],
+  "SelectedNode": "\\backend\\ToolAPI\\Repository\\ToolRepository.cs",
+  "PreviewInSolutionExplorer": false
+}
