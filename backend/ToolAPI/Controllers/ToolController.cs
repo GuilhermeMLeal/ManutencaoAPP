@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ToolApi.Controllers.Validation;
 using ToolAPI.Business;
-using ToolAPI.Controllers.Validation;
 using ToolAPI.Models;
 
 namespace ToolAPI.Controllers
