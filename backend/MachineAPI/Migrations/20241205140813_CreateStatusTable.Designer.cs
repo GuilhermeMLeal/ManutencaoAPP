@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace MachineAPI.Infrastructure.Migrations
+namespace MachineAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241202133149_IncrementalId")]
-    partial class IncrementalId
+    [Migration("20241205140813_CreateStatusTable")]
+    partial class CreateStatusTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,9 +51,8 @@ namespace MachineAPI.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int?>("StatusId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -62,6 +61,8 @@ namespace MachineAPI.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PlaceId");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("Machines", (string)null);
                 });
@@ -91,6 +92,23 @@ namespace MachineAPI.Infrastructure.Migrations
                     b.ToTable("Places", (string)null);
                 });
 
+            modelBuilder.Entity("MachineAPI.Domain.Entities.Status", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Status", (string)null);
+                });
+
             modelBuilder.Entity("MachineAPI.Domain.Entities.Machine", b =>
                 {
                     b.HasOne("MachineAPI.Domain.Entities.Place", "Place")
@@ -98,10 +116,22 @@ namespace MachineAPI.Infrastructure.Migrations
                         .HasForeignKey("PlaceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("MachineAPI.Domain.Entities.Status", "Status")
+                        .WithMany("Machines")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.Navigation("Place");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("MachineAPI.Domain.Entities.Place", b =>
+                {
+                    b.Navigation("Machines");
+                });
+
+            modelBuilder.Entity("MachineAPI.Domain.Entities.Status", b =>
                 {
                     b.Navigation("Machines");
                 });

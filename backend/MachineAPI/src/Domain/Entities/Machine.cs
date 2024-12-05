@@ -1,3 +1,4 @@
+using MachineAPI.Domain.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MachineAPI.Domain.Entities
@@ -11,9 +12,11 @@ namespace MachineAPI.Domain.Entities
         public string Model { get; set; }
         public DateTime ManufactureDate { get; set; }
         public string SerialNumber { get; set; }
-        public string Status { get; set; }
-        
+
         public int? PlaceId { get; set; }
         public Place Place { get; set; }
+
+        public int? StatusId { get; set; }
+        public Status Status { get; set; }
     }
 }

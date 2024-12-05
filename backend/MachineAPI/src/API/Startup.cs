@@ -102,6 +102,26 @@ public class Startup
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             context.Database.Migrate();
 
+            if (!context.Status.Any())
+            {
+                var status1 = new MachineAPI.Domain.Entities.Status
+                {
+                    Id = 1,
+                    Name = "Funcionando"
+                };
+
+                var status2 = new MachineAPI.Domain.Entities.Status
+                {
+                    Id = 2,
+                    Name = "Em andamento"
+                };
+
+                var status3 = new MachineAPI.Domain.Entities.Status
+                {
+                    Id = 3,
+                    Name = "Solicitada manutenção"
+                };
+            }
             // Seed de Places
             if (!context.Places.Any())
             {

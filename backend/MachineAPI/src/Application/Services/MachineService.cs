@@ -78,7 +78,7 @@ namespace MachineAPI.Application.Services
             existingMachine.Type = machineUpdateDto.Type;
             existingMachine.Model = machineUpdateDto.Model;
             existingMachine.ManufactureDate = machineUpdateDto.ManufactureDate;
-            existingMachine.Status = machineUpdateDto.Status;
+            existingMachine.StatusId = machineUpdateDto.StatusId;
             existingMachine.PlaceId = machineUpdateDto.PlaceId;
 
             await _machineRepository.UpdateAsync(existingMachine);

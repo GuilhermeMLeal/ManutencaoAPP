@@ -4,10 +4,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace MachineAPI.Infrastructure.Migrations
+namespace MachineAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class AddPlaceMachineRelationship : Migration
+    public partial class CreateStatusTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,6 +28,19 @@ namespace MachineAPI.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Status",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Status", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Machines",
                 columns: table => new
                 {
@@ -38,8 +51,8 @@ namespace MachineAPI.Infrastructure.Migrations
                     Model = table.Column<string>(type: "text", nullable: false),
                     ManufactureDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     SerialNumber = table.Column<string>(type: "text", nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false),
-                    PlaceId = table.Column<int>(type: "integer", nullable: false)
+                    PlaceId = table.Column<int>(type: "integer", nullable: true),
+                    StatusId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -50,12 +63,23 @@ namespace MachineAPI.Infrastructure.Migrations
                         principalTable: "Places",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Machines_Status_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "Status",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Machines_PlaceId",
                 table: "Machines",
                 column: "PlaceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Machines_StatusId",
+                table: "Machines",
+                column: "StatusId");
         }
 
         /// <inheritdoc />
@@ -66,6 +90,9 @@ namespace MachineAPI.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Places");
+
+            migrationBuilder.DropTable(
+                name: "Status");
         }
     }
 }
