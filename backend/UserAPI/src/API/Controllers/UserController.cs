@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserAuth.API.DTOs;
+using UserAuth.API.Validation.Controllers.Validation;
 using UserAuth.Application.Interfaces;
-using UserAuth.API.Controllers.Validation;
 
 namespace UserAuth.API.Controllers
 {

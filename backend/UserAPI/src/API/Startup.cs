@@ -12,9 +12,9 @@ using UserAuth.Infrastructure.Repositories;
 using AuthUser.Infrastructure.Repositories;
 using AuthUser.Domain.Interfaces;
 using UserAuth.Infrastructure.Services;
-using UserAuth.API.Controllers.Validation;
 using UserAuth.Domain.Entities;
 using UserAuth.Application.Helpers;
+using UserAuth.API.Validation.Controllers.Validation;
 
 public class Startup
 {

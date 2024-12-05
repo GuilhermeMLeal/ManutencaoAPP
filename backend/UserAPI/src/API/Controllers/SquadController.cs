@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Squad.API.DTOs;
 using UserAuth.API.DTOs;
+using UserAuth.API.Validation.Controllers.Validation;
 using UserAuth.Application.Helpers;
 using UserAuth.Application.Interfaces;
 using UserAuth.Application.Services;
-using UserAuth.API.Controllers.Validation;
 
 namespace UserAuth.API.Controllers
 {
