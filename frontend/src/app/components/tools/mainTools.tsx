@@ -80,7 +80,7 @@ export default function MainTools() {
   };
 
   return (
-    <main className="flex-1 flex flex-col p-6 pt-20 bg-white/90">
+    <main className="flex-1 flex flex-col bg-white/90 overflow-y-auto max-h-svh">
       <Title
         title="Sistema de Gestão de Peças"
         subtitle="Visualização Detalhada de Peças"
@@ -92,7 +92,7 @@ export default function MainTools() {
         nameTextSearch="Peça"
         typeTextField="Fornecedor"
       />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" className="mb-4">
         <Box
           sx={{
             display: "flex",
@@ -117,13 +117,13 @@ export default function MainTools() {
               />
             ))}
         </Box>
-        <PaginationComponent
+        {/* <PaginationComponent
           count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
-        />
+        /> */}
       </Container>
     </main>
   );

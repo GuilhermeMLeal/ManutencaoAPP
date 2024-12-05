@@ -66,7 +66,7 @@ export default function MainMachine() {
   };
 
   return (
-    <main className="flex-1 flex flex-col p-6 pt-24 bg-white/90">
+    <main className="flex-1 flex flex-col bg-white/90 overflow-y-auto max-h-svh">
       <Title
         title="Sistema de Gestão de Máquinas"
         subtitle="Visualização Detalhada de Máquinas"
@@ -78,7 +78,7 @@ export default function MainMachine() {
         nameTextSearch="Máquina"
         typeTextField="Tipo de Máquina"
       />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" className="mb-4">
         <Box
           sx={{
             display: "flex",
@@ -97,13 +97,13 @@ export default function MainMachine() {
             />
           ))}
         </Box>
-        <PaginationComponent
+        {/* <PaginationComponent
           count={machineData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
-        />
+        /> */}
       </Container>
       <Dialog
         open={openDialog}

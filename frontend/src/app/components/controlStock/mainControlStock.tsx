@@ -105,12 +105,14 @@ const maintenanceVolumeData = {
 
 export default function DashboardPage() {
   return (
-    <main className="flex-1 flex flex-col p-6 pt-24 bg-white/90">
+    <main className="flex-1 flex flex-col bg-white/90 overflow-y-auto max-h-svh">
       <TitleMain
         title={"Sistema de Gestão de Manutenção"}
         subtitle="Dashboard de Manutenção e Recursos"
       />
-      <Container maxWidth="lg">
+      <Container
+        maxWidth="lg"
+        className="pt-2">
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
             <Paper elevation={3} sx={{ p: 2, height: "100%" }}>

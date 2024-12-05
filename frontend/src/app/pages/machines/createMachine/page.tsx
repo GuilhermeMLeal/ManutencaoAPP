@@ -1,5 +1,4 @@
 import Aside from "@/app/components/asideBar";
-import Footer from "@/app/components/footer";
 import CreateMachine from "@/app/components/machines/createMachine";
 
 export default function CreateMachinePage() {
@@ -9,7 +8,6 @@ export default function CreateMachinePage() {
         <Aside />
         <CreateMachine />
       </div>
-      <Footer />
     </div>
   );
 }
