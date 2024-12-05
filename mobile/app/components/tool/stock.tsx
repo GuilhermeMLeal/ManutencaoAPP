@@ -13,6 +13,7 @@ import {
 import Card from "../card";
 import FloatingButton from "../floatingButton";
 import { apiTool, endpointTool } from "../../services/api";
+import { useNavigation } from '@react-navigation/native'; // Importa useNavigation
 
 const StockScreen: React.FC = () => {
   const [stockItems, setStockItems] = useState<any[]>([]);
@@ -21,8 +22,11 @@ const StockScreen: React.FC = () => {
   const [editedField, setEditedField] = useState<any>({});
   const [loading, setLoading] = useState(true);
 
-  // Fetch stock items from the API
-  useEffect(() => {
+  const navigation = useNavigation(); // Obtém o objeto de navegação
+
+  // Função para buscar itens de estoque
+  const getStock = () => {
+    setLoading(true);
     apiTool
       .get(endpointTool.tool)
       .then((response: any) => {
@@ -34,15 +38,24 @@ const StockScreen: React.FC = () => {
             setStockItems(data);
           }
         } else {
-          //Alert.alert("Erro", "Não foi possível carregar os itens de estoque.");
+          Alert.alert("Erro", "Não foi possível carregar os itens de estoque.");
         }
       })
       .catch((error: any) => {
         console.error("Erro ao buscar itens de estoque:", error);
-        //Alert.alert("Erro", "Ocorreu um erro ao buscar os itens de estoque.");
       })
       .finally(() => setLoading(false));
-  }, []);
+  };
+
+  useEffect(() => {
+    getStock();
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      getStock();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const handleIconPress = (icon: string, item: any) => {
     if (icon === "pencil") {
