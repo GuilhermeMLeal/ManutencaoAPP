@@ -5,7 +5,7 @@ import { View, Text, StyleSheet } from "react-native";
 import MachineScreen from "./machine/machine";
 import MaintenanceHistoryScreen from "./maintenance/maintenance";
 import MaintenanceRequestScreen from "./maintenance/maintenanceRequest";
-import StockScreen from "./stock";
+import StockScreen from "./tool/stock";
 
 const Tab = createBottomTabNavigator();
 

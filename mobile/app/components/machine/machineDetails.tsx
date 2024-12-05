@@ -1,31 +1,98 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import MachineService from "../../services/MachineService";
+import { apiMachine, endpointMachine } from "@/app/services/api";
+import axios from "axios";
 
-const mockMachineDetails = {
-  model: "XYZ-1234",
-  manufactureDate: "2022-06-15",
-  serialNumber: "SN1234567890",
-  description: "Fresa",
-  location: "Setor A",
-  condiction: "Bom",
-  lastMaintenance: "2023-08-01",
-  status: "Em Operação",
-};
+interface MachineDetails {
+  Id: number;
+  Name: string;
+  Type: string;
+  Model: string;
+  ManufactureDate: string;
+  SerialNumber: string;
+  Status: string;
+  PlaceId?: number | null;
+}
 
 const MachineDetailsScreen: React.FC = () => {
-  const navigation = useNavigation();
+  const [machineDetails, setMachineDetails] = useState<MachineDetails | null>(
+    null
+  );
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const navigation = useNavigation<any>();
+  const route = useRoute<any>();
+
+  // Obtém o ID da máquina a partir dos parâmetros da rota
+  const { itemId } = route.params;
+
+  useEffect(() => {
+    // Busca os detalhes da máquina com base no ID
+    apiMachine.get(`${endpointMachine.machine}/${itemId}`)
+      .then((response) => {
+        const details = response.data; // Os dados da máquina estão em `response.data`
+
+        console.log("Dados recebidos:", details);
+    
+        setMachineDetails({
+          Id: details.id, // Atualize os campos para corresponder ao retorno da API
+          Name: details.name,
+          Type: details.type,
+          Model: details.model,
+          ManufactureDate: details.manufactureDate,
+          SerialNumber: details.serialNumber,
+          Status: details.status,
+          PlaceId: details.placeId,
+        });
+    
+        console.log("Detalhes da máquina:", details);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(`Error fetching machine details for ID ${itemId}:`, err);
+        setError("Não foi possível carregar os detalhes da máquina.");
+        setLoading(false);
+      });
+  }, [itemId]);
 
   const handleOpenMachineDetails = () => {
-    navigation.navigate("MachineMaintenanceHistoryScreen"); // Navega para a tela de histórico de manutenção
+    navigation.navigate("MachineMaintenanceHistoryScreen", { itemId }); // Navega para a tela de histórico de manutenção
   };
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#007bff" />
+        <Text style={styles.loadingText}>Carregando detalhes...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
+
+  if (!machineDetails) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>Detalhes não disponíveis.</Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView style={styles.container}>
@@ -35,35 +102,37 @@ const MachineDetailsScreen: React.FC = () => {
       </View>
       <View style={styles.card}>
         <View style={styles.detail}>
+          <Text style={styles.label}>Nome:</Text>
+          <Text style={styles.value}>{machineDetails.Name}</Text>
+        </View>
+        <View style={styles.detail}>
           <Text style={styles.label}>Modelo:</Text>
-          <Text style={styles.value}>{mockMachineDetails.model}</Text>
+          <Text style={styles.value}>{machineDetails.Model}</Text>
         </View>
         <View style={styles.detail}>
           <Text style={styles.label}>Data de Fabricação:</Text>
           <Text style={styles.value}>
-            {mockMachineDetails.manufactureDate}
+            {new Date(machineDetails.ManufactureDate).toLocaleDateString()}
           </Text>
         </View>
         <View style={styles.detail}>
           <Text style={styles.label}>Número de Série:</Text>
-          <Text style={styles.value}>{mockMachineDetails.serialNumber}</Text>
+          <Text style={styles.value}>{machineDetails.SerialNumber}</Text>
         </View>
         <View style={styles.detail}>
-          <Text style={styles.label}>Descrição:</Text>
-          <Text style={styles.value}>{mockMachineDetails.description}</Text>
-        </View>
-        <View style={styles.detail}>
-          <Text style={styles.label}>Localização:</Text>
-          <Text style={styles.value}>{mockMachineDetails.location}</Text>
+          <Text style={styles.label}>Tipo:</Text>
+          <Text style={styles.value}>{machineDetails.Type}</Text>
         </View>
         <View style={styles.detail}>
           <Text style={styles.label}>Status:</Text>
-          <Text style={styles.value}>{mockMachineDetails.status}</Text>
+          <Text style={styles.value}>{machineDetails.Status}</Text>
         </View>
         <View style={styles.detail}>
-          <Text style={styles.label}>Última Manutenção:</Text>
+          <Text style={styles.label}>Localização:</Text>
           <Text style={styles.value}>
-            {mockMachineDetails.lastMaintenance}
+            {machineDetails.PlaceId
+              ? `Setor ${machineDetails.PlaceId}`
+              : "Desconhecido"}
           </Text>
         </View>
       </View>
@@ -127,6 +196,29 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f5f5f5",
+  },
+  loadingText: {
+    marginTop: 8,
+    fontSize: 16,
+    color: "#555",
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f5f5f5",
+  },
+  errorText: {
+    fontSize: 18,
+    color: "#ff0000",
+    textAlign: "center",
+    paddingHorizontal: 16,
   },
 });
 

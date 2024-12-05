@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect, useContext, ReactNode } from
 import axios from 'axios';
 import {jwtDecode, JwtPayload} from 'jwt-decode';
 import { getAccessToken, getTokens, storeAccessToken, storeTokens } from '../utils/storage';
+import { apiAuth, endpointMachine, endpointPlace, apiMachine, endpointsAuth } from '../services/api'
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -78,25 +79,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }: any) => 
     }, [isAuthenticated, fetchTokens]);
 
   const login = async (username: string, password: string) => {
-    try {
-      //192.168.0.11
-      const response = await axios.post('http://192.168.0.11:3001/api/Auth', { username, password });
-  
-      console.log(response);
-  
-      // Verifica se o token está na propriedade `data`
-      const token = response.data; // ou `response.data.token` se for um objeto com `token`
-      
+    apiAuth
+      .post(endpointsAuth.getToken, { username, password })
+      .then((response)=>{
+      const token = response.data;
       if (!token) {
         throw new Error('Token não retornado pela API.');
       }
-  
-      console.log('Token recebido:', token);
       storeAccessToken({accessToken: token});
       setIsAuthenticated(true);
-    } catch (error) {
-      console.error('Erro no login:', error);
-    }
+    })
+    .catch(()=>{
+      
+    })
   };    
 
   // Função para logout

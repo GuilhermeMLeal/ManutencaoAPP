@@ -11,6 +11,7 @@ import CreateMachine from "./components/machine/machineCreate";
 import CreateMaintenance from "./components/maintenance/maintenanceCreate";
 import { AuthProvider, useAuth } from "./context/authService";
 import PrivateRoute from "./privateRoute";
+import CreateTool from "./components/tool/createTool";
 
 type RootStackParamList = {
   Home: undefined;
@@ -85,7 +86,15 @@ export default function Index()  {
               <CreateMaintenance />
             </PrivateRoute>
           )}
-        />
+        /> 
+        <Stack.Screen
+          name="CreateTool"
+          component={() => (
+            <PrivateRoute>
+              <CreateTool />
+            </PrivateRoute>
+        )}
+      />
       </Stack.Navigator>
 
   );
