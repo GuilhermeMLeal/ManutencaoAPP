@@ -25,10 +25,13 @@ public class Startup
         );
 
         services.AddScoped<IMachineService, MachineService>();
+        services.AddScoped<IStatusService, StatusService>();
         services.AddScoped<IPlaceService, PlaceService>();
         services.AddScoped<IMachineRepository, MachineRepository>();
         services.AddScoped<IPlaceRepository, PlaceRepository>();
+        services.AddScoped<IStatusRepository,StatusRepository>();
         services.AddScoped<VerifyToken>();
+
         //services.AddCors(options =>
         //{
         //    options.AddPolicy("AllowAPIGateway",
@@ -121,6 +124,10 @@ public class Startup
                     Id = 3,
                     Name = "Solicitada manutenção"
                 };
+                context.Status.Add(status1);
+                context.Status.Add(status2);
+                context.Status.Add(status3);
+                context.SaveChanges();
             }
             // Seed de Places
             if (!context.Places.Any())

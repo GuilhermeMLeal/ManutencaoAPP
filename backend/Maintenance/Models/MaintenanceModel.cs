@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Maintenance.Models
 {
@@ -19,7 +20,8 @@ namespace Maintenance.Models
     {
         public int Id { get; set; }
         public int MaintenanceId { get; set; }
-        public Maintenance Maintenance { get; set; }
+        [JsonIgnore]
+        public Maintenance? Maintenance { get; set; }
         public int PartId { get; set; }
         public int Quantity { get; set; }
     }

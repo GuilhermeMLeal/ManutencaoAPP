@@ -59,7 +59,7 @@ namespace ToolAPI
 
 
             // Garante que as migrações sejam aplicadas automaticamente
-            app.ApplyMigrations();
+            //app.ApplyMigrations();
             app.UseCors("AllowAll");
             app.UseAuthorization();
 

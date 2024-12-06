@@ -82,6 +82,29 @@ namespace ToolAPI.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("quantity")]
+        public async Task<IActionResult> UpdateByQuantity([FromBody] UpdateTool tool)
+        {
+            try
+            {
+                await _toolService.UpdateToolByQuantity(tool);
+                return NoContent();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

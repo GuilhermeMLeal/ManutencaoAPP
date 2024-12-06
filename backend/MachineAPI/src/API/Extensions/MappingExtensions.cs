@@ -46,6 +46,14 @@ namespace MachineAPI.API.Extensions
                 PlaceId = machine.PlaceId != null ? machine.PlaceId.Value : null
             };
         }
+        public static StatusDTO ToDtoStatus(this Status status)
+        {
+            return new StatusDTO
+            {
+                Id = status.Id,
+                Name = status.Name
+            };
+        }
 
         public static PlaceDTO ToDto(this Place place)
         {

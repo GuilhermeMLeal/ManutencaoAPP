@@ -5,6 +5,7 @@ const IP = "192.168.0.11";
 const BASE_URL_AUTH = `http://${IP}:3001/api`;
 const BASE_URL_MACHINE = `http://${IP}:3002/api`;
 const BASE_URL_TOOL = `http://${IP}:3003/api`;
+const BASE_URL_MAINTENANCE = `http://${IP}:3005/api`;
 
 // Configuração padrão de transformResponse
 const transformResponse = [
@@ -63,6 +64,7 @@ const createAPIInstance = (baseURL) => {
 const apiAuth = createAPIInstance(BASE_URL_AUTH);
 const apiMachine = createAPIInstance(BASE_URL_MACHINE);
 const apiTool = createAPIInstance(BASE_URL_TOOL);
+const apiMaintenance = createAPIInstance(BASE_URL_MAINTENANCE);
 
 // Endpoints específicos para os serviços
 export const endpointsAuth = { 
@@ -82,4 +84,7 @@ export const endpointPlace = {
   place: "/Places",
 };
 
+export const endpointStatus = {
+  status: "/Status",
+};
 export { apiAuth, apiMachine, apiTool };

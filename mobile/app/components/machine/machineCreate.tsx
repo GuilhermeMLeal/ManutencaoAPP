@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "expo-router";
-import { apiAuth, endpointMachine, endpointPlace, apiMachine } from '../../services/api'
+import { apiAuth, endpointMachine, endpointPlace, apiMachine, endpointStatus } from '../../services/api'
 import {getAccessToken} from '../../../app/utils/storage'
 const CreateMachine: React.FC = () => {
   const navigation = useNavigation();
@@ -19,7 +19,8 @@ const CreateMachine: React.FC = () => {
   const [serialNumber, setSerialNumber] = useState("");
   const [model, setModel] = useState("");
   const [manufactureDate, setManufactureDate] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState<number | null>(null);
+  const [statuses, setStatuses] = useState<{ id: number; name: string }[]>([]);
   const [placeId, setPlaceId] = useState<number | null>(null);
   const [places, setPlaces] = useState<
     { id: number; name: string; description: string; observation: string }[]
@@ -43,6 +44,22 @@ const CreateMachine: React.FC = () => {
         Alert.alert("Erro", "Não foi possível carregar os lugares.");
         setLoading(false);
       });
+
+    apiMachine
+      .get(endpointStatus.status) 
+      .then((response) => {
+        if (response.status === 200) {
+          setStatuses(response.data);
+        } else {
+          throw new Error(`Erro: ${response.status}`);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar lugares:", error);
+        Alert.alert("Erro", "Não foi possível carregar os lugares.");
+        setLoading(false);
+      });
   }, []);
 
   const handleSubmit = () => {
@@ -52,7 +69,7 @@ const CreateMachine: React.FC = () => {
       model,
       manufactureDate: new Date(manufactureDate).toISOString(),
       serialNumber,
-      status,
+      statusId: status,
       placeId,
     };
 
@@ -117,12 +134,17 @@ const CreateMachine: React.FC = () => {
         value={manufactureDate}
         onChangeText={setManufactureDate}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Status"
-        value={status}
-        onChangeText={setStatus}
-      />
+      <Text style={styles.label}>Status:</Text>
+      <Picker
+        selectedValue={status}
+        onValueChange={(itemValue: number | null) => setStatus(itemValue)}
+        style={styles.picker}
+      >
+        <Picker.Item label="Selecione um status" value={null} />
+        {statuses.map((statusItem) => (
+          <Picker.Item key={statusItem.id} label={statusItem.name} value={statusItem.id} />
+        ))}
+      </Picker>
       <Text style={styles.label}>Localização:</Text>
       <Picker
         selectedValue={placeId}

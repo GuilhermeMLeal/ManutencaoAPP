@@ -1,5 +1,6 @@
 ﻿using Maintenance.Models;
 using Maintenance.Repository;
+using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 
 namespace Maintenance.Business
@@ -8,11 +9,13 @@ namespace Maintenance.Business
     {
         private readonly MaintenanceRepository _repository;
         private readonly HttpClient _httpClient;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public MaintenanceBusiness(MaintenanceRepository repository, IHttpClientFactory httpClientFactory)
+        public MaintenanceBusiness(MaintenanceRepository repository, IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor)
         {
             _repository = repository;
             _httpClient = httpClientFactory.CreateClient();
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<List<Models.Maintenance>> GetAllAsync()
@@ -32,14 +35,25 @@ namespace Maintenance.Business
         {
             maintenance.LastUpdate = DateTime.UtcNow;
 
-            // Notificar ToolAPI para decrementar peças no estoque
-            foreach (var part in maintenance.MaintenanceParts)
+            if (maintenance.MaintenanceParts != null)
             {
-                await NotifyToolApi(part.PartId, part.Quantity);
+                foreach (var part in maintenance.MaintenanceParts)
+                {
+                    part.Maintenance = maintenance;
+
+                    // Verifique se o PartId está configurado corretamente
+                    if (part.PartId <= 0)
+                    {
+                        throw new Exception("PartId is missing or invalid.");
+                    }
+
+                    await NotifyToolApi(part.PartId, part.Quantity);
+                }
             }
 
             await _repository.AddAsync(maintenance);
         }
+
 
         public async Task UpdateAsync(Models.Maintenance maintenance)
         {
@@ -59,21 +73,25 @@ namespace Maintenance.Business
 
                 if (existingPart != null)
                 {
-                    var difference = part.Quantity - existingPart.Quantity;
+                    var quantityDifference = part.Quantity - existingPart.Quantity;
+
+                    // Atualizar quantidade da peça
                     existingPart.Quantity = part.Quantity;
 
-                    // Notificar ToolAPI para ajustar quantidade
-                    if (difference != 0)
-                        await NotifyToolApi(part.PartId, difference);
+                    // Notificar ToolAPI da diferença
+                    if (quantityDifference != 0)
+                        await NotifyToolApi(part.PartId, quantityDifference);
                 }
                 else
                 {
+                    // Adicionar nova peça
                     existingMaintenance.MaintenanceParts.Add(part);
 
-                    // Notificar ToolAPI para decrementar nova peça
+                    // Notificar ToolAPI da nova quantidade
                     await NotifyToolApi(part.PartId, part.Quantity);
                 }
             }
+
 
             await _repository.UpdateAsync(existingMaintenance);
         }
@@ -95,14 +113,40 @@ namespace Maintenance.Business
 
         private async Task NotifyToolApi(int partId, int quantityChange)
         {
-            var url = $"http://toolapi:8080/api/tool/update-quantity/{partId}";
-            var payload = new { Quantity = quantityChange };
+            if (partId <= 0)
+            {
+                throw new Exception("Invalid PartId: PartId must be greater than zero.");
+            }
+
+            var payload = new
+            {
+                Id = partId,
+                SubQuantity = quantityChange
+            };
+
+            var url = "http://toolapi:8080/api/Tool/quantity";
             var content = new StringContent(JsonSerializer.Serialize(payload));
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
+            var token = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString();
+
+            if (!string.IsNullOrWhiteSpace(token))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.Replace("Bearer ", "").Trim());
+            }
+
+            // Enviar requisição PUT
             var response = await _httpClient.PutAsync(url, content);
+
             if (!response.IsSuccessStatusCode)
-                throw new Exception($"Failed to update tool quantity for PartId {partId}: {response.ReasonPhrase}");
+            {
+                var errorDetails = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Failed to update tool quantity for PartId {partId}: {response.StatusCode}. Details: {errorDetails}");
+            }
+
         }
+
+
     }
 }
