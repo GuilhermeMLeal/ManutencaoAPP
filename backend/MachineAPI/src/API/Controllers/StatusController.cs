@@ -34,5 +34,23 @@ namespace MachineAPI.src.API.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetStatusById()
+        {
+            try
+            {
+                var status = await _statusService.GetStatusById();
+                if (status == null || !status.Any())
+                    return NotFound(new { message = "No places found." });
+
+                return Ok(status);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while retrieving places.", details = ex.Message });
+            }
+        }
+
     }
 }

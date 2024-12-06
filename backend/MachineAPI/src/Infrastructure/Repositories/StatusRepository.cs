@@ -23,6 +23,9 @@ namespace MachineAPI.Infrastructure.Repositories
         {
             return await _context.Status.ToListAsync();
         }
-
+        public async Task<Status> GetStatusById(int id)
+        {
+            return await _context.Status.FirstOrDefaultAsync(p => p.Id == id);
+        }
     }
 }
