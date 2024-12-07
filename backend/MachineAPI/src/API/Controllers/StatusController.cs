@@ -36,12 +36,12 @@ namespace MachineAPI.src.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetStatusById()
+        public async Task<IActionResult> GetStatusById(int id)
         {
             try
             {
-                var status = await _statusService.GetStatusById();
-                if (status == null || !status.Any())
+                var status = await _statusService.GetStatusById(id);
+                if (status == null)
                     return NotFound(new { message = "No places found." });
 
                 return Ok(status);

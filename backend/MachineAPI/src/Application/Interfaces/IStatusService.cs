@@ -6,6 +6,6 @@ namespace MachineAPI.Application.Interfaces
     {
         // Recupera todos os lugares
         Task<IEnumerable<StatusDTO>> GetAllStatus();
-        Task<StatusDTO> GetStatusById();
+        Task<StatusDTO> GetStatusById(int id);
     }
 }

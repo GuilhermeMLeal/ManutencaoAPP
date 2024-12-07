@@ -6,11 +6,12 @@ import {
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import MachineService from "../../services/MachineService";
-import { apiMachine, endpointMachine } from "@/app/services/api";
+import { apiMachine, endpointMachine, endpointStatus } from "@/app/services/api";
 import axios from "axios";
 
 interface MachineDetails {
@@ -37,34 +38,52 @@ const MachineDetailsScreen: React.FC = () => {
   const { itemId } = route.params;
 
   useEffect(() => {
-    // Busca os detalhes da máquina com base no ID
-    apiMachine.get(`${endpointMachine.machine}/${itemId}`)
-      .then((response) => {
-        const details = response.data; // Os dados da máquina estão em `response.data`
-
-        console.log("Dados recebidos:", details);
-    
+    // Função assíncrona para buscar os detalhes da máquina
+    const fetchData = async () => {
+      try {
+        // Busca os detalhes da máquina pelo ID
+        const response = await apiMachine.get(`${endpointMachine.machine}/${itemId}`);
+        console.log(response.data + "DADO INTEIRO")
+        const details = response.data;
+        console.log(details.statusId)
+        let statusName = "N/A";
+  
+        try {
+          // Busca o nome do status relacionado
+          const statusResponse = await apiMachine.get(`${endpointStatus.status}/${details.statusId}`);
+          statusName = statusResponse?.data?.name || "N/A";
+        } catch (statusError: any) {
+          if (statusError.response && statusError.response.status === 400) {
+            console.warn(`Status não encontrado para ID ${details.status}. Usando "N/A".`);
+          } else {
+            console.error("Erro ao buscar status:", statusError);
+            throw statusError; // Repassa outros erros para o bloco catch principal
+          }
+        }
+  
+        // Atualiza os detalhes da máquina
         setMachineDetails({
-          Id: details.id, // Atualize os campos para corresponder ao retorno da API
+          Id: details.id,
           Name: details.name,
           Type: details.type,
           Model: details.model,
           ManufactureDate: details.manufactureDate,
           SerialNumber: details.serialNumber,
-          Status: details.status,
+          Status: statusName,
           PlaceId: details.placeId,
         });
-    
-        console.log("Detalhes da máquina:", details);
+  
         setLoading(false);
-      })
-      .catch((err) => {
-        console.error(`Error fetching machine details for ID ${itemId}:`, err);
+      } catch (error: any) {
+        console.error(`Erro ao buscar os detalhes da máquina para o ID ${itemId}:`, error);
         setError("Não foi possível carregar os detalhes da máquina.");
         setLoading(false);
-      });
+      }
+    };
+  
+    fetchData();
   }, [itemId]);
-
+  
   const handleOpenMachineDetails = () => {
     navigation.navigate("MachineMaintenanceHistoryScreen", { itemId }); // Navega para a tela de histórico de manutenção
   };

@@ -30,9 +30,9 @@ namespace MachineAPI.Application.Services
             return status.Select(m => m.ToDtoStatus());
         }
 
-        public async Task<StatusDTO> GetStatusById()
+        public async Task<StatusDTO> GetStatusById(int id)
         {
-            var status = await _statusRepository.GetStatusById();
+            var status = await _statusRepository.GetStatusById(id);
             if (status == null)
             {
                 throw new InvalidOperationException("No machines found.");
