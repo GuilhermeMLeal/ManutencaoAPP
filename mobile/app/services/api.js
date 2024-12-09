@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getAccessToken } from "../utils/storage";
 
-const IP = "192.168.0.11";
+const IP = "10.109.3.102";
 const BASE_URL_AUTH = `http://${IP}:3001/api`;
 const BASE_URL_MACHINE = `http://${IP}:3002/api`;
 const BASE_URL_TOOL = `http://${IP}:3003/api`;
@@ -87,4 +87,9 @@ export const endpointPlace = {
 export const endpointStatus = {
   status: "/Status",
 };
-export { apiAuth, apiMachine, apiTool };
+
+export const endpointMaintenance = {
+  maintenance: "/Maintenance",
+};
+
+export { apiAuth, apiMachine, apiTool, apiMaintenance };
