@@ -12,6 +12,7 @@ import CreateMaintenance from "./components/maintenance/maintenanceCreate";
 import { AuthProvider, useAuth } from "./context/authService";
 import PrivateRoute from "./privateRoute";
 import CreateTool from "./components/tool/createTool";
+import EditMachineScreen from "./components/machine/editMachine";
 
 type RootStackParamList = {
   Home: undefined;
@@ -76,6 +77,14 @@ export default function Index()  {
           component={() => (
             <PrivateRoute>
               <CreateMachine />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="EditMachineScreen"
+          component={() => (
+            <PrivateRoute>
+              <EditMachineScreen />
             </PrivateRoute>
           )}
         />
