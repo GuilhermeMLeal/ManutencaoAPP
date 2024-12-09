@@ -88,6 +88,11 @@ const MachineDetailsScreen: React.FC = () => {
     navigation.navigate("MachineMaintenanceHistoryScreen", { itemId }); // Navega para a tela de histórico de manutenção
   };
 
+  const handleEditMachine = () => {
+    if (machineDetails) {
+      navigation.navigate("EditMachineScreen", { machineDetails });
+    }
+  };
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -155,6 +160,9 @@ const MachineDetailsScreen: React.FC = () => {
           </Text>
         </View>
       </View>
+      <TouchableOpacity style={styles.button} onPress={handleEditMachine}>
+        <Text style={styles.buttonText}>Editar Máquina</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={handleOpenMachineDetails}>
         <Text style={styles.buttonText}>
           Visualizar histórico de manutenção da máquina
