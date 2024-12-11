@@ -6,6 +6,8 @@ import MachineScreen from "./machine/machine";
 import MaintenanceHistoryScreen from "./maintenance/maintenance";
 import MaintenanceRequestScreen from "./maintenance/maintenanceRequest";
 import StockScreen from "./tool/stock";
+import ManageSquadsScreen from "./squads/manageSquads";
+import UserListScreen from "./user/userList";
 
 const Tab = createBottomTabNavigator();
 
@@ -45,6 +47,16 @@ export function HomeScreen() {
         name="Stock"
         options={{ tabBarLabel: "Estoque" }}
         component={StockScreen}
+      />
+      <Tab.Screen
+        name="Squads"
+        options={{ tabBarLabel: "Squads" }}
+        component={ManageSquadsScreen}
+      />
+      <Tab.Screen
+        name="Users"
+        options={{ tabBarLabel: "Users" }}
+        component={UserListScreen}
       />
       <Tab.Screen
         name="MaintenanceRequest"

@@ -14,6 +14,8 @@ import PrivateRoute from "./privateRoute";
 import CreateTool from "./components/tool/createTool";
 import EditMachineScreen from "./components/machine/editMachine";
 import MaintenanceDetailsScreen from "./components/maintenance/maintenanceDetailsScreen";
+import CreateSquadScreen from "./components/squads/createSquad";
+import ManageSquadsScreen from "./components/squads/manageSquads";
 
 type RootStackParamList = {
   Home: undefined;
@@ -112,7 +114,31 @@ export default function Index()  {
               <CreateTool />
             </PrivateRoute>
         )}
-      />
+        />
+        <Stack.Screen
+          name="CreateSquad"
+          component={() => (
+            <PrivateRoute>
+              <CreateSquadScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="ManageSquad"
+          component={() => (
+            <PrivateRoute>
+              <ManageSquadsScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="UpdateSquad"
+          component={() => (
+            <PrivateRoute>
+              <UpdateSquadScreen />
+            </PrivateRoute>
+          )}
+        />
       </Stack.Navigator>
 
   );
