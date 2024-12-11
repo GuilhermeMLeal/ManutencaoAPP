@@ -8,7 +8,7 @@ using UserAuth.Application.Services;
 
 namespace UserAuth.API.Controllers
 {
-    [ServiceFilter(typeof(VerifyToken))]
+    //[ServiceFilter(typeof(VerifyToken))]
     [ApiController]
     [Route("api/[controller]")]
     public class SquadController : ControllerBase
