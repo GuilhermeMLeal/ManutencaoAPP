@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAccessToken } from "../utils/storage";
+import { getAccessToken } from "../../utils/storage";
 
 const transformResponse = [
   (data) => {

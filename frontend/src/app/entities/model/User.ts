@@ -9,7 +9,7 @@ interface Squad {
     Id: number;
     Name: string;
     Description: string;
-    UserSquads: UserSquad[];
+    //UserSquads: UserSquad[];
 }
 
 interface User {

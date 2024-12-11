@@ -1,10 +1,8 @@
-import Cookies from 'js-cookie';
-
-// Armazena tokens nos cookies
+// Armazena tokens no localStorage
 export const storeTokens = ({ accessToken, refreshToken }: { accessToken: string; refreshToken: string }) => {
   try {
-    Cookies.set('accessToken', accessToken, { secure: true, sameSite: 'strict', path: '/' });
-    Cookies.set('refreshToken', refreshToken, { secure: true, sameSite: 'strict', path: '/' });
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
   } catch (error) {
     console.error('Erro ao armazenar os tokens', error);
   }
@@ -12,17 +10,17 @@ export const storeTokens = ({ accessToken, refreshToken }: { accessToken: string
 
 export const storeAccessToken = (accessToken: string) => {
   try {
-    Cookies.set('accessToken', accessToken, { secure: true, sameSite: 'strict', path: '/' });
+    localStorage.setItem('accessToken', accessToken);
   } catch (error) {
     console.error('Erro ao armazenar o token de acesso', error);
   }
 };
 
-// Obtém tokens dos cookies
+// Obtém tokens do localStorage
 export const getTokens = () => {
   try {
-    const accessToken = Cookies.get('accessToken');
-    const refreshToken = Cookies.get('refreshToken');
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
     return { accessToken, refreshToken };
   } catch (error) {
     console.error('Erro ao obter os tokens', error);
@@ -32,18 +30,18 @@ export const getTokens = () => {
 
 export const getAccessToken = () => {
   try {
-    return Cookies.get('accessToken') || null;
+    return localStorage.getItem('accessToken') || null;
   } catch (error) {
     console.error('Erro ao obter o token de acesso', error);
     return null;
   }
 };
 
-// Remove tokens dos cookies
+// Remove tokens do localStorage
 export const clearTokens = () => {
   try {
-    Cookies.remove('accessToken', { path: '/' });
-    Cookies.remove('refreshToken', { path: '/' });
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
   } catch (error) {
     console.error('Erro ao remover os tokens', error);
   }

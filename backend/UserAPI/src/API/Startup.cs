@@ -54,15 +54,16 @@ public class Startup
         //                .AllowAnyHeader();
         //        });
         //});
+        // CORS Configuration
         services.AddCors(options =>
         {
-            options.AddPolicy("AllowAll",
-                builder =>
-                {
-                    builder.AllowAnyOrigin()
-                           .AllowAnyMethod()
-                           .AllowAnyHeader();
-                });
+            options.AddPolicy("AllowAll", builder =>
+            {
+                builder.WithOrigins("http://localhost:3000") // Specific frontend origin
+                       .AllowAnyHeader()
+                       .AllowAnyMethod()
+                       .AllowCredentials(); // Required when using cookies or authorization headers
+            });
         });
 
         services.AddControllers();
