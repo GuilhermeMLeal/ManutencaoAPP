@@ -1,45 +1,53 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Button,
   Container,
-  Box,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  CardMedia,
-  DialogActions,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TablePagination,
+  Typography,
+  Paper,
+  IconButton,
 } from "@mui/material";
+import { FaEdit, FaTrashAlt } from "react-icons/fa"; // Ícones de lápis e borracha
 import Title from "../titles/titleMain";
-import CardBox from "../table/cardBox";
 import { FindItemTextBox } from "../create/findItemTextBox";
-import PaginationComponent from "../table/PaginationComponent";
+import MachineService from "@/app/service/MachineService";
+import { useRouter } from "next/navigation";
 
-const machineData = [
-  {
-    title: "Máquina A",
-    description: "Parte Superior - Aço Inoxidável",
-    image: "/image/roboto.png",
-  },
-  {
-    title: "Máquina B",
-    description: "Parte Inferior - Plástico ABS",
-    image: "/image/roboto.png",
-  },
-  {
-    title: "Máquina C",
-    description: "Motor - Alumínio",
-    image: "/image/roboto.png",
-  },
-];
-
-export default function MainMachine() {
+export default function MainMachines() {
+  const [machines, setMachines] = useState<Machine[]>([]);
+  const [filteredMachines, setFilteredMachines] = useState<Machine[]>([]);
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(3);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchMachines = async () => {
+      try {
+        const data = await MachineService.getAllMachines();
+        setMachines(data);
+        setFilteredMachines(data);
+      } catch (error) {
+        console.error("Error fetching machines:", error);
+      }
+    };
+
+    fetchMachines();
+  }, []);
+
+  const handleSearch = (query: string) => {
+    const filtered = machines.filter((machine) =>
+      machine.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredMachines(filtered);
+    setPage(0);
+  };
 
   const handlePageChange = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -55,14 +63,18 @@ export default function MainMachine() {
     setPage(0);
   };
 
-  const handleOpenDialog = (item: any) => {
-    setSelectedItem(item);
-    setOpenDialog(true);
+  const handleEditMachine = (id: number) => {
+    router.push(`/pages/machines/createMachine?id=${id}`);
   };
 
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-    setSelectedItem(null);
+  const handleDeleteMachine = async (id: number) => {
+    try {
+      await MachineService.deleteMachine(id);
+      setMachines((prev) => prev.filter((machine) => machine.id !== id));
+      setFilteredMachines((prev) => prev.filter((machine) => machine.id !== id));
+    } catch (error) {
+      console.error(`Error deleting machine with ID ${id}:`, error);
+    }
   };
 
   return (
@@ -72,61 +84,75 @@ export default function MainMachine() {
         subtitle="Visualização Detalhada de Máquinas"
       />
       <FindItemTextBox
-        textReport="Criar Relatório de Máquinas"
         textButton="Cadastrar uma Máquina"
         pageText="/pages/machines/createMachine"
         nameTextSearch="Máquina"
-        typeTextField="Tipo de Máquina"
+        onSearch={handleSearch}
       />
       <Container maxWidth="lg" className="mb-4">
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            flexWrap: "wrap",
-            gap: 2,
-            mt: 4,
-          }}
-        >
-          {machineData.map((machine, index) => (
-            <CardBox
-              key={index}
-              item={machine}
-              updatePath="/pages/machines/createMachine"
-              onSeeMore={() => handleOpenDialog(machine)}
-            />
-          ))}
-        </Box>
-        {/* <PaginationComponent
-          count={machineData.length}
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Nome</TableCell>
+                <TableCell>Tipo</TableCell>
+                <TableCell>Modelo</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Localização</TableCell>
+                <TableCell>Ações</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredMachines.length > 0 ? (
+                filteredMachines
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((machine) => (
+                    <TableRow key={machine.id}>
+                      <TableCell>{machine.id}</TableCell>
+                      <TableCell>{machine.name}</TableCell>
+                      <TableCell>{machine.type}</TableCell>
+                      <TableCell>{machine.model}</TableCell>
+                      <TableCell>{machine.status?.name || "N/A"}</TableCell>
+                      <TableCell>{machine.place?.name || "N/A"}</TableCell>
+                      <TableCell>
+                        <IconButton
+                          color="primary"
+                          onClick={() => handleEditMachine(machine.id!)}
+                        >
+                          <FaEdit />
+                        </IconButton>
+                        <IconButton
+                          color="error"
+                          onClick={() => handleDeleteMachine(machine.id!)}
+                          sx={{ ml: 1 }}
+                        >
+                          <FaTrashAlt />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={7} align="center">
+                    <Typography variant="body1" color="textSecondary">
+                      Nenhuma máquina foi encontrada
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          component="div"
+          count={filteredMachines.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
-        /> */}
+        />
       </Container>
-      <Dialog
-        open={openDialog}
-        onClose={handleCloseDialog}
-        maxWidth="md"
-        fullWidth
-        sx={{
-          maxWidth: 800,
-          margin: "auto",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <DialogTitle>{selectedItem?.title}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>{selectedItem?.description}</DialogContentText>
-          <CardMedia sx={{ height: 300 }} image={selectedItem?.image} />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog}>Fechar</Button>
-        </DialogActions>
-      </Dialog>
     </main>
   );
 }
