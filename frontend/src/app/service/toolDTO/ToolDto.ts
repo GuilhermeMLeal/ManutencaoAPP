@@ -5,3 +5,8 @@ interface ToolDTO {
     Quantity: number;
     Description: string;
   }
+
+  interface UpdateTool {
+    id: number;
+    subQuantity: number;
+  }

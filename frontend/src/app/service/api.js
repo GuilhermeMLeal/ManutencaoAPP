@@ -1,18 +1,17 @@
-import axios from "axios"
+import axios from "axios";
+import { getAccessToken } from "../utils/storage";
 
-// Configuração padrão de transformResponse
 const transformResponse = [
   (data) => {
     try {
-      return JSON.parse(data); // Tenta converter para JSON
+      return JSON.parse(data);
     } catch (error) {
       console.error("Erro ao converter a resposta para JSON:", error);
-      return data; // Retorna como texto se não for JSON
+      return data;
     }
   },
 ];
 
-// Cria instância de API com base na URL
 const createAPIInstance = (baseURL) => {
   const instance = axios.create({
     baseURL,
@@ -23,10 +22,9 @@ const createAPIInstance = (baseURL) => {
     transformResponse,
   });
 
-  // Interceptor para adicionar o token
   instance.interceptors.request.use(
     async (config) => {
-      const token = await getAccessToken(); // Obtenha o token do armazenamento
+      const token = await getAccessToken();
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -38,7 +36,6 @@ const createAPIInstance = (baseURL) => {
     }
   );
 
-  // Interceptor para tratar erros globalmente
   instance.interceptors.response.use(
     (response) => response,
     (error) => {
@@ -54,42 +51,25 @@ const createAPIInstance = (baseURL) => {
 };
 
 const API_BASE_URLS = {
-  userApi: "http://localhost:3001",
-  machineApi: "http://localhost:3002",
-  toolApi: "http://localhost:3003",
-  apiGateway: "http://localhost:3004",
+  userApi: "http://localhost:3001/api",
+  machineApi: "http://localhost:3002/api",
+  toolApi: "http://localhost:3003/api",
+  apiGateway: "http://localhost:3004/api",
+  maintenanceApi: "http://localhost:3005/api",
 };
 
-const userApiClient = axios.create({
-  baseURL: API_BASE_URLS.userApi,
-  withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+const userApiClient = createAPIInstance(API_BASE_URLS.userApi);
+const machineApiClient = createAPIInstance(API_BASE_URLS.machineApi);
+const toolApiClient = createAPIInstance(API_BASE_URLS.toolApi);
+const maintenanceApiClient = createAPIInstance(API_BASE_URLS.maintenanceApi);
+const apiGatewayClient = createAPIInstance(API_BASE_URLS.apiGateway);
 
-const machineApiClient = axios.create({
-  baseURL: API_BASE_URLS.machineApi,
-  withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-const toolApiClient = axios.create({
-  baseURL: API_BASE_URLS.toolApi,
-  withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-const apiGatewayClient = axios.create({
-  baseURL: API_BASE_URLS.apiGateway,
-  withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-export { userApiClient, machineApiClient, toolApiClient, apiGatewayClient };
+export {
+  userApiClient,
+  machineApiClient,
+  toolApiClient,
+  maintenanceApiClient,
+  apiGatewayClient,
+  createAPIInstance,
+  API_BASE_URLS,
+};
