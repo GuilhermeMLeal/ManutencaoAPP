@@ -92,4 +92,15 @@ export const endpointMaintenance = {
   maintenance: "/Maintenance",
 };
 
+export const endpointRole = {
+  role: "/Role",
+};
+
+export const endpointUser = {
+  user: "/User",
+};
+
+export const endpointSquad = {
+  squad: "/Squad",
+};
 export { apiAuth, apiMachine, apiTool, apiMaintenance };

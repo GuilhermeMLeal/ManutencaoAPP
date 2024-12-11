@@ -166,7 +166,7 @@ public class Startup
                 };
                 context.Users.Add(user);
                 context.SaveChanges();
-                Console.WriteLine("Usuário salvo.");
+                Console.WriteLine("Usuï¿½rio salvo.");
             }
 
             // Seed de Roles
@@ -205,9 +205,8 @@ public class Startup
             {
                 var squad = new UserAuth.Domain.Entities.Squad
                 {
-                    Id = -1,
                     Name = "Manutencao 1",
-                    Description = "Manutenção no Place 1"
+                    Description = "Manutenï¿½ï¿½o no Place 1"
                 };
                 context.Squads.Add(squad);
                 context.SaveChanges();
@@ -232,7 +231,7 @@ public class Startup
                 }
                 else
                 {
-                    Console.WriteLine("Erro: Usuário ou Squad não encontrado.");
+                    Console.WriteLine("Erro: Usuï¿½rio ou Squad nï¿½o encontrado.");
                 }
             }
         }
