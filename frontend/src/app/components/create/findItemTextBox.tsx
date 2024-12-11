@@ -8,6 +8,7 @@ interface TextBox {
   textButton: string;
   pageText: string;
   typeTextField: string;
+  onSearch: (query: string) => void;
 }
 
 export function FindItemTextBox({
@@ -16,6 +17,7 @@ export function FindItemTextBox({
   textButton,
   pageText,
   typeTextField,
+  onSearch,
 }: TextBox) {
   return (
     <Box
@@ -23,7 +25,7 @@ export function FindItemTextBox({
         display: "flex",
         justifyContent: "flex-end",
         paddingRight: "8%",
-        paddingLeft:"8%",
+        paddingLeft: "8%",
         paddingBottom: "1%",
         paddingTop: "2%",
       }}
@@ -38,6 +40,7 @@ export function FindItemTextBox({
           width: "300px",
           marginLeft: "16px",
         }}
+        onChange={(e) => onSearch(e.target.value)} 
       />
     </Box>
   );

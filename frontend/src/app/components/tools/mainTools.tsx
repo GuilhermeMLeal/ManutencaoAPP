@@ -1,65 +1,52 @@
 "use client";
 
-import React, { useState } from "react";
-import { Box, Container, TablePagination } from "@mui/material";
-import CardBox from "../table/cardBox";
+import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TablePagination,
+  Typography,
+  Paper,
+  Button,
+} from "@mui/material";
 import Title from "../titles/titleMain";
 import { FindItemTextBox } from "../create/findItemTextBox";
-import PaginationComponent from "../table/PaginationComponent";
-
-function createData(
-  name: string,
-  code: string,
-  supplier: string,
-  quantity: number,
-  unitPrice: number,
-  imageUrl: string,
-  description: string
-) {
-  return {
-    name,
-    code,
-    supplier,
-    quantity,
-    unitPrice,
-    imageUrl,
-    description,
-  };
-}
-
-const rows = [
-  createData(
-    "Peça A",
-    "P001",
-    "Fornecedor X",
-    100,
-    15.0,
-    "/image/parafuso.avif",
-    "Descrição da Peça A."
-  ),
-  createData(
-    "Peça B",
-    "P002",
-    "Fornecedor Y",
-    200,
-    22.0,
-    "/image/parafuso.avif",
-    "Descrição da Peça B."
-  ),
-  createData(
-    "Peça C",
-    "P003",
-    "Fornecedor Z",
-    150,
-    18.0,
-    "/image/parafuso.avif",
-    "Descrição da Peça C."
-  ),
-];
+import ToolService from "@/app/service/ToolService";
+import { useRouter } from "next/navigation";
 
 export default function MainTools() {
+  const [tools, setTools] = useState<ToolDTO[]>([]);
+  const [filteredTools, setFilteredTools] = useState<ToolDTO[]>([]);
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(3);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchTools = async () => {
+      try {
+        const data = await ToolService.getAllTools();
+        setTools(data);
+        setFilteredTools(data); 
+      } catch (error) {
+        console.error("Error fetching tools:", error);
+      }
+    };
+
+    fetchTools();
+  }, []);
+
+  const handleSearch = (query: string) => {
+    const filtered = tools.filter((tool) =>
+      tool.Name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredTools(filtered);
+    setPage(0); // Reinicia a paginação após a busca
+  };
 
   const handlePageChange = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -75,8 +62,8 @@ export default function MainTools() {
     setPage(0);
   };
 
-  const handleSeeMore = (name: string) => {
-    console.log(`Ver mais sobre ${name}`);
+  const handleEditTool = (id: number) => {
+    router.push(`/pages/tools/createTool?id=${id}`);
   };
 
   return (
@@ -91,39 +78,61 @@ export default function MainTools() {
         pageText="/pages/tools/createTool"
         nameTextSearch="Peça"
         typeTextField="Fornecedor"
+        onSearch={handleSearch} // Passa a lógica de busca
       />
       <Container maxWidth="lg" className="mb-4">
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 2,
-            justifyContent: "center",
-            mt: 4,
-          }}
-        >
-          {rows
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((row, index) => (
-              <CardBox
-                key={index}
-                item={{
-                  title: `${row.name} (Código: ${row.code})`,
-                  description: `Fornecedor: ${row.supplier} - Quantidade: ${row.quantity} - Valor Unitário: R$${row.unitPrice.toFixed(2)}`,
-                  image: row.imageUrl,
-                }}
-                updatePath="/pages/tools/createTool"
-                onSeeMore={() => handleSeeMore(row.name)}
-              />
-            ))}
-        </Box>
-        {/* <PaginationComponent
-          count={rows.length}
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Nome</TableCell>
+                <TableCell>Quantidade</TableCell>
+                <TableCell>Descrição</TableCell>
+                <TableCell>Ações</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredTools.length > 0 ? (
+                filteredTools
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((tool) => (
+                    <TableRow key={tool.Id}>
+                      <TableCell>{tool.Id}</TableCell>
+                      <TableCell>{tool.Name}</TableCell>
+                      <TableCell>{tool.Quantity}</TableCell>
+                      <TableCell>{tool.Description}</TableCell>
+                      <TableCell>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => handleEditTool(tool.Id!)}
+                        >
+                          Editar
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={5} align="center">
+                    <Typography variant="body1" color="textSecondary">
+                      Nenhuma peça foi encontrada
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          component="div"
+          count={filteredTools.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
-        /> */}
+        />
       </Container>
     </main>
   );
