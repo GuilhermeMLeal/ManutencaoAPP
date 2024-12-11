@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { apiMaintenance, endpointMaintenance } from "../../services/api";
+import FloatingButton from "../floatingButton";
 
 interface MaintenancePart {
   id: number;
@@ -106,16 +107,23 @@ const MaintenanceListScreen: React.FC = () => {
   }
 
   return (
-    <FlatList
-      data={maintenances}
-      renderItem={renderMaintenance}
-      keyExtractor={(item) => item.id.toString()}
-      contentContainerStyle={styles.listContainer}
-    />
+    <View style={styles.container}>
+      <FlatList
+        data={maintenances}
+        renderItem={renderMaintenance}
+        keyExtractor={(item: any) => item.id.toString()}
+        contentContainerStyle={styles.listContainer}
+      />
+      <FloatingButton type="maintenance" /> {/* Adicionando o botão flutuante */}
+    </View> 
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+  },
   listContainer: {
     padding: 16,
     backgroundColor: "#f5f5f5",
