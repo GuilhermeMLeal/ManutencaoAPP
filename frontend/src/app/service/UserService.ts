@@ -102,7 +102,7 @@ const UnifiedService = {
   // Squad Services
   async getAllSquads(): Promise<Squad[]> {
     try {
-      const response = await userApiClient.get<Squad[]>("/squads");
+      const response = await userApiClient.get<Squad[]>("/Squads");
       return response.data;
     } catch (error) {
       console.error("Error fetching squads:", error);
@@ -112,7 +112,7 @@ const UnifiedService = {
 
   async getSquadById(id: number): Promise<Squad> {
     try {
-      const response = await userApiClient.get<Squad>(`/squads/${id}`);
+      const response = await userApiClient.get<Squad>(`/Squads/${id}`);
       return response.data;
     } catch (error) {
       console.error(`Error fetching squad with ID ${id}:`, error);
@@ -122,7 +122,7 @@ const UnifiedService = {
 
   async createSquad(squadDTO: Squad): Promise<Squad> {
     try {
-      const response = await userApiClient.post<Squad>("/squads", squadDTO);
+      const response = await userApiClient.post<Squad>("/Squads", squadDTO);
       return response.data;
     } catch (error) {
       console.error("Error creating squad:", error);
@@ -132,7 +132,7 @@ const UnifiedService = {
 
   async updateSquad(id: number, squadDTO: Squad): Promise<void> {
     try {
-      await userApiClient.put(`/squads/${id}`, squadDTO);
+      await userApiClient.put(`/Squads/${id}`, squadDTO);
     } catch (error) {
       console.error(`Error updating squad with ID ${id}:`, error);
       throw error;
@@ -141,7 +141,7 @@ const UnifiedService = {
 
   async deleteSquad(id: number): Promise<void> {
     try {
-      await userApiClient.delete(`/squads/${id}`);
+      await userApiClient.delete(`/Squads/${id}`);
     } catch (error) {
       console.error(`Error deleting squad with ID ${id}:`, error);
       throw error;
