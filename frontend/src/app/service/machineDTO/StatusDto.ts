@@ -1,4 +1,5 @@
 interface Status {
-    id: number;
-    name: string;
-  }
+  id: number;
+  name: string;
+  machines?: Machine[];
+}

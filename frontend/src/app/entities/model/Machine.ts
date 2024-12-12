@@ -1,20 +1,21 @@
 
 interface Machine {
-    Id: number;
-    Name: string;
-    Type: string;
-    Model: string;
-    ManufactureDate: Date;
-    SerialNumber: string;
-    Status: string;
-    PlaceId?: number | null;
-    Place?: Place | null;
-  }
+  id: number;
+  name: string;
+  type: string;
+  model: string;
+  manufactureDate: Date;
+  serialNumber: string;
+  placeId?: number | null;
+  place?: Place;
+  statusId?: number | null;
+  status?: Status;
+}
   
 interface Place {
-    Id: number;
-    Name: string;
-    Description: string;
-    Observation: string;
-    Machines: Machine[];
+  id: number;
+  name: string;
+  description: string;
+  observation: string;
+  machines?: Machine[];
 }
