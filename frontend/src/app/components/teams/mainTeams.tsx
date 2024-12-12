@@ -31,6 +31,7 @@ const MainTeam: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const [filteredSquads, setFilteredSquads] = useState<SquadCreateDTO[]>([]);
   // Fetch squads from the API
   useEffect(() => {
     const fetchSquads = async () => {
@@ -74,6 +75,14 @@ const MainTeam: React.FC = () => {
     setPage(0);
   };
 
+  const handleSearch = (query: string) => {
+    const filtered = squads.filter((squad) =>
+      squad.Name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredSquads(filtered);
+    setPage(0); // Reinicia a paginação após a busca
+  };
+
   if (loading) {
     return (
       <main className="flex-1 flex flex-col bg-white/90 overflow-y-auto max-h-svh">
@@ -106,6 +115,7 @@ const MainTeam: React.FC = () => {
         pageText="/pages/teams/createTeam"
         nameTextSearch="Equipe"
         typeTextField="Área do Time"
+        onSearch={handleSearch}
       />
       <Container maxWidth="lg" className="mb-4">
         <Box

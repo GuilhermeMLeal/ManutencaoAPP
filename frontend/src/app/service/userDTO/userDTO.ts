@@ -19,6 +19,12 @@ interface SquadDTO {
     Description: string;
 }
 
+interface SquadCreateDTO {
+    Name: string;
+    Description: string;
+}
+
+
 interface UserLoginDTO {
     Username: string;
     Password: string;

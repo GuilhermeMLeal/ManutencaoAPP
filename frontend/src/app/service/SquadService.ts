@@ -21,7 +21,7 @@ const SquadService = {
     }
   },
 
-  async addSquad(squadDto: SquadDTO): Promise<Squad> {
+  async addSquad(squadDto: SquadCreateDTO): Promise<Squad> {
     try {
       const response = await userApiClient.post<Squad>("/Squads", squadDto);
       return response.data;
