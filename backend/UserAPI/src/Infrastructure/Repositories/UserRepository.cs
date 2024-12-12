@@ -72,6 +72,12 @@ namespace UserAuth.Infrastructure.Repositories
             await _context.UserRoles.AddAsync(userRole);
             await _context.SaveChangesAsync();
         }
+        public async Task AddSquadToUser(int userId, UserAuth.Domain.Entities.Squad squad)
+        {
+            var userSquad = new UserSquad { UserId = userId, SquadId = squad.Id };
+            await _context.UserSquads.AddAsync(userSquad);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task RemoveRoleFromUser(int userId, int roleId)
         {

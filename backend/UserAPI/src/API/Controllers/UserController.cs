@@ -40,10 +40,10 @@ namespace UserAuth.API.Controllers
             await _userService.AddUser(userDTO);
 
             // Recupera o usuário criado para obter o Id
-            var createdUser = await _userService.GetUserByEmail(userDTO.Email);
-            if (createdUser == null) return BadRequest("Erro ao criar usuário.");
-
-            return CreatedAtAction(nameof(GetUser), new { id = createdUser.Id }, createdUser);
+            //var createdUser = await _userService.GetUserByEmail(userDTO.Email);
+            //if (createdUser == null) return BadRequest("Erro ao criar usuário.");
+            return Ok();
+         //   return CreatedAtAction(nameof(GetUser), new { id = userDTO.Id }, userDTO);
         }
 
         [HttpPut("{id}")]

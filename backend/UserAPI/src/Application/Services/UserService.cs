@@ -1,3 +1,5 @@
+using AuthUser.Domain.Interfaces;
+using Squad.API.DTOs;
 using UserAuth.API.DTOs;
 using UserAuth.Application.Helpers;
 using UserAuth.Application.Interfaces;
@@ -10,11 +12,12 @@ namespace UserAuth.Application.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
-
-        public UserService(IUserRepository userRepository, IRoleRepository roleRepository)
+        private readonly ISquadRepository _squadRepository;
+        public UserService(IUserRepository userRepository, IRoleRepository roleRepository, ISquadRepository squadRepository)
         {
             _userRepository = userRepository;
             _roleRepository = roleRepository;
+            _squadRepository = squadRepository;
         }
 
         public async Task<IEnumerable<UserDTO>> GetAllUsers()
@@ -30,6 +33,11 @@ namespace UserAuth.Application.Services
                 {
                     Id = userRole.Role.Id,
                     Name = userRole.Role.Name
+                }).ToList(),
+                Squads = user.UserSquads.Select(userSquad => new SquadDTO
+                {
+                    Id = userSquad.Squad.Id,
+                    Name = userSquad.Squad.Name
                 }).ToList()
             }).ToList();
         }
@@ -93,6 +101,18 @@ namespace UserAuth.Application.Services
                 }
 
                 await _userRepository.AddRoleToUser(user.Id, existingRole);
+            }
+
+            foreach (var squadDTO in userDTO.Squads)
+            {
+                var existingSquad = await _squadRepository.GetSquadById((int)squadDTO.Id);
+                if (existingSquad== null)
+                {
+                    //existingSquad = new UserAuth.Domain.Entities.Squad { Name = squadDTO.Name };
+                    //await _roleRepository.AddRole(existingRole); // Adicione um método para adicionar role
+                }
+
+                await _userRepository.AddSquadToUser(user.Id, existingSquad);
             }
         }
 

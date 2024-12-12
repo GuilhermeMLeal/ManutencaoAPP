@@ -64,7 +64,7 @@ namespace UserAuth.API.Controllers
                     return BadRequest(ModelState);
 
                 await _squadService.AddSquad(squadDTO);
-                return CreatedAtAction(nameof(GetById), squadDTO);
+                return Ok();
             }
             catch (ArgumentException ex)
             {
