@@ -30,17 +30,17 @@ namespace MachineAPI.Infrastructure.Repositories
 
         public async Task AddAsync(Machine machine)
         {
-            // Verificar se PlaceId é válido, se o PlaceId foi fornecido
+            // Verificar se PlaceId ï¿½ vï¿½lido, se o PlaceId foi fornecido
             if (machine.PlaceId.HasValue)
             {
                 var place = await _context.Places.FindAsync(machine.PlaceId.Value);
                 if (place == null)
                 {
-                    throw new ArgumentException($"O PlaceId {machine.PlaceId} fornecido não existe.");
+                    throw new ArgumentException($"O PlaceId {machine.PlaceId} fornecido nï¿½o existe.");
                 }
             }
 
-            // Adicionar máquina ao banco
+            // Adicionar mï¿½quina ao banco
             await _context.Machines.AddAsync(machine);
             await _context.SaveChangesAsync();
         }
@@ -51,20 +51,20 @@ namespace MachineAPI.Infrastructure.Repositories
             var existingMachine = await _context.Machines.FindAsync(machine.Id);
             if (existingMachine == null)
             {
-                throw new KeyNotFoundException($"Máquina com ID {machine.Id} não encontrada.");
+                throw new KeyNotFoundException($"Mï¿½quina com ID {machine.Id} nï¿½o encontrada.");
             }
 
-            // Verificar se PlaceId é válido
+            // Verificar se PlaceId ï¿½ vï¿½lido
             if (machine.PlaceId != null)
             {
                 var place = await _context.Places.FindAsync(machine.PlaceId);
                 if (place == null)
                 {
-                    throw new ArgumentException("O PlaceId fornecido não existe.");
+                    throw new ArgumentException("O PlaceId fornecido nï¿½o existe.");
                 }
             }
 
-            // Atualizar as propriedades da máquina
+            // Atualizar as propriedades da mï¿½quina
             existingMachine.Name = machine.Name;
             existingMachine.Type = machine.Type;
             existingMachine.Model = machine.Model;
@@ -72,8 +72,20 @@ namespace MachineAPI.Infrastructure.Repositories
             existingMachine.Status = machine.Status;
             existingMachine.PlaceId = machine.PlaceId;
 
-            // Marcar a máquina para atualização
+            // Marcar a mï¿½quina para atualizaï¿½ï¿½o
             _context.Machines.Update(existingMachine);
+            await _context.SaveChangesAsync();
+        }
+        
+        public async Task DeleteAsync(int id)
+        {
+            var machine = await _context.Machines.FindAsync(id);
+            if (machine == null)
+            {
+                throw new KeyNotFoundException($"Machine with ID {id} not found.");
+            }
+
+            _context.Machines.Remove(machine);
             await _context.SaveChangesAsync();
         }
     }

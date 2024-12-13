@@ -8,6 +8,6 @@ namespace MachineAPI.Domain.Interfaces
         Task<Machine> GetByIdAsync(int id);
         Task AddAsync(Machine machine);
         Task UpdateAsync(Machine machine);
-
+        Task DeleteAsync(int id);
     }
 }

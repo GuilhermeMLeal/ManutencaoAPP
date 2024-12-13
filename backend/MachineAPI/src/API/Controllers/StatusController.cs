@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MachineAPI.src.API.Controllers
 {
-    [ServiceFilter(typeof(VerifyToken))]
+    //[ServiceFilter(typeof(VerifyToken))]
     [Route("api/[controller]")]
     [ApiController]
     public class StatusController : ControllerBase

@@ -19,3 +19,9 @@ interface Place {
   observation: string;
   machines?: Machine[];
 }
+
+interface Status {
+  id: number;
+  name: string;
+  machines?: Machine[];
+}

@@ -23,7 +23,7 @@ import {
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import Title from "../titles/titleMain";
 import { FindItemTextBox } from "../create/findItemTextBox";
-import ToolService from "@/app/service/ToolService";
+import ToolService from "@/service/ToolService";
 import { useRouter } from "next/navigation";
 
 interface Tool {
@@ -37,7 +37,7 @@ export default function MainTools() {
   const [tools, setTools] = useState<Tool[]>([]);
   const [filteredTools, setFilteredTools] = useState<Tool[]>([]);
   const [page, setPage] = useState<number>(0);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(3);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(5); // Valor inicial ajustado para 5
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedToolId, setSelectedToolId] = useState<number | null>(null);
 
@@ -176,6 +176,7 @@ export default function MainTools() {
           page={page}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
+          rowsPerPageOptions={[5, 10, 15, 20]} // Adicionado opções de paginação
         />
       </Container>
 
@@ -193,9 +194,9 @@ export default function MainTools() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-        <Button onClick={handleCloseDialog} sx={{ color: "black" }}>
-          Cancelar
-        </Button>
+          <Button onClick={handleCloseDialog} sx={{ color: "black" }}>
+            Cancelar
+          </Button>
           <Button onClick={handleConfirmDelete} color="error" autoFocus>
             Excluir
           </Button>

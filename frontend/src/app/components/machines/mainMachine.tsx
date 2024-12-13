@@ -13,32 +13,65 @@ import {
   Typography,
   Paper,
   IconButton,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
 } from "@mui/material";
-import { FaEdit, FaTrashAlt } from "react-icons/fa"; // Ícones de lápis e borracha
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import Title from "../titles/titleMain";
 import { FindItemTextBox } from "../create/findItemTextBox";
-import MachineService from "@/app/service/MachineService";
+import MachineService from "@/service/MachineService";
 import { useRouter } from "next/navigation";
 
 export default function MainMachines() {
   const [machines, setMachines] = useState<Machine[]>([]);
   const [filteredMachines, setFilteredMachines] = useState<Machine[]>([]);
   const [page, setPage] = useState<number>(0);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(3);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedMachineId, setSelectedMachineId] = useState<number | null>(
+    null
+  );
+  const [places, setPlaces] = useState<Place[]>([]);
+  const [statuses, setStatuses] = useState<Status[]>([]);
   const router = useRouter();
 
   useEffect(() => {
-    const fetchMachines = async () => {
+    const fetchData = async () => {
       try {
-        const data = await MachineService.getAllMachines();
-        setMachines(data);
-        setFilteredMachines(data);
+        // Fetch machines
+        const machineData = await MachineService.getAllMachines();
+
+        // Fetch places and statuses
+        const placeData = await MachineService.getAllPlaces();
+        const statusData = await MachineService.getAllStatuses();
+
+        setPlaces(placeData);
+        setStatuses(statusData);
+
+        // Map place and status names to machines
+        const enrichedMachines = machineData.map((machine) => {
+          const place = placeData.find((p) => p.id === machine.placeId);
+          const status = statusData.find((s) => s.id === machine.statusId);
+
+          return {
+            ...machine,
+            placeName: place?.name || "N/A",
+            statusName: status?.name || "N/A",
+          };
+        });
+
+        setMachines(enrichedMachines);
+        setFilteredMachines(enrichedMachines);
       } catch (error) {
-        console.error("Error fetching machines:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchMachines();
+    fetchData();
   }, []);
 
   const handleSearch = (query: string) => {
@@ -64,16 +97,33 @@ export default function MainMachines() {
   };
 
   const handleEditMachine = (id: number) => {
-    router.push(`/pages/machines/createMachine?id=${id}`);
+    router.push(`/machines/createMachine?id=${id}`);
   };
 
-  const handleDeleteMachine = async (id: number) => {
+  const handleOpenDialog = (id: number) => {
+    setSelectedMachineId(id);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setSelectedMachineId(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (selectedMachineId === null) return;
+
     try {
-      await MachineService.deleteMachine(id);
-      setMachines((prev) => prev.filter((machine) => machine.id !== id));
-      setFilteredMachines((prev) => prev.filter((machine) => machine.id !== id));
+      await MachineService.deleteMachine(selectedMachineId);
+      setMachines((prev) =>
+        prev.filter((machine) => machine.id !== selectedMachineId)
+      );
+      setFilteredMachines((prev) =>
+        prev.filter((machine) => machine.id !== selectedMachineId)
+      );
+      handleCloseDialog();
     } catch (error) {
-      console.error(`Error deleting machine with ID ${id}:`, error);
+      console.error(`Error deleting machine with ID ${selectedMachineId}:`, error);
     }
   };
 
@@ -85,7 +135,7 @@ export default function MainMachines() {
       />
       <FindItemTextBox
         textButton="Cadastrar uma Máquina"
-        pageText="/pages/machines/createMachine"
+        pageText="/machines/createMachine"
         nameTextSearch="Máquina"
         onSearch={handleSearch}
       />
@@ -113,8 +163,8 @@ export default function MainMachines() {
                       <TableCell>{machine.name}</TableCell>
                       <TableCell>{machine.type}</TableCell>
                       <TableCell>{machine.model}</TableCell>
-                      <TableCell>{machine.status?.name || "N/A"}</TableCell>
-                      <TableCell>{machine.place?.name || "N/A"}</TableCell>
+                      <TableCell>{machine.statusName}</TableCell>
+                      <TableCell>{machine.placeName}</TableCell>
                       <TableCell>
                         <IconButton
                           color="primary"
@@ -124,7 +174,7 @@ export default function MainMachines() {
                         </IconButton>
                         <IconButton
                           color="error"
-                          onClick={() => handleDeleteMachine(machine.id!)}
+                          onClick={() => handleOpenDialog(machine.id!)}
                           sx={{ ml: 1 }}
                         >
                           <FaTrashAlt />
@@ -151,8 +201,33 @@ export default function MainMachines() {
           page={page}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
+          rowsPerPageOptions={[5, 10, 15, 20]}
         />
       </Container>
+
+      {/* Modal de Confirmação de Exclusão */}
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Confirmar Exclusão</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Tem certeza de que deseja excluir esta máquina? Esta ação não pode
+            ser desfeita.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} sx={{ color: "black" }}>
+            Cancelar
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error" autoFocus>
+            Excluir
+          </Button>
+        </DialogActions>
+      </Dialog>
     </main>
   );
 }

@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button, Grid, Box, MenuItem } from "@mui/material";
 import TitleCreate from "../titles/titleCreate";
-import MachineService from "@/app/service/MachineService";
-import { useRouter } from "next/navigation";
+import MachineService from "@/service/MachineService";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function CreateMachine() {
+export default function CreateOrEditMachine() {
   const [formData, setFormData] = useState({
+    id: null,
     name: "",
     type: "",
     model: "",
@@ -21,8 +22,11 @@ export default function CreateMachine() {
   const [places, setPlaces] = useState<Place[]>([]);
   const [statuses, setStatuses] = useState<Status[]>([]);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const machineId = searchParams.get("id"); // Obtém o ID da URL para edição
 
-  React.useEffect(() => {
+  useEffect(() => {
+    // Fetch data for places, statuses, and machine if editing
     const fetchData = async () => {
       try {
         const placesData = await MachineService.getAllPlaces();
@@ -30,13 +34,29 @@ export default function CreateMachine() {
 
         const statusesData = await MachineService.getAllStatuses();
         setStatuses(statusesData);
+
+        if (machineId) {
+          const machineData = await MachineService.getMachineById(
+            Number(machineId)
+          );
+          setFormData({
+            id: machineData.id,
+            name: machineData.name,
+            type: machineData.type,
+            model: machineData.model,
+            manufactureDate: machineData.manufactureDate.split("T")[0], // Ajusta a data para o formato YYYY-MM-DD
+            serialNumber: machineData.serialNumber,
+            placeId: machineData.placeId ? String(machineData.placeId) : "",
+            statusId: machineData.statusId ? String(machineData.statusId) : "",
+          });
+        }
       } catch (error) {
-        console.error("Error fetching places or statuses:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [machineId]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -45,31 +65,40 @@ export default function CreateMachine() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handlePlaceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({ ...prev, placeId: e.target.value }));
-  };
-
-  const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({ ...prev, statusId: e.target.value }));
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      await MachineService.addMachine({
-        name: formData.name,
-        type: formData.type,
-        model: formData.model,
-        manufactureDate: new Date(formData.manufactureDate),
-        serialNumber: formData.serialNumber,
-        placeId: formData.placeId ? parseInt(formData.placeId) : null,
-        statusId: formData.statusId ? parseInt(formData.statusId) : null,
-      });
-      router.push("/pages/machines");
+      if (machineId) {
+        // Atualizar máquina existente
+        await MachineService.updateMachine({
+          Id: formData.id,
+          Name: formData.name,
+          Type: formData.type,
+          Model: formData.model,
+          ManufactureDate: new Date(formData.manufactureDate),
+          SerialNumber: formData.serialNumber,
+          PlaceId: formData.placeId ? parseInt(formData.placeId) : null,
+          StatusId: formData.statusId ? parseInt(formData.statusId) : null,
+        });
+        console.log("Machine updated successfully.");
+      } else {
+        // Criar nova máquina
+        await MachineService.addMachine({
+          Name: formData.name,
+          Type: formData.type,
+          Model: formData.model,
+          ManufactureDate: new Date(formData.manufactureDate),
+          SerialNumber: formData.serialNumber,
+          PlaceId: formData.placeId ? parseInt(formData.placeId) : null,
+          StatusId: formData.statusId ? parseInt(formData.statusId) : null,
+        });
+        console.log("Machine created successfully.");
+      }
+      router.push("/machines");
     } catch (error) {
-      console.error("Error adding machine:", error);
+      console.error("Error saving machine:", error);
     } finally {
       setLoading(false);
     }
@@ -77,7 +106,9 @@ export default function CreateMachine() {
 
   return (
     <main className="flex-1 flex flex-col bg-white/90 overflow-y-auto max-h-svh">
-      <TitleCreate title="Registro de Máquinas" />
+      <TitleCreate
+        title={machineId ? "Editar Máquina" : "Registrar Máquina"}
+      />
       <Box
         component="form"
         noValidate
@@ -93,6 +124,7 @@ export default function CreateMachine() {
         }}
       >
         <Grid container spacing={3}>
+          {/* Nome */}
           <Grid item xs={12} sm={6}>
             <TextField
               required
@@ -105,6 +137,8 @@ export default function CreateMachine() {
               onChange={handleInputChange}
             />
           </Grid>
+
+          {/* Tipo */}
           <Grid item xs={12} sm={6}>
             <TextField
               required
@@ -117,6 +151,8 @@ export default function CreateMachine() {
               onChange={handleInputChange}
             />
           </Grid>
+
+          {/* Modelo */}
           <Grid item xs={12} sm={6}>
             <TextField
               required
@@ -129,6 +165,8 @@ export default function CreateMachine() {
               onChange={handleInputChange}
             />
           </Grid>
+
+          {/* Data de Fabricação */}
           <Grid item xs={12} sm={6}>
             <TextField
               required
@@ -145,6 +183,8 @@ export default function CreateMachine() {
               onChange={handleInputChange}
             />
           </Grid>
+
+          {/* Número de Série */}
           <Grid item xs={12} sm={6}>
             <TextField
               required
@@ -157,6 +197,8 @@ export default function CreateMachine() {
               onChange={handleInputChange}
             />
           </Grid>
+
+          {/* Localização */}
           <Grid item xs={12} sm={6}>
             <TextField
               select
@@ -166,7 +208,7 @@ export default function CreateMachine() {
               fullWidth
               variant="outlined"
               value={formData.placeId}
-              onChange={handlePlaceChange}
+              onChange={handleInputChange}
             >
               <MenuItem value="">
                 <em>Selecione uma Localização</em>
@@ -178,6 +220,8 @@ export default function CreateMachine() {
               ))}
             </TextField>
           </Grid>
+
+          {/* Status */}
           <Grid item xs={12} sm={6}>
             <TextField
               select
@@ -187,7 +231,7 @@ export default function CreateMachine() {
               fullWidth
               variant="outlined"
               value={formData.statusId}
-              onChange={handleStatusChange}
+              onChange={handleInputChange}
             >
               <MenuItem value="">
                 <em>Selecione um Status</em>
@@ -199,6 +243,8 @@ export default function CreateMachine() {
               ))}
             </TextField>
           </Grid>
+
+          {/* Botão de Envio */}
           <Grid item xs={12} className="flex justify-center items-center">
             <Button
               type="submit"
@@ -206,7 +252,13 @@ export default function CreateMachine() {
               color="primary"
               disabled={loading}
             >
-              {loading ? "Registrando..." : "Registrar Máquina"}
+              {loading
+                ? machineId
+                  ? "Atualizando..."
+                  : "Registrando..."
+                : machineId
+                ? "Atualizar Máquina"
+                : "Registrar Máquina"}
             </Button>
           </Grid>
         </Grid>

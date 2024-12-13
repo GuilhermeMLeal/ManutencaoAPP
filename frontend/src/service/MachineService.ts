@@ -71,7 +71,7 @@ const MachineService = {
       throw error;
     }
   },
-
+/*
   async addPlace(placeDto: PlaceDTO): Promise<Place> {
     try {
       const response = await machineApiClient.post<Place>("/Places", placeDto);
@@ -90,7 +90,7 @@ const MachineService = {
       throw error;
     }
   },
-
+*/
   async deletePlace(id: number): Promise<void> {
     try {
       await machineApiClient.delete(`/Places/${id}`);

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Button, Grid, Box, MenuItem } from "@mui/material";
 import TitleCreate from "../titles/titleCreate";
-import UnifiedService from "@/app/service/UserService";
+import UnifiedService from "@/service/UserService";
 import { useRouter } from "next/navigation";
 
 export default function CreateSquad() {
@@ -66,7 +66,7 @@ export default function CreateSquad() {
       };
 
       await UnifiedService.createSquad(squadDTO);
-      router.push("/pages/teams"); // Redireciona após o cadastro
+      router.push("/teams"); // Redireciona após o cadastro
     } catch (error) {
       console.error("Error creating squad:", error);
     } finally {

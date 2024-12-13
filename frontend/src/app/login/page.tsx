@@ -53,7 +53,6 @@ export default function Login() {
     setRemember(event.target.checked);
   };
 
-  //#region Redirect
   if (redirect) {
     return (
       <>
