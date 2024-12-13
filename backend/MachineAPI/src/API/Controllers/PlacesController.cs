@@ -5,7 +5,7 @@ using MachineAPI.API.Controllers.Validation;
 
 namespace MachineAPI.API.Controllers
 {
-    [ServiceFilter(typeof(VerifyToken))]
+    //[ServiceFilter(typeof(VerifyToken))]
     [Route("api/[controller]")]
     [ApiController]
     public class PlacesController : ControllerBase
