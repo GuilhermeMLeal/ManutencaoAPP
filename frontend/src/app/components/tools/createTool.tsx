@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import TitleCreate from "../titles/titleCreate";
 import { Box, Button, Grid, TextField } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
-import ToolService from "@/app/service/ToolService";
+import ToolService from "@/service/ToolService";
 
 export default function CreateOrEditTool() {
   const [toolData, setToolData] = useState({

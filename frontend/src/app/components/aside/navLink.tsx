@@ -7,16 +7,16 @@ import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturi
 
 export default function NavLink() {
   const links = [
-    { target: "/pages/index", text: "Manutenção", icon: <GrVmMaintenance className="text-3xl" /> },
+    { target: "/index", text: "Manutenção", icon: <GrVmMaintenance className="text-3xl" /> },
     {
-      target: "/pages/machines",
+      target: "/machines",
       text: "Máquinas",
       icon: <PrecisionManufacturingIcon fontSize="large" />,
     },
-    { target: "/pages/tools", text: "Peças", icon: <ConstructionIcon fontSize="large" /> },
-    { target: "/pages/teams", text: "Times", icon: <GroupsIcon fontSize="large" /> },
+    { target: "/tools", text: "Peças", icon: <ConstructionIcon fontSize="large" /> },
+    { target: "/teams", text: "Times", icon: <GroupsIcon fontSize="large" /> },
     {
-      target: "/pages/controlStock",
+      target: "/controlStock",
       text: "Relatórios",
       icon: <ChecklistIcon fontSize="large" />,
     },

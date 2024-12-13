@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAccessToken } from "../../utils/storage";
+// import { getAccessToken } from "../../utils/storage";
 
 const transformResponse = [
   (data) => {
@@ -15,26 +15,27 @@ const transformResponse = [
 const createAPIInstance = (baseURL) => {
   const instance = axios.create({
     baseURL,
-    withCredentials: true,
+   // withCredentials: true,
     headers: {
       "Content-Type": "application/json",
     },
     transformResponse,
   });
 
-  instance.interceptors.request.use(
-    async (config) => {
-      const token = await getAccessToken();
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      return config;
-    },
-    (error) => {
-      console.error("Erro ao adicionar o token ao cabeçalho:", error);
-      return Promise.reject(error);
-    }
-  );
+  // Comentando o interceptor de request relacionado ao token
+  // instance.interceptors.request.use(
+  //   async (config) => {
+  //     const token = await getAccessToken();
+  //     if (token) {
+  //       config.headers.Authorization = `Bearer ${token}`;
+  //     }
+  //     return config;
+  //   },
+  //   (error) => {
+  //     console.error("Erro ao adicionar o token ao cabeçalho:", error);
+  //     return Promise.reject(error);
+  //   }
+  // );
 
   instance.interceptors.response.use(
     (response) => response,

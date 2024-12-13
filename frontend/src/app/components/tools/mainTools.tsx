@@ -23,7 +23,7 @@ import {
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import Title from "../titles/titleMain";
 import { FindItemTextBox } from "../create/findItemTextBox";
-import ToolService from "@/app/service/ToolService";
+import ToolService from "@/service/ToolService";
 import { useRouter } from "next/navigation";
 
 interface Tool {

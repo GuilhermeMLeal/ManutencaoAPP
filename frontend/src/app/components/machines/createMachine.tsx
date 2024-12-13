@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { TextField, Button, Grid, Box, MenuItem } from "@mui/material";
 import TitleCreate from "../titles/titleCreate";
-import MachineService from "@/app/service/MachineService";
+import MachineService from "@/service/MachineService";
 import { useRouter } from "next/navigation";
 
 export default function CreateMachine() {
@@ -59,15 +59,15 @@ export default function CreateMachine() {
 
     try {
       await MachineService.addMachine({
-        name: formData.name,
-        type: formData.type,
-        model: formData.model,
-        manufactureDate: new Date(formData.manufactureDate),
-        serialNumber: formData.serialNumber,
-        placeId: formData.placeId ? parseInt(formData.placeId) : null,
+        Name: formData.name,
+        Type: formData.type,
+        Model: formData.model,
+        ManufactureDate: new Date(formData.manufactureDate),
+        SerialNumber: formData.serialNumber,
+        PlaceId: formData.placeId ? parseInt(formData.placeId) : null,
         statusId: formData.statusId ? parseInt(formData.statusId) : null,
       });
-      router.push("/pages/machines");
+      router.push("/machines");
     } catch (error) {
       console.error("Error adding machine:", error);
     } finally {

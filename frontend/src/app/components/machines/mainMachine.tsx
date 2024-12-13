@@ -17,7 +17,7 @@ import {
 import { FaEdit, FaTrashAlt } from "react-icons/fa"; // Ícones de lápis e borracha
 import Title from "../titles/titleMain";
 import { FindItemTextBox } from "../create/findItemTextBox";
-import MachineService from "@/app/service/MachineService";
+import MachineService from "@/service/MachineService";
 import { useRouter } from "next/navigation";
 
 export default function MainMachines() {
@@ -64,7 +64,7 @@ export default function MainMachines() {
   };
 
   const handleEditMachine = (id: number) => {
-    router.push(`/pages/machines/createMachine?id=${id}`);
+    router.push(`/machines/createMachine?id=${id}`);
   };
 
   const handleDeleteMachine = async (id: number) => {
@@ -85,7 +85,7 @@ export default function MainMachines() {
       />
       <FindItemTextBox
         textButton="Cadastrar uma Máquina"
-        pageText="/pages/machines/createMachine"
+        pageText="/machines/createMachine"
         nameTextSearch="Máquina"
         onSearch={handleSearch}
       />

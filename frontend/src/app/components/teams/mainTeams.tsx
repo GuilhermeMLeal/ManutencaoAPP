@@ -16,10 +16,7 @@ import Title from "../titles/titleMain";
 import CardBox from "../table/cardBox";
 import { FindItemTextBox } from "../create/findItemTextBox";
 import PaginationComponent from "../table/PaginationComponent";
-import SquadService from "@/app/service/SquadService";
-
-// Ensure you import the Squad type from the correct file
-import { Squad } from "../../entities/model/User"; // Replace with the correct path to your Squad entity/type
+import SquadService from "@/service/SquadService";
 
 const MainTeam: React.FC = () => {
   const [squads, setSquads] = useState<Squad[]>([]); // Correct Squad type used here
@@ -110,11 +107,9 @@ const MainTeam: React.FC = () => {
         subtitle="Visualização Detalhada de Equipe"
       />
       <FindItemTextBox
-        textReport="Criar Relatório de Equipe"
         textButton="Cadastrar uma Equipe"
         pageText="/pages/teams/createTeam"
         nameTextSearch="Equipe"
-        typeTextField="Área do Time"
         onSearch={handleSearch}
       />
       <Container maxWidth="lg" className="mb-4">
