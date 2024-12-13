@@ -79,6 +79,25 @@ namespace UserAuth.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task DeleteSquadToUser(int squadId)
+        {
+            // Busca todas as relações onde SquadId corresponde ao fornecido
+            var userSquads = await _context.UserSquads
+                .Where(us => us.SquadId == squadId)
+                .ToListAsync();
+
+            // Verifica se existem relações antes de tentar remover
+            if (userSquads.Any())
+            {
+                _context.UserSquads.RemoveRange(userSquads); // Remove todas as relações encontradas
+                await _context.SaveChangesAsync(); // Salva as alterações
+            }
+            else
+            {
+                throw new KeyNotFoundException("Nenhuma relação encontrada para o SquadId especificado.");
+            }
+        }
+
         public async Task RemoveRoleFromUser(int userId, int roleId)
         {
             var userRole = await _context.UserRoles

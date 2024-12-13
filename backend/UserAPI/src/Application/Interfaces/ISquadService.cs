@@ -9,6 +9,8 @@ namespace UserAuth.Application.Interfaces
         Task<SquadDTO> GetSquadById(int id);
         Task AddSquad(SquadDTO roleDTO);
         Task UpdateSquad(int id, SquadDTO roleDTO);
+        Task AddSquadToUser(int squadId, SquadDTO squadDTO);
         Task DeleteSquad(int id);
+        Task DeleteAllUsersOfSquads(int squadId);
     }
 }
