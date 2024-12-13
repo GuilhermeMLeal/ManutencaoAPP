@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   TextField,
   Button,
@@ -10,181 +10,282 @@ import {
   Select,
   InputLabel,
   FormControl,
-  Chip,
+  Typography,
 } from "@mui/material";
 import TitleCreate from "../titles/titleCreate";
+import MachineService from "@/service/MachineService";
+import ToolService from "@/service/ToolService";
+import MaintenanceService from "@/service/MaintenanceService";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const teams = [
-  { value: "team1", label: "Equipe 1" },
-  { value: "team2", label: "Equipe 2" },
-  { value: "team3", label: "Equipe 3" },
-];
+interface Maintenance {
+  id?: number;
+  machineId: number;
+  observations: string;
+  startDate: string;
+  endDate: string;
+  maintenanceParts: MaintenancePart[];
+}
 
-const parts = [
-  { value: "part1", label: "Peça 1" },
-  { value: "part2", label: "Peça 2" },
-  { value: "part3", label: "Peça 3" },
-];
+interface MaintenancePart {
+  partId: number;
+  quantity: number;
+}
 
-export default function CreateMaintenance() {
-  const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
-  const [selectedParts, setSelectedParts] = useState<
-    { part: string; quantity: number; supplier: string }[]
-  >([]);
+interface Part {
+  Id: number;
+  Name: string;
+  Quantity: number;
+  Description: string;
+}
 
-  const handleTeamChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSelectedTeams(event.target.value as string[]);
+export default function CreateOrEditMaintenance() {
+  const [formData, setFormData] = useState<Omit<Maintenance, "id">>({
+    machineId: 0,
+    observations: "",
+    startDate: "",
+    endDate: "",
+    maintenanceParts: [],
+  });
+  const [machines, setMachines] = useState<{ id: number; name: string }[]>([]);
+  const [parts, setParts] = useState<Part[]>([]);
+  const [dateError, setDateError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const maintenanceId = searchParams.get("id");
+
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        setLoading(true);
+
+        // Fetch machines and parts
+        const [machineData, partData] = await Promise.all([
+          MachineService.getAllMachines(),
+          ToolService.getAllTools(),
+        ]);
+        setMachines(machineData.map((m) => ({ id: m.id, name: m.name })));
+        setParts(partData);
+
+        // If editing, fetch the maintenance details
+        if (maintenanceId) {
+          const maintenance = await MaintenanceService.getMaintenanceById(
+            Number(maintenanceId)
+          );
+          setFormData({
+            machineId: maintenance.machineId,
+            observations: maintenance.observations,
+            startDate: maintenance.startDate.split("T")[0],
+            endDate: maintenance.endDate.split("T")[0],
+            maintenanceParts: maintenance.maintenanceParts.map((part) => ({
+              partId: part.partId,
+              quantity: part.quantity,
+            })),
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInitialData();
+  }, [maintenanceId]);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+
+    if (name === "startDate" || name === "endDate") {
+      validateDates(name, value);
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const validateDates = (field: string, value: string) => {
+    const startDate = field === "startDate" ? value : formData.startDate;
+    const endDate = field === "endDate" ? value : formData.endDate;
+
+    if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
+      setDateError("A data de início não pode ser maior que a data de fim.");
+    } else {
+      setDateError("");
+    }
   };
 
   const handlePartChange = (
     index: number,
-    field: string,
+    field: keyof MaintenancePart,
     value: string | number
   ) => {
-    const newParts = [...selectedParts];
+    const newParts = [...formData.maintenanceParts];
     newParts[index] = { ...newParts[index], [field]: value };
-    setSelectedParts(newParts);
+    setFormData({ ...formData, maintenanceParts: newParts });
   };
 
   const addPart = () => {
-    setSelectedParts([
-      ...selectedParts,
-      { part: "", quantity: 0, supplier: "" },
-    ]);
+    setFormData({
+      ...formData,
+      maintenanceParts: [
+        ...formData.maintenanceParts,
+        { partId: 0, quantity: 0 },
+      ],
+    });
   };
 
   const removePart = (index: number) => {
-    setSelectedParts(selectedParts.filter((_, i) => i !== index));
+    setFormData({
+      ...formData,
+      maintenanceParts: formData.maintenanceParts.filter((_, i) => i !== index),
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+
+      const maintenancePayload = {
+        machineId: formData.machineId,
+        observations: formData.observations,
+        startDate: `${formData.startDate}T00:00:00Z`,
+        endDate: `${formData.endDate}T00:00:00Z`,
+        lastUpdate: new Date().toISOString(),
+        maintenanceParts: formData.maintenanceParts.map(({ partId, quantity }) => ({
+          partId,
+          quantity,
+        })),
+      };
+
+      if (maintenanceId) {
+        // Update existing maintenance
+        await MaintenanceService.updateMaintenance({
+          ...maintenancePayload,
+          id: Number(maintenanceId),
+        });
+      } else {
+        await MaintenanceService.createMaintenance(maintenancePayload);
+      }
+
+      router.push("/maintenance");
+    } catch (error) {
+      console.error("Error saving maintenance:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <main className="flex-1 flex flex-col bg-white/90 overflow-y-auto max-h-svh">
-      <TitleCreate title={"Registro de Solicitações de Manutenção"} />
-      <Box component="form" noValidate sx={{ maxWidth: 800, margin: "0 auto" }} className="pt-4">
+      <TitleCreate
+        title={maintenanceId ? "Editar Manutenção" : "Registrar Manutenção"}
+      />
+      <Box
+        component="form"
+        noValidate
+        onSubmit={handleSubmit}
+        sx={{
+          width: "100%",
+          maxWidth: 1000,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "auto",
+        }}
+      >
         <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <FormControl fullWidth variant="outlined">
+              <InputLabel id="machine-label">Máquina</InputLabel>
+              <Select
+                required
+                id="machineId"
+                name="machineId"
+                label="Máquina"
+                value={formData.machineId}
+                onChange={(e) =>
+                  setFormData({ ...formData, machineId: Number(e.target.value) })
+                }
+                labelId="machine-label"
+              >
+                <MenuItem value={0}>
+                  <em>Selecione uma Máquina</em>
+                </MenuItem>
+                {machines.map((machine) => (
+                  <MenuItem key={machine.id} value={machine.id}>
+                    {machine.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
           <Grid item xs={12}>
             <TextField
               required
-              id="description"
-              name="description"
-              label="Descrição do Problema"
+              id="observations"
+              name="observations"
+              label="Observações"
               fullWidth
               multiline
               rows={4}
               variant="outlined"
+              value={formData.observations}
+              onChange={handleInputChange}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               required
-              id="requestDate"
-              name="requestDate"
-              label="Data da Solicitação"
+              id="startDate"
+              name="startDate"
+              label="Data de Início"
               type="date"
               fullWidth
               InputLabelProps={{
                 shrink: true,
               }}
               variant="outlined"
+              value={formData.startDate}
+              onChange={handleInputChange}
+              error={!!dateError}
             />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth variant="outlined">
-              <InputLabel id="priority-label">Prioridade</InputLabel>
-              <Select
-                required
-                id="priority"
-                name="priority"
-                label="Prioridade"
-                labelId="priority-label"
-              >
-                <MenuItem value="Baixa">Baixa</MenuItem>
-                <MenuItem value="Média">Média</MenuItem>
-                <MenuItem value="Alta">Alta</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth variant="outlined">
-              <InputLabel id="teams-label">Equipes</InputLabel>
-              <Select
-                multiple
-                id="teams"
-                name="teams"
-                label="Equipes"
-                value={selectedTeams}
-                onChange={(e) =>
-                  handleTeamChange(e as React.ChangeEvent<{ value: unknown }>)
-                }
-                renderValue={(selected) => (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {(selected as string[]).map((value) => (
-                      <Chip
-                        key={value}
-                        label={
-                          teams.find((team) => team.value === value)?.label
-                        }
-                      />
-                    ))}
-                  </Box>
-                )}
-              >
-                {teams.map((team) => (
-                  <MenuItem key={team.value} value={team.value}>
-                    {team.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               required
-              id="responsible"
-              name="responsible"
-              label="Responsável"
+              id="endDate"
+              name="endDate"
+              label="Data de Fim"
+              type="date"
               fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
               variant="outlined"
+              value={formData.endDate}
+              onChange={handleInputChange}
+              error={!!dateError}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth variant="outlined">
-              <InputLabel id="status-label">Status da Manutenção</InputLabel>
-              <Select
-                required
-                id="status"
-                name="status"
-                label="Status da Manutenção"
-                labelId="status-label"
-              >
-                <MenuItem value="Pendente">Pendente</MenuItem>
-                <MenuItem value="Em Andamento">Em Andamento</MenuItem>
-                <MenuItem value="Concluída">Concluída</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+          {dateError && (
+            <Grid item xs={12}>
+              <Typography color="error">{dateError}</Typography>
+            </Grid>
+          )}
           <Grid container item xs={12} spacing={2} justifyContent="center">
             <Grid item>
               <Button variant="contained" onClick={addPart}>
                 Adicionar Peça
               </Button>
             </Grid>
-            <Grid item>
-              <input
-                accept="image/*"
-                style={{ display: "none" }}
-                id="raised-button-file"
-                multiple
-                type="file"
-              />
-              <label htmlFor="raised-button-file">
-                <Button variant="contained" component="span">
-                  Upload de Arquivos
-                </Button>
-              </label>
-            </Grid>
           </Grid>
-          {selectedParts.map((part, index) => (
+          {formData.maintenanceParts.map((part, index) => (
             <Grid item xs={12} key={index}>
               <Box
                 sx={{
@@ -202,22 +303,22 @@ export default function CreateMaintenance() {
                         id={`part-${index}`}
                         name={`part-${index}`}
                         label="Peça"
-                        value={part.part}
+                        value={part.partId}
                         onChange={(e) =>
                           handlePartChange(
                             index,
-                            "part",
-                            e.target.value as string
+                            "partId",
+                            Number(e.target.value)
                           )
                         }
                         labelId={`part-label-${index}`}
                       >
+                        <MenuItem value={0}>
+                          <em>Selecione uma Peça</em>
+                        </MenuItem>
                         {parts.map((partOption) => (
-                          <MenuItem
-                            key={partOption.value}
-                            value={partOption.value}
-                          >
-                            {partOption.label}
+                          <MenuItem key={partOption.Id} value={partOption.Id}>
+                            {partOption.Name}
                           </MenuItem>
                         ))}
                       </Select>
@@ -242,38 +343,13 @@ export default function CreateMaintenance() {
                     />
                   </Grid>
                   <Grid item xs={12} sm={4}>
-                    <Grid container alignItems="center">
-                      <Grid item xs={9}>
-                        <TextField
-                          id={`supplier-${index}`}
-                          name={`supplier-${index}`}
-                          label="Fornecedor"
-                          fullWidth
-                          variant="outlined"
-                          value={part.supplier}
-                          onChange={(e) =>
-                            handlePartChange(
-                              index,
-                              "supplier",
-                              e.target.value as string
-                            )
-                          }
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        xs={3}
-                        sx={{ textAlign: "right", paddingLeft: "5%" }}
-                      >
-                        <Button
-                          variant="contained"
-                          color="error"
-                          onClick={() => removePart(index)}
-                        >
-                          Remover Peça
-                        </Button>
-                      </Grid>
-                    </Grid>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={() => removePart(index)}
+                    >
+                      Remover Peça
+                    </Button>
                   </Grid>
                 </Grid>
               </Box>
@@ -281,11 +357,20 @@ export default function CreateMaintenance() {
           ))}
           <Grid container item xs={12} justifyContent="center">
             <Grid item xs={12} className="flex justify-center items-center">
-              <a href="/pages/index">
-                <Button variant="contained" color="primary">
-                  Registrar Manutenção
-                </Button>
-              </a>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={loading}
+              >
+                {loading
+                  ? maintenanceId
+                    ? "Atualizando..."
+                    : "Registrando..."
+                  : maintenanceId
+                  ? "Atualizar Manutenção"
+                  : "Registrar Manutenção"}
+              </Button>
             </Grid>
           </Grid>
         </Grid>

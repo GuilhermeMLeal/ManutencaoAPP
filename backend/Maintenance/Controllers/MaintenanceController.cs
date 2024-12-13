@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Maintenance.Controllers
 {   
-    [ServiceFilter(typeof(VerifyToken))]
+    //[ServiceFilter(typeof(VerifyToken))]
     [ApiController]
     [Route("api/[controller]")]
     public class MaintenanceController : ControllerBase

@@ -44,7 +44,7 @@ export default function CreateOrEditMachine() {
             name: machineData.name,
             type: machineData.type,
             model: machineData.model,
-            manufactureDate: machineData.manufactureDate.split("T")[0], // Ajusta a data para o formato YYYY-MM-DD
+            manufactureDate: machineData.manufactureDate.split("T")[0],
             serialNumber: machineData.serialNumber,
             placeId: machineData.placeId ? String(machineData.placeId) : "",
             statusId: machineData.statusId ? String(machineData.statusId) : "",
