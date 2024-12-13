@@ -7,7 +7,7 @@ import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturi
 
 export default function NavLink() {
   const links = [
-    { target: "/index", text: "Manutenção", icon: <GrVmMaintenance className="text-3xl" /> },
+    { target: "/maintenance", text: "Manutenção", icon: <GrVmMaintenance className="text-3xl" /> },
     {
       target: "/machines",
       text: "Máquinas",
