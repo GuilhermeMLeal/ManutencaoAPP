@@ -30,25 +30,48 @@ export default function MainMachines() {
   const [machines, setMachines] = useState<Machine[]>([]);
   const [filteredMachines, setFilteredMachines] = useState<Machine[]>([]);
   const [page, setPage] = useState<number>(0);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(3);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(5);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedMachineId, setSelectedMachineId] = useState<number | null>(
     null
   );
+  const [places, setPlaces] = useState<Place[]>([]);
+  const [statuses, setStatuses] = useState<Status[]>([]);
   const router = useRouter();
 
   useEffect(() => {
-    const fetchMachines = async () => {
+    const fetchData = async () => {
       try {
-        const data = await MachineService.getAllMachines();
-        setMachines(data);
-        setFilteredMachines(data);
+        // Fetch machines
+        const machineData = await MachineService.getAllMachines();
+
+        // Fetch places and statuses
+        const placeData = await MachineService.getAllPlaces();
+        const statusData = await MachineService.getAllStatuses();
+
+        setPlaces(placeData);
+        setStatuses(statusData);
+
+        // Map place and status names to machines
+        const enrichedMachines = machineData.map((machine) => {
+          const place = placeData.find((p) => p.id === machine.placeId);
+          const status = statusData.find((s) => s.id === machine.statusId);
+
+          return {
+            ...machine,
+            placeName: place?.name || "N/A",
+            statusName: status?.name || "N/A",
+          };
+        });
+
+        setMachines(enrichedMachines);
+        setFilteredMachines(enrichedMachines);
       } catch (error) {
-        console.error("Error fetching machines:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchMachines();
+    fetchData();
   }, []);
 
   const handleSearch = (query: string) => {
@@ -140,8 +163,8 @@ export default function MainMachines() {
                       <TableCell>{machine.name}</TableCell>
                       <TableCell>{machine.type}</TableCell>
                       <TableCell>{machine.model}</TableCell>
-                      <TableCell>{machine.status?.name || "N/A"}</TableCell>
-                      <TableCell>{machine.place?.name || "N/A"}</TableCell>
+                      <TableCell>{machine.statusName}</TableCell>
+                      <TableCell>{machine.placeName}</TableCell>
                       <TableCell>
                         <IconButton
                           color="primary"
@@ -178,6 +201,7 @@ export default function MainMachines() {
           page={page}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
+          rowsPerPageOptions={[5, 10, 15, 20]}
         />
       </Container>
 
