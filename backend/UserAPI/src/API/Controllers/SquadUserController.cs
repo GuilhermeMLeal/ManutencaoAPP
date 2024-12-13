@@ -35,7 +35,7 @@ namespace AuthMicroservice.src.API.Controllers
             try
             {
                 await _squadService.DeleteAllUsersOfSquads(squadId);
-                await _squadService.AddUsersToUser(squadId, squadDTO);
+                await _squadService.AddSquadToUser(squadId, squadDTO);
                 return Ok(new { message = "Todos os usuários foram removidos do squad." });
             }
             catch (Exception ex)
