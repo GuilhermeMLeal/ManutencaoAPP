@@ -62,12 +62,26 @@ namespace Maintenance.Controllers
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> Update([FromBody] Models.Maintenance maintenance)
         {
             try
             {
                 await _business.UpdateAsync(maintenance);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _business.DeleteAsync(id);    
                 return NoContent();
             }
             catch (Exception ex)

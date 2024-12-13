@@ -47,7 +47,7 @@ namespace UserAuth.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "users:admin")]
+        //[Authorize(Roles = "users:admin")]
         public async Task<IActionResult> UpdateUser(int id, UserDTO userDTO)
         {
             var existingUser = await _userService.GetUserById(id);
@@ -58,7 +58,7 @@ namespace UserAuth.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "users:admin")]
+        //[Authorize(Roles = "users:admin")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var existingUser = await _userService.GetUserById(id);
