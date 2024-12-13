@@ -168,6 +168,21 @@ namespace UserAuth.Application.Services
             await _userRepository.AddRoleToUser(userId, role);
         }
 
+        public async Task AddSquadToUser(List<int> users, int squadId)
+        {
+            foreach (var userDTO in users)
+            {
+                var existingSquad = await _squadRepository.GetSquadById(squadId);
+                if (existingSquad == null)
+                {
+                    //existingSquad = new UserAuth.Domain.Entities.Squad { Name = squadDTO.Name };
+                    //await _roleRepository.AddRole(existingRole); // Adicione um método para adicionar role
+                }
+
+                await _userRepository.AddSquadToUser((int)userDTO, existingSquad);
+            }
+        }
+
         public async Task RemoveRoleFromUser(int userId, int roleId)
         {
             await _userRepository.RemoveRoleFromUser(userId, roleId);

@@ -72,6 +72,20 @@ namespace UserAuth.Infrastructure.Services
             }
         }
 
+        public async Task DeleteAllUsersOfSquads(int squadId)
+        {
+            await _userRepository.DeleteSquadToUser(squadId);
+        }
+
+        public async Task AddSquadToUser(int squadId, SquadDTO squadDTO)
+        {
+            var squad = await _squadRepository.GetSquadById(squadId);
+            foreach (var user in squadDTO.Users)
+            {
+                _userRepository.AddSquadToUser((int)user.Id, squad);
+            }
+        }
+
         public async Task UpdateSquad(int id, SquadDTO squadDTO)
         {
             var squad = await _squadRepository.GetSquadById(id);
@@ -83,6 +97,15 @@ namespace UserAuth.Infrastructure.Services
             squad.Description = squadDTO.Description;
 
             await _squadRepository.UpdateSquad(squad);
+
+            await DeleteAllUsersOfSquads(id);
+            if(squadDTO.Users != null)
+            {
+                foreach (var user in squadDTO.Users)
+                {
+                    _userRepository.AddSquadToUser((int)user.Id, squad);
+                }
+            }
         }
 
         public async Task DeleteSquad(int id)
