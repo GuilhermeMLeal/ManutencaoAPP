@@ -1,7 +1,7 @@
 "use client";
 import { AuthProvider } from "@/AuthContext";
-import Index from "./pages/index/page";
-import Login from "./pages/login/page";
+import Index from "./index/page";
+import Login from "./login/page";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "@/PrivateRoute";
 
