@@ -14,7 +14,8 @@ namespace UserAuth.Domain.Interfaces
 
         Task<IEnumerable<Role>> GetRolesByUserId(int userId);
         Task AddRoleToUser(int userId, Role role);
-        Task AddSquadToUser(int userId, UserAuth.Domain.Entities.Squad role);
+        Task DeleteSquadToUser(int squadId);
+        Task AddSquadToUser(int userId, UserAuth.Domain.Entities.Squad squad);
 
         Task RemoveRoleFromUser(int userId, int roleId);
     }
