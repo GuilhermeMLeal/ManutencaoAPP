@@ -5,7 +5,7 @@ interface MachineCreateDto {
     Model: string;
     ManufactureDate: Date;
     SerialNumber: string;
-    Status: string;
+    StatusId?: number | null;
     PlaceId?: number | null;
   }
   

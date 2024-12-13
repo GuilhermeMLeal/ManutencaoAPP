@@ -13,8 +13,14 @@ import {
   Typography,
   Paper,
   IconButton,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
 } from "@mui/material";
-import { FaEdit, FaTrashAlt } from "react-icons/fa"; // Ícones de lápis e borracha
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import Title from "../titles/titleMain";
 import { FindItemTextBox } from "../create/findItemTextBox";
 import MachineService from "@/service/MachineService";
@@ -25,6 +31,10 @@ export default function MainMachines() {
   const [filteredMachines, setFilteredMachines] = useState<Machine[]>([]);
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(3);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedMachineId, setSelectedMachineId] = useState<number | null>(
+    null
+  );
   const router = useRouter();
 
   useEffect(() => {
@@ -67,13 +77,30 @@ export default function MainMachines() {
     router.push(`/machines/createMachine?id=${id}`);
   };
 
-  const handleDeleteMachine = async (id: number) => {
+  const handleOpenDialog = (id: number) => {
+    setSelectedMachineId(id);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setSelectedMachineId(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (selectedMachineId === null) return;
+
     try {
-      await MachineService.deleteMachine(id);
-      setMachines((prev) => prev.filter((machine) => machine.id !== id));
-      setFilteredMachines((prev) => prev.filter((machine) => machine.id !== id));
+      await MachineService.deleteMachine(selectedMachineId);
+      setMachines((prev) =>
+        prev.filter((machine) => machine.id !== selectedMachineId)
+      );
+      setFilteredMachines((prev) =>
+        prev.filter((machine) => machine.id !== selectedMachineId)
+      );
+      handleCloseDialog();
     } catch (error) {
-      console.error(`Error deleting machine with ID ${id}:`, error);
+      console.error(`Error deleting machine with ID ${selectedMachineId}:`, error);
     }
   };
 
@@ -124,7 +151,7 @@ export default function MainMachines() {
                         </IconButton>
                         <IconButton
                           color="error"
-                          onClick={() => handleDeleteMachine(machine.id!)}
+                          onClick={() => handleOpenDialog(machine.id!)}
                           sx={{ ml: 1 }}
                         >
                           <FaTrashAlt />
@@ -153,6 +180,30 @@ export default function MainMachines() {
           onRowsPerPageChange={handleRowsPerPageChange}
         />
       </Container>
+
+      {/* Modal de Confirmação de Exclusão */}
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Confirmar Exclusão</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Tem certeza de que deseja excluir esta máquina? Esta ação não pode
+            ser desfeita.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} sx={{ color: "black" }}>
+            Cancelar
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error" autoFocus>
+            Excluir
+          </Button>
+        </DialogActions>
+      </Dialog>
     </main>
   );
 }
