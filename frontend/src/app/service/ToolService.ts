@@ -3,8 +3,13 @@ import { toolApiClient } from "./api";
 const ToolService = {
   async getAllTools(): Promise<Tool[]> {
     try {
-      const response = await toolApiClient.get<Tool[]>("/Tools");
-      return response.data;
+      const response = await toolApiClient.get("/Tool");
+      return response.data.map((tool: any) => ({
+        Id: tool.id,
+        Name: tool.name,
+        Quantity: tool.quantity,
+        Description: tool.description,
+      }));
     } catch (error) {
       console.error("Error fetching tools:", error);
       throw error;
@@ -13,8 +18,13 @@ const ToolService = {
 
   async getToolById(id: number): Promise<Tool> {
     try {
-      const response = await toolApiClient.get<Tool>(`/Tools/${id}`);
-      return response.data;
+      const response = await toolApiClient.get(`/Tool/${id}`);
+      return {
+        Id: response.data.id,
+        Name: response.data.name,
+        Quantity: response.data.quantity,
+        Description: response.data.description,
+      };
     } catch (error) {
       console.error(`Error fetching tool with ID ${id}:`, error);
       throw error;
@@ -23,7 +33,7 @@ const ToolService = {
 
   async addTool(toolDto: ToolDTO): Promise<Tool> {
     try {
-      const response = await toolApiClient.post<Tool>("/Tools", toolDto);
+      const response = await toolApiClient.post<Tool>("/Tool", toolDto);
       return response.data;
     } catch (error) {
       console.error("Error adding tool:", error);
@@ -33,7 +43,7 @@ const ToolService = {
 
   async updateTool(toolDto: ToolDTO): Promise<void> {
     try {
-      await toolApiClient.put("/Tools", toolDto);
+      await toolApiClient.put("/Tool", toolDto);
     } catch (error) {
       console.error(`Error updating tool with ID ${toolDto.Id}:`, error);
       throw error;
@@ -42,7 +52,7 @@ const ToolService = {
 
   async updateToolQuantity(updateTool: UpdateTool): Promise<void> {
     try {
-      await toolApiClient.put("/Tools/quantity", updateTool);
+      await toolApiClient.put("/Tool/quantity", updateTool);
     } catch (error) {
       console.error(
         `Error updating quantity for tool with ID ${updateTool.id}:`,
@@ -54,7 +64,7 @@ const ToolService = {
 
   async deleteTool(id: number): Promise<void> {
     try {
-      await toolApiClient.delete(`/Tools/${id}`);
+      await toolApiClient.delete(`/Tool/${id}`);
     } catch (error) {
       console.error(`Error deleting tool with ID ${id}:`, error);
       throw error;

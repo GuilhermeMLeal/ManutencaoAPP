@@ -12,18 +12,35 @@ import {
   TablePagination,
   Typography,
   Paper,
+  IconButton,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Button,
 } from "@mui/material";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import Title from "../titles/titleMain";
 import { FindItemTextBox } from "../create/findItemTextBox";
 import ToolService from "@/app/service/ToolService";
 import { useRouter } from "next/navigation";
 
+interface Tool {
+  Id: number;
+  Name: string;
+  Quantity: number;
+  Description: string;
+}
+
 export default function MainTools() {
-  const [tools, setTools] = useState<ToolDTO[]>([]);
-  const [filteredTools, setFilteredTools] = useState<ToolDTO[]>([]);
+  const [tools, setTools] = useState<Tool[]>([]);
+  const [filteredTools, setFilteredTools] = useState<Tool[]>([]);
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(3);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedToolId, setSelectedToolId] = useState<number | null>(null);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -31,7 +48,7 @@ export default function MainTools() {
       try {
         const data = await ToolService.getAllTools();
         setTools(data);
-        setFilteredTools(data); 
+        setFilteredTools(data);
       } catch (error) {
         console.error("Error fetching tools:", error);
       }
@@ -45,7 +62,7 @@ export default function MainTools() {
       tool.Name.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredTools(filtered);
-    setPage(0); // Reinicia a paginação após a busca
+    setPage(0);
   };
 
   const handlePageChange = (
@@ -63,7 +80,30 @@ export default function MainTools() {
   };
 
   const handleEditTool = (id: number) => {
-    router.push(`/pages/tools/createTool?id=${id}`);
+    router.push(`/tools/createTool?id=${id}`);
+  };
+
+  const handleOpenDialog = (id: number) => {
+    setSelectedToolId(id);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setSelectedToolId(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (selectedToolId === null) return;
+    try {
+      await ToolService.deleteTool(selectedToolId);
+      const updatedTools = tools.filter((tool) => tool.Id !== selectedToolId);
+      setTools(updatedTools);
+      setFilteredTools(updatedTools);
+      handleCloseDialog();
+    } catch (error) {
+      console.error(`Error deleting tool with ID ${selectedToolId}:`, error);
+    }
   };
 
   return (
@@ -73,12 +113,10 @@ export default function MainTools() {
         subtitle="Visualização Detalhada de Peças"
       />
       <FindItemTextBox
-        textReport="Criar Relatório de Peças"
         textButton="Cadastrar uma Peça"
-        pageText="/pages/tools/createTool"
+        pageText="/tools/createTool"
         nameTextSearch="Peça"
-        typeTextField="Fornecedor"
-        onSearch={handleSearch} // Passa a lógica de busca
+        onSearch={handleSearch}
       />
       <Container maxWidth="lg" className="mb-4">
         <TableContainer component={Paper}>
@@ -103,13 +141,19 @@ export default function MainTools() {
                       <TableCell>{tool.Quantity}</TableCell>
                       <TableCell>{tool.Description}</TableCell>
                       <TableCell>
-                        <Button
-                          variant="contained"
+                        <IconButton
                           color="primary"
-                          onClick={() => handleEditTool(tool.Id!)}
+                          onClick={() => handleEditTool(tool.Id)}
                         >
-                          Editar
-                        </Button>
+                          <FaEdit />
+                        </IconButton>
+                        <IconButton
+                          color="error"
+                          onClick={() => handleOpenDialog(tool.Id)}
+                          sx={{ ml: 1 }}
+                        >
+                          <FaTrashAlt />
+                        </IconButton>
                       </TableCell>
                     </TableRow>
                   ))
@@ -134,6 +178,29 @@ export default function MainTools() {
           onRowsPerPageChange={handleRowsPerPageChange}
         />
       </Container>
+
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Confirmar Exclusão</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Tem certeza de que deseja excluir esta peça? Esta ação não pode ser
+            desfeita.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+        <Button onClick={handleCloseDialog} sx={{ color: "black" }}>
+          Cancelar
+        </Button>
+          <Button onClick={handleConfirmDelete} color="error" autoFocus>
+            Excluir
+          </Button>
+        </DialogActions>
+      </Dialog>
     </main>
   );
 }

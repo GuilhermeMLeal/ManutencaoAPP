@@ -43,12 +43,10 @@ export default function CreateOrEditTool() {
     try {
       if (toolId) {
         await ToolService.updateTool(toolData);
-        console.log("Tool updated successfully");
       } else {
         await ToolService.addTool(toolData);
-        console.log("Tool added successfully");
       }
-      router.push("/tools"); // Redirect to tools list after submission
+      router.push("/tools");
     } catch (error) {
       console.error("Error saving tool:", error);
     }
