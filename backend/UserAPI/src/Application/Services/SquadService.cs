@@ -98,9 +98,17 @@ namespace UserAuth.Infrastructure.Services
 
             await _squadRepository.UpdateSquad(squad);
 
-            await DeleteAllUsersOfSquads(id);
-            if(squadDTO.Users != null)
+            if(squadDTO.Users != null && squadDTO.Users.Count != 0)
             {
+                try
+                {
+                    await DeleteAllUsersOfSquads(id);
+                }
+                catch
+                {
+                    
+                }
+               
                 foreach (var user in squadDTO.Users)
                 {
                     _userRepository.AddSquadToUser((int)user.Id, squad);
