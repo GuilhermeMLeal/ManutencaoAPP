@@ -10,9 +10,9 @@ export const storeTokens = ({ accessToken, refreshToken }: { accessToken: string
 
 export const storeAccessToken = (accessToken: string) => {
   try {
-    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem("accessToken", accessToken);
   } catch (error) {
-    console.error('Erro ao armazenar o token de acesso', error);
+    console.error("Erro ao armazenar o token de acesso", error);
   }
 };
 
@@ -40,9 +40,8 @@ export const getAccessToken = () => {
 // Remove tokens do localStorage
 export const clearTokens = () => {
   try {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    localStorage.removeItem("accessToken");
   } catch (error) {
-    console.error('Erro ao remover os tokens', error);
+    console.error("Erro ao remover o token de acesso", error);
   }
 };

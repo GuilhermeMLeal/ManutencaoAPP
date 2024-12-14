@@ -1,6 +1,35 @@
 import axios from "axios";
 // import { getAccessToken } from "../../utils/storage";
 
+const transformResponseForLogin = [
+  (data) => {
+    try {
+      return JSON.parse(data);
+    } catch {
+      // Retorna o dado original caso não seja JSON
+      return data;
+    }
+  },
+];
+
+// Instância específica para login
+const loginApiClient = axios.create({
+  baseURL: "http://localhost:3001/api", // Substituir pelo endpoint correto
+  headers: {
+    "Content-Type": "application/json",
+  },
+  transformResponse: transformResponseForLogin,
+});
+
+// Interceptor para tratar respostas e erros no login
+loginApiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error("Erro na requisição de login:", error.response || error.message);
+    return Promise.reject(error);
+  }
+);
+
 const transformResponse = [
   (data) => {
     try {
@@ -73,4 +102,5 @@ export {
   apiGatewayClient,
   createAPIInstance,
   API_BASE_URLS,
+  loginApiClient,
 };
