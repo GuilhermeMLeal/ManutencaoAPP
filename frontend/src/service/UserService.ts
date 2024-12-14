@@ -1,4 +1,4 @@
-import { userApiClient } from "./api";
+import { loginApiClient, userApiClient } from "./api";
 
 const UnifiedService = {
   // User Services
@@ -148,30 +148,48 @@ const UnifiedService = {
     }
   },
 
-  // Auth Services
   async login(userLoginDTO: { username: string; password: string }): Promise<string> {
     try {
-      const response = await userApiClient.post<string>("/Auth", userLoginDTO);
-      return response.data;
+      const response = await loginApiClient.post("/Auth", userLoginDTO);
+      const token = response.data;
+  
+      if (!token) {
+        throw new Error("Token não encontrado na resposta do servidor.");
+      }
+      localStorage.setItem("token", token);
+  
+      return token;
     } catch (error) {
-      console.error("Error logging in:", error);
-      throw error;
+      console.error("Erro ao fazer login:", error);
+      throw new Error("Falha no login. Verifique suas credenciais.");
     }
   },
 
-  async refreshToken(): Promise<string> {
+  async renewToken(): Promise<void> {
+    const refreshToken = localStorage.getItem("refreshToken");
+
+    if (!refreshToken) {
+      throw new Error("No refresh token available.");
+    }
+
     try {
-      const response = await userApiClient.post<string>("/Auth/refresh-token");
-      return response.data;
+      const response = await loginApiClient.post<{ token: string; refreshToken: string }>(
+        "/Auth/refresh-token",
+        { refreshToken }
+      );
+      const { token, refreshToken: newRefreshToken } = response.data;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("refreshToken", newRefreshToken);
     } catch (error) {
       console.error("Error refreshing token:", error);
-      throw error;
+      throw new Error("Failed to renew token.");
     }
   },
 
   async validateToken(): Promise<boolean> {
     try {
-      const response = await userApiClient.get<string>("/Auth/validate-token");
+      const response = await loginApiClient.get("/Auth/validate-token");
       return response.status === 200;
     } catch (error) {
       console.error("Error validating token:", error);

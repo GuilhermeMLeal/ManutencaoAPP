@@ -3,41 +3,42 @@
 import React, { useState } from "react";
 import {
   TextField,
-  Checkbox,
   Button,
-  FormControlLabel,
   Typography,
   Box,
   Avatar,
   Paper,
   Snackbar,
   Alert,
+  Grid,
 } from "@mui/material";
-import { Navigate } from "react-router-dom";
-import { Home } from "@mui/icons-material";// Certifique-se de que este hook existe
 import TextFieldComponent from "@/app/components/TextFieldComponent";
 import ButtonComponent from "@/app/components/ButtonComponent";
-import { useAuth } from "@/AuthContext";
+import { useRouter } from "next/navigation";
+import { storeAccessToken, storeTokens } from "@/utils/storage";
+import UnifiedService from "@/service/UserService";
 
 export default function Login() {
-  //#region Definition
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState(false);
-  const { login } = useAuth(); // Certifique-se de que `useAuth` fornece a função `login`
-  const [redirect, setRedirect] = useState(false);
-  const [remember, setRemember] = useState(false); // Estado para o checkbox "Manter logado"
-  const [error, setError] = useState(false); // Para exibir erro no login
+  const [error, setError] = useState(false);
+  const router = useRouter();
 
   const handleLogin = async () => {
     try {
-      await login(username, password);
+      const userLoginDTO = { username, password };
+  
+      const token = await UnifiedService.login(userLoginDTO);
+  
+      storeAccessToken(token);
+  
       setSuccess(true);
       setTimeout(() => {
-        setRedirect(true);
-      }, 2000);
+        router.push("/maintenance");
+      });
     } catch (err) {
-      setSuccess(false);
+      console.error("Login failed:", err);
       setError(true);
     }
   };
@@ -49,22 +50,8 @@ export default function Login() {
     }
   };
 
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRemember(event.target.checked);
-  };
-
-  if (redirect) {
-    return (
-      <>
-        <Navigate to="/home" />
-        <Home />
-      </>
-    );
-  }
-
   return (
     <Box
-      className="flex items-center justify-center min-h-screen bg-white"
       sx={{
         display: "flex",
         justifyContent: "center",
@@ -73,80 +60,99 @@ export default function Login() {
         minHeight: "100vh",
       }}
     >
-      <Paper
-        elevation={3}
+      <Box
         sx={{
-          padding: 4,
-          width: 400,
-          borderRadius: 2,
-          border: "1px solid #e0e0e0",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          maxWidth: 400,
         }}
       >
-        {/* Avatar */}
-        <Box display="flex" justifyContent="center" mb={3}>
-          <Avatar
-            alt="User Avatar"
-            src={"/image/Logo2.jpg"}
-            sx={{
-              width: 80,
-              height: 80,
-              border: "2px solid #1976D2",
-            }}
-          />
-        </Box>
-
-        {/* Título */}
-        <Typography
-          variant="h4"
-          component="h1"
-          color="primary"
-          textAlign="center"
-          gutterBottom
+        <Paper
+          elevation={3}
+          sx={{
+            padding: 4,
+            width: "100%",
+            borderRadius: 2,
+            border: "1px solid #e0e0e0",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
-          Login
-        </Typography>
-
-        {/* Campos de Entrada */}
-        <TextFieldComponent
-          value={username}
-          placeholder="Username"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setUsername(e.target.value)
-          }
-          onKeyPress={handleKeyPress}
-        />
-
-        <TextFieldComponent
-          type="password"
-          value={password}
-          placeholder="Password"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setPassword(e.target.value)
-          }
-          onKeyPress={handleKeyPress}
-        />
-
-        {/* CheckBox */}
-        <FormControlLabel
-          control={
-            <Checkbox
-              name="remember"
-              checked={remember}
-              onChange={handleCheckboxChange}
-              color="primary"
+          {/* Avatar */}
+          <Box display="flex" justifyContent="center" mb={3}>
+            <Avatar
+              alt="User Avatar"
+              src={"/image/Logo2.jpg"}
+              sx={{
+                width: 80,
+                height: 80,
+                border: "2px solid #1976D2",
+              }}
             />
-          }
-          label="Manter logado"
-          sx={{ marginTop: 1, marginBottom: 3 }}
-        />
+          </Box>
 
-        {/* Botão de Login */}
-        <ButtonComponent
-          className="button"
-          onClick={handleLogin}
-          name="Login"
-        />
-      </Paper>
+          {/* Título */}
+          <Typography
+            variant="h4"
+            component="h1"
+            color="primary"
+            textAlign="center"
+            gutterBottom
+          >
+            Login
+          </Typography>
+
+          <Grid container spacing={2} direction="column" alignItems="center">
+            <Grid item xs={12} width="100%">
+              {/* Campo de Username */}
+              <TextFieldComponent
+                value={username}
+                placeholder="Username"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setUsername(e.target.value)
+                }
+                onKeyPress={handleKeyPress}
+              />
+            </Grid>
+
+            <Grid item xs={12} width="100%">
+              {/* Campo de Senha */}
+              <TextFieldComponent
+                type="password"
+                value={password}
+                placeholder="Password"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setPassword(e.target.value)
+                }
+                onKeyPress={handleKeyPress}
+              />
+            </Grid>
+
+            <Grid item xs={12} width="100%">
+              {/* Botão Criar Usuário */}
+              <Button
+                variant="outlined"
+                onClick={() => alert("Criar Usuário")}
+                fullWidth
+              >
+                Criar Usuário
+              </Button>
+            </Grid>
+
+            <Grid item xs={12} width="100%">
+              {/* Botão de Login */}
+              <ButtonComponent
+                className="button"
+                onClick={handleLogin}
+                name="Logar"
+              />
+            </Grid>
+          </Grid>
+        </Paper>
+      </Box>
 
       {/* Snackbars */}
       <Snackbar

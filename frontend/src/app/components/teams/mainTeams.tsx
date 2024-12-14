@@ -77,7 +77,7 @@ const MainTeam: React.FC = () => {
       squad.Name.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredSquads(filtered);
-    setPage(0); // Reinicia a paginação após a busca
+    setPage(0); 
   };
 
   if (loading) {
@@ -108,7 +108,7 @@ const MainTeam: React.FC = () => {
       />
       <FindItemTextBox
         textButton="Cadastrar uma Equipe"
-        pageText="/pages/teams/createTeam"
+        pageText="/teams/createTeam"
         nameTextSearch="Equipe"
         onSearch={handleSearch}
       />
@@ -130,9 +130,9 @@ const MainTeam: React.FC = () => {
                 item={{
                   title: squad.name,
                   description: squad.description,
-                  image: "/image/equipe.png", // Replace with dynamic image path if available
+                  image: "/image/equipe.png",
                 }}
-                updatePath={`/pages/teams/editTeam?id=${squad.id}`} // Example dynamic path
+                updatePath={`/teams/editTeam?id=${squad.id}`}
                 onSeeMore={() => handleOpenDialog(squad)}
               />
             ))}
