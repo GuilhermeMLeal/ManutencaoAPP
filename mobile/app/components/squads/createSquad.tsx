@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,15 +7,46 @@ import {
   StyleSheet,
   Alert,
   ActivityIndicator,
+  TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { useNavigation } from "expo-router";
-import { apiMachine, endpointSquad } from "@/app/services/api";
+import { apiAuth, endpointSquad, endpointUser } from "@/app/services/api";
+
+interface User {
+  id: number;
+  name: string;
+}
 
 const CreateSquadScreen: React.FC = () => {
   const navigation = useNavigation();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [users, setUsers] = useState<User[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await apiAuth.get(endpointUser.user);
+        setUsers(response.data);
+      } catch (error: any) {
+        console.error("Erro ao buscar usuários:", error);
+        Alert.alert("Erro", "Não foi possível carregar os usuários.");
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  const toggleUserSelection = (userId: number) => {
+    if (selectedUsers.includes(userId)) {
+      setSelectedUsers(selectedUsers.filter((id) => id !== userId));
+    } else {
+      setSelectedUsers([...selectedUsers, userId]);
+    }
+  };
 
   const handleCreateSquad = async () => {
     if (!name || !description) {
@@ -26,15 +57,16 @@ const CreateSquadScreen: React.FC = () => {
     const squadData = {
       name,
       description,
+      users: selectedUsers.map((id) => ({ id })),
     };
 
     setLoading(true);
     try {
-      const response = await apiMachine.post(endpointSquad.squad, squadData);
+      const response = await apiAuth.post(endpointSquad.squad, squadData);
 
-      if (response.status === 201) {
+      if (response.status === 200 || response.status === 201) {
         Alert.alert("Sucesso", "Squad criado com sucesso!");
-        navigation.goBack(); // Voltar para a tela anterior
+        navigation.goBack();
       } else {
         throw new Error("Erro ao criar o squad.");
       }
@@ -47,7 +79,7 @@ const CreateSquadScreen: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>Criar Squad</Text>
 
       <TextInput
@@ -65,6 +97,20 @@ const CreateSquadScreen: React.FC = () => {
         multiline
       />
 
+      <Text style={styles.subTitle}>Adicionar Usuários:</Text>
+      {users.map((user) => (
+        <TouchableOpacity
+          key={user.id}
+          style={[
+            styles.userItem,
+            selectedUsers.includes(user.id) && styles.userItemSelected,
+          ]}
+          onPress={() => toggleUserSelection(user.id)}
+        >
+          <Text style={styles.userName}>{user.name}</Text>
+        </TouchableOpacity>
+      ))}
+
       <Button
         title={loading ? "Criando..." : "Salvar"}
         onPress={handleCreateSquad}
@@ -72,7 +118,7 @@ const CreateSquadScreen: React.FC = () => {
       />
 
       {loading && <ActivityIndicator size="large" color="#007bff" />}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -81,7 +127,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
     padding: 16,
-    justifyContent: "center",
   },
   title: {
     fontSize: 24,
@@ -89,6 +134,12 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     color: "#333",
     textAlign: "center",
+  },
+  subTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 8,
+    color: "#555",
   },
   input: {
     borderWidth: 1,
@@ -98,6 +149,22 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     fontSize: 16,
     backgroundColor: "#fff",
+  },
+  userItem: {
+    padding: 12,
+    marginBottom: 8,
+    borderRadius: 8,
+    backgroundColor: "#eee",
+    borderColor: "#ccc",
+    borderWidth: 1,
+  },
+  userItemSelected: {
+    backgroundColor: "#007bff",
+    borderColor: "#0056b3",
+  },
+  userName: {
+    color: "#333",
+    fontSize: 16,
   },
 });
 

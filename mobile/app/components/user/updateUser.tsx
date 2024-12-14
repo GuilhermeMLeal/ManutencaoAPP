@@ -76,7 +76,7 @@ const UpdateUserScreen: React.FC = () => {
       password: password || undefined, // Se não alterar a senha, envia `undefined`
       squads: selectedSquads.map((id) => ({ id })), // Passa os IDs das Squads selecionadas
     };
-
+    console.log(updatedUser);
     try {
       await apiAuth.put(`${endpointUser.user}/${userId}`, updatedUser);
       Alert.alert("Sucesso", "Usuário atualizado com sucesso!");

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,31 +6,42 @@ import {
   Button,
   StyleSheet,
   Alert,
-  ActivityIndicator,
+  ScrollView,
 } from "react-native";
-import { useNavigation, useRoute } from "expo-router";
-import { apiMachine, endpointSquad } from "@/app/services/api";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { apiAuth, endpointSquad, endpointUser } from "@/app/services/api";
 
 const UpdateSquadScreen: React.FC = () => {
   const navigation = useNavigation();
   const route = useRoute<any>();
   const { squadId } = route.params;
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [squadDetails, setSquadDetails] = useState<any>(null);
+  const [allUsers, setAllUsers] = useState<{ id: number; name: string }[]>([]);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    // Busca os detalhes do Squad para preencher os campos
     const fetchSquadDetails = async () => {
       try {
-        const response = await apiMachine.get(`${endpointSquad.squads}/${squadId}`);
-        const { name, description } = response.data;
+        const [squadResponse, usersResponse] = await Promise.all([
+          apiAuth.get(`${endpointSquad.squad}/${squadId}`),
+          apiAuth.get(endpointUser.user),
+        ]);
 
-        setName(name);
-        setDescription(description);
-      } catch (error: any) {
+        const squadData = squadResponse.data;
+        const allUsersData = usersResponse.data;
+
+        setSquadDetails({
+          ...squadData,
+          users: squadData.users || [],
+        });
+
+        const availableUsers = allUsersData.filter(
+          (user: any) => !squadData.users.some((squadUser: any) => squadUser.id === user.id)
+        );
+
+        setAllUsers(availableUsers);
+      } catch (error) {
         console.error("Erro ao buscar os detalhes do Squad:", error);
         Alert.alert("Erro", "Não foi possível carregar os detalhes do Squad.");
       } finally {
@@ -41,71 +52,97 @@ const UpdateSquadScreen: React.FC = () => {
     fetchSquadDetails();
   }, [squadId]);
 
-  const handleUpdate = async () => {
-    if (!name || !description) {
-      Alert.alert("Erro", "Por favor, preencha todos os campos.");
-      return;
-    }
+  const handleAddUser = (user: { id: number; name: string }) => {
+    setSquadDetails({
+      ...squadDetails,
+      users: [...squadDetails.users, user],
+    });
+    setAllUsers(allUsers.filter((u) => u.id !== user.id));
+  };
 
-    const updatedSquad = { name, description };
+  const handleRemoveUser = (user: { id: number; name: string }) => {
+    setSquadDetails({
+      ...squadDetails,
+      users: squadDetails.users.filter((u: any) => u.id !== user.id),
+    });
+    setAllUsers([...allUsers, user]);
+  };
 
-    setSaving(true);
+  const handleSave = async () => {
+    const updatedSquad = {
+      name: squadDetails.name,
+      description: squadDetails.description,
+      users: squadDetails.users.map((user: any) => ({ id: user.id })),
+    };
+
     try {
-      const response = await apiMachine.put(
-        `${endpointSquad.squad}/${squadId}`,
-        updatedSquad
-      );
-
-      if (response.status === 204) {
-        Alert.alert("Sucesso", "Squad atualizado com sucesso!");
-        navigation.goBack(); // Voltar para a tela anterior
-      } else {
-        throw new Error("Erro ao atualizar o Squad.");
-      }
-    } catch (error: any) {
-      console.error("Erro ao atualizar o Squad:", error);
-      Alert.alert("Erro", "Não foi possível atualizar o Squad.");
-    } finally {
-      setSaving(false);
+      await apiAuth.put(`${endpointSquad.squad}/${squadId}`, updatedSquad);
+      Alert.alert("Sucesso", "Squad atualizado com sucesso!");
+      navigation.goBack();
+    } catch (error) {
+      console.error("Erro ao salvar o Squad:", error);
+      Alert.alert("Erro", "Não foi possível salvar o Squad.");
     }
   };
 
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#007bff" />
-        <Text style={styles.loadingText}>Carregando detalhes...</Text>
+        <Text>Carregando...</Text>
+      </View>
+    );
+  }
+
+  if (!squadDetails) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text>Detalhes do Squad não encontrados.</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>Editar Squad</Text>
-
       <TextInput
         style={styles.input}
         placeholder="Nome do Squad"
-        value={name}
-        onChangeText={setName}
+        value={squadDetails.name}
+        onChangeText={(text) => setSquadDetails({ ...squadDetails, name: text })}
       />
-
       <TextInput
         style={styles.input}
         placeholder="Descrição do Squad"
-        value={description}
-        onChangeText={setDescription}
+        value={squadDetails.description}
+        onChangeText={(text) =>
+          setSquadDetails({ ...squadDetails, description: text })
+        }
         multiline
       />
-
-      <Button
-        title={saving ? "Salvando..." : "Salvar"}
-        onPress={handleUpdate}
-        disabled={saving}
-      />
-
-      {saving && <ActivityIndicator size="large" color="#007bff" />}
-    </View>
+      <Text style={styles.subTitle}>Usuários no Squad:</Text>
+      {squadDetails.users.length > 0 ? (
+        squadDetails.users.map((user: any) => (
+          <View key={user.id} style={styles.userContainer}>
+            <Text style={styles.userName}>{user.name}</Text>
+            <Button title="Remover" onPress={() => handleRemoveUser(user)} />
+          </View>
+        ))
+      ) : (
+        <Text style={styles.noUsersText}>Nenhum usuário no Squad</Text>
+      )}
+      <Text style={styles.subTitle}>Adicionar Usuários:</Text>
+      {allUsers.length > 0 ? (
+        allUsers.map((user) => (
+          <View key={user.id} style={styles.userContainer}>
+            <Text style={styles.userName}>{user.name}</Text>
+            <Button title="Adicionar" onPress={() => handleAddUser(user)} />
+          </View>
+        ))
+      ) : (
+        <Text style={styles.noUsersText}>Nenhum usuário disponível</Text>
+      )}
+      <Button title="Salvar Alterações" onPress={handleSave} />
+    </ScrollView>
   );
 };
 
@@ -114,14 +151,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
     padding: 16,
-    justifyContent: "center",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 16,
     color: "#333",
-    textAlign: "center",
   },
   input: {
     borderWidth: 1,
@@ -132,15 +167,40 @@ const styles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: "#fff",
   },
+  subTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 8,
+    color: "#555",
+  },
+  userContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: 12,
+    marginBottom: 8,
+    borderRadius: 8,
+    borderColor: "#ccc",
+    borderWidth: 1,
+  },
+  userName: {
+    fontSize: 16,
+    color: "#333",
+  },
+  noUsersText: {
+    fontSize: 14,
+    color: "#777",
+  },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-  loadingText: {
-    marginTop: 8,
-    fontSize: 16,
-    color: "#555",
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

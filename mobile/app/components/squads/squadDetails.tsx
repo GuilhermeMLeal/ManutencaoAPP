@@ -9,73 +9,69 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
-import { apiAuth, endpointUser } from "@/app/services/api";
-
-interface Squad {
-  id: number;
-  name: string;
-  description: string | null;
-}
+import { apiAuth, endpointSquad } from "@/app/services/api";
 
 interface User {
   id: number;
   name: string;
   email: string;
   username: string;
-  roles: { name: string }[];
-  squads: Squad[];
 }
 
-const UserDetailsScreen: React.FC = () => {
-  const route = useRoute<any>();
-  const navigation = useNavigation();
-  const { userId } = route.params;
+interface SquadDetails {
+  id: number;
+  name: string;
+  description: string;
+  users: User[];
+}
 
-  const [user, setUser] = useState<User | null>(null);
+const SquadDetailsScreen: React.FC = () => {
+  const route = useRoute<any>();
+  const navigation = useNavigation<any>();
+  const { squadId } = route.params;
+
+  const [squad, setSquad] = useState<SquadDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchUserDetails = async () => {
+    const fetchSquadDetails = async () => {
       try {
         setLoading(true);
-        const response = await apiAuth.get(`${endpointUser.user}/${userId}`);
-        setUser(response.data);
+        const response = await apiAuth.get(`${endpointSquad.squad}/${squadId}`);
+        setSquad(response.data);
       } catch (error: any) {
-        console.error("Erro ao buscar detalhes do usuário:", error);
-        setError("Não foi possível carregar os detalhes do usuário.");
+        console.error("Erro ao buscar detalhes do squad:", error);
+        setError("Não foi possível carregar os detalhes do squad.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUserDetails();
-  }, [userId]);
+    fetchSquadDetails();
+  }, [squadId]);
 
   const handleEdit = () => {
-    navigation.navigate("EditUser", { userId }); // Certifique-se de que existe uma tela de edição configurada
+    navigation.navigate("UpdateSquad", { squadId });
   };
 
   const handleDelete = async () => {
     Alert.alert(
       "Confirmação",
-      "Tem certeza de que deseja excluir este usuário?",
+      "Tem certeza que deseja deletar este squad?",
       [
         { text: "Cancelar", style: "cancel" },
         {
-          text: "Excluir",
+          text: "Deletar",
           style: "destructive",
           onPress: async () => {
             try {
-              await apiAuth.delete(`${endpointUser.user}/${userId}`);
-              Alert.alert("Sucesso", "Usuário excluído com sucesso!");
-              navigation.goBack(); // Retorna à lista de usuários
+              await apiAuth.delete(`${endpointSquad.squad}/${squadId}`);
+              Alert.alert("Sucesso", "Squad deletado com sucesso.");
+              navigation.goBack();
             } catch (error: any) {
-              console.error("Erro ao excluir usuário:", error);
-              Alert.alert(
-                "Erro",
-                "Não foi possível excluir o usuário. Tente novamente mais tarde."
-              );
+              console.error("Erro ao deletar o squad:", error);
+              Alert.alert("Erro", "Não foi possível deletar o squad.");
             }
           },
         },
@@ -100,59 +96,47 @@ const UserDetailsScreen: React.FC = () => {
     );
   }
 
-  if (!user) {
+  if (!squad) {
     return (
       <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>Detalhes do usuário não disponíveis.</Text>
+        <Text style={styles.errorText}>Detalhes do squad não disponíveis.</Text>
       </View>
     );
   }
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>Detalhes do Usuário</Text>
+      <Text style={styles.title}>Detalhes do Squad</Text>
       <View style={styles.card}>
         <Text style={styles.label}>ID:</Text>
-        <Text style={styles.value}>{user.id}</Text>
+        <Text style={styles.value}>{squad.id}</Text>
 
         <Text style={styles.label}>Nome:</Text>
-        <Text style={styles.value}>{user.name}</Text>
+        <Text style={styles.value}>{squad.name}</Text>
 
-        <Text style={styles.label}>E-mail:</Text>
-        <Text style={styles.value}>{user.email}</Text>
+        <Text style={styles.label}>Descrição:</Text>
+        <Text style={styles.value}>{squad.description}</Text>
 
-        <Text style={styles.label}>Nome de Usuário:</Text>
-        <Text style={styles.value}>{user.username}</Text>
-
-        <Text style={styles.label}>Funções:</Text>
-        {user.roles.length > 0 ? (
-          user.roles.map((role, index) => (
-            <Text key={index} style={styles.value}>
-              {role.name}
-            </Text>
-          ))
-        ) : (
-          <Text style={styles.value}>Nenhuma função associada</Text>
-        )}
-
-        <Text style={styles.label}>Squads:</Text>
-        {user.squads.length > 0 ? (
-          user.squads.map((squad) => (
-            <View key={squad.id} style={styles.squadContainer}>
-              <Text style={styles.value}>{squad.name}</Text>
+        <Text style={styles.label}>Usuários:</Text>
+        {squad.users.length > 0 ? (
+          squad.users.map((user) => (
+            <View key={user.id} style={styles.userContainer}>
+              <Text style={styles.userValue}>
+                {user.name} ({user.email})
+              </Text>
             </View>
           ))
         ) : (
-          <Text style={styles.value}>Nenhuma squad associada</Text>
+          <Text style={styles.value}>Nenhum usuário associado.</Text>
         )}
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleEdit}>
-        <Text style={styles.buttonText}>Editar Usuário</Text>
+      <TouchableOpacity style={styles.editButton} onPress={handleEdit}>
+        <Text style={styles.buttonText}>Editar Squad</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
-        <Text style={styles.deleteButtonText}>Excluir Usuário</Text>
+        <Text style={styles.buttonText}>Deletar Squad</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -192,14 +176,13 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     color: "#777",
   },
-  squadContainer: {
+  userContainer: {
     marginBottom: 8,
     marginLeft: 8,
   },
-  squadDescription: {
-    fontSize: 14,
-    color: "#999",
-    marginTop: 4,
+  userValue: {
+    fontSize: 16,
+    color: "#555",
   },
   loadingContainer: {
     flex: 1,
@@ -224,8 +207,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingHorizontal: 16,
   },
-  button: {
+  editButton: {
     backgroundColor: "#007bff",
+    padding: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 16,
+  },
+  deleteButton: {
+    backgroundColor: "#ff0000",
     padding: 12,
     borderRadius: 8,
     alignItems: "center",
@@ -236,18 +226,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  deleteButton: {
-    backgroundColor: "#ff4d4f",
-    padding: 12,
-    borderRadius: 8,
-    alignItems: "center",
-    marginTop: 16,
-  },
-  deleteButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
 });
 
-export default UserDetailsScreen;
+export default SquadDetailsScreen;

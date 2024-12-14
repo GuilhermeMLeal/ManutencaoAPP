@@ -21,6 +21,8 @@ export function HomeScreen() {
             Maintenance: "handyman",
             Stock: "storage",
             MaintenanceRequest: "note-add",
+            Squads: "group",
+            Users: "people",
           };
 
           const iconName = iconMap[route.name] || "home";
@@ -58,11 +60,11 @@ export function HomeScreen() {
         options={{ tabBarLabel: "Users" }}
         component={UserListScreen}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="MaintenanceRequest"
         options={{ tabBarLabel: "Solicitação" }}
         component={MaintenanceRequestScreen}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }

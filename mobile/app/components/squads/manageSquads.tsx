@@ -56,7 +56,7 @@ const ManageSquadsScreen: React.FC = () => {
     );
   }
   const handlePress = (squadId: number) => {
-    navigation.navigate("UpdateSquadScreen", { squadId });
+    navigation.navigate("SquadDetails", { squadId });
   };
   
   return (
