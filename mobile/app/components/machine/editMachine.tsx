@@ -39,7 +39,14 @@ const EditMachineScreen: React.FC = () => {
 
   const handleSave = async () => {
     try {
-      await apiMachine.put(`${endpointMachine.machine}`, machineDetails);
+      // Enviando os dados corrigidos com os IDs de Status e Place
+      const dataToSave = {
+        ...machineDetails,
+        statusId: machineDetails.Status, // ID do status
+        placeId: machineDetails.PlaceId, // ID do local
+      };
+      await apiMachine.put(`${endpointMachine.machine}`, dataToSave);
+
       Alert.alert("Sucesso", "Os dados foram salvos!");
       navigation.goBack();
     } catch (error) {
@@ -83,7 +90,7 @@ const EditMachineScreen: React.FC = () => {
       <Text style={styles.label}>Status:</Text>
       <Picker
         selectedValue={machineDetails.Status}
-        onValueChange={(value: any) => setMachineDetails({ ...machineDetails, Status: value })}
+        onValueChange={(value: number) => setMachineDetails({ ...machineDetails, Status: value })}
         style={styles.picker}
       >
         {statuses.map((status) => (
@@ -93,7 +100,7 @@ const EditMachineScreen: React.FC = () => {
       <Text style={styles.label}>Localização:</Text>
       <Picker
         selectedValue={machineDetails.PlaceId}
-        onValueChange={(value: any) => setMachineDetails({ ...machineDetails, PlaceId: value })}
+        onValueChange={(value: number) => setMachineDetails({ ...machineDetails, PlaceId: value })}
         style={styles.picker}
       >
         {places.map((place) => (

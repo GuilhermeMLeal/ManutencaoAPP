@@ -93,6 +93,31 @@ const MachineDetailsScreen: React.FC = () => {
       navigation.navigate("EditMachineScreen", { machineDetails });
     }
   };
+
+  const handleDeleteMachine = async () => {
+    Alert.alert(
+      "Confirmar Exclusão",
+      "Tem certeza de que deseja excluir esta máquina?",
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Excluir",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await apiMachine.delete(`${endpointMachine.machine}/${itemId}`);
+              Alert.alert("Sucesso", "Máquina excluída com sucesso.");
+              navigation.goBack(); // Volta para a tela anterior
+            } catch (error) {
+              console.error("Erro ao excluir a máquina:", error);
+              Alert.alert("Erro", "Não foi possível excluir a máquina.");
+            }
+          },
+        },
+      ]
+    );
+  };
+  
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -163,11 +188,14 @@ const MachineDetailsScreen: React.FC = () => {
       <TouchableOpacity style={styles.button} onPress={handleEditMachine}>
         <Text style={styles.buttonText}>Editar Máquina</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={handleOpenMachineDetails}>
+      <TouchableOpacity style={styles.button} onPress={handleDeleteMachine}>
+        <Text style={styles.buttonText}>Excluir Máquina</Text>
+      </TouchableOpacity>
+      {/* <TouchableOpacity style={styles.button} onPress={handleOpenMachineDetails}>
         <Text style={styles.buttonText}>
           Visualizar histórico de manutenção da máquina
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </ScrollView>
   );
 };
