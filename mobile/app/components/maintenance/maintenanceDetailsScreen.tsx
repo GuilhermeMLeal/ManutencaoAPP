@@ -6,9 +6,11 @@ import {
   ActivityIndicator,
   Alert,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { apiMachine, endpointMaintenance, endpointMachine, apiMaintenance } from "@/app/services/api";
+import { useNavigation } from "expo-router";
 
 interface MaintenancePart {
   id: number;
@@ -33,7 +35,7 @@ const MaintenanceDetailsScreen: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const route = useRoute<any>();
-
+  const navigation = useNavigation();
   // Obtém o ID da manutenção a partir dos parâmetros da rota
   const { maintenanceId } = route.params;
 
@@ -85,6 +87,42 @@ const MaintenanceDetailsScreen: React.FC = () => {
     fetchMaintenanceDetails();
   }, [maintenanceId]);
 
+  const handleEdit = () => {
+    navigation.navigate("EditMaintenance", { maintenanceId });
+  };
+
+  const handleDelete = async () => {
+    Alert.alert(
+      "Confirmar Exclusão",
+      "Tem certeza de que deseja excluir esta manutenção?",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel",
+        },
+        {
+          text: "Excluir",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              const response = await apiMaintenance.delete(
+                `${endpointMaintenance.maintenance}/${maintenanceId}`
+              );
+              if (response.status === 204) {
+                Alert.alert("Sucesso", "Manutenção excluída com sucesso!");
+                navigation.goBack();
+              } else {
+                throw new Error("Erro ao excluir manutenção.");
+              }
+            } catch (error) {
+              console.error("Erro ao excluir manutenção:", error);
+              Alert.alert("Erro", "Não foi possível excluir a manutenção.");
+            }
+          },
+        },
+      ]
+    );
+  };
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -147,7 +185,14 @@ const MaintenanceDetailsScreen: React.FC = () => {
           </View>
         ))}
       </View>
+      <TouchableOpacity style={styles.button} onPress={handleEdit}>
+        <Text style={styles.buttonText}>Editar Manutenção</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.button, styles.deleteButton]} onPress={handleDelete}>
+        <Text style={styles.buttonText}>Excluir Manutenção</Text>
+      </TouchableOpacity>
     </ScrollView>
+    
   );
 };
 
@@ -211,6 +256,21 @@ const styles = StyleSheet.create({
     color: "#ff0000",
     textAlign: "center",
     paddingHorizontal: 16,
+  },
+  button: {
+    backgroundColor: "#007bff",
+    padding: 12,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 16,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  deleteButton: {
+    backgroundColor: "#ff4d4d",
   },
 });
 

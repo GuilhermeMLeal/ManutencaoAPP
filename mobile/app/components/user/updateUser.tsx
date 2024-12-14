@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { apiMachine, endpointUser, endpointSquad, apiAuth } from "@/app/services/api";
-import { useNavigation, useRoute } from "expo-router";
+import { useRoute, useNavigation } from "@react-navigation/native";
 
 interface Squad {
   id: number;
@@ -19,7 +19,7 @@ interface Squad {
 
 const UpdateUserScreen: React.FC = () => {
   const navigation = useNavigation();
-  const route = useRoute();
+  const route = useRoute<any>();
   const { userId } = route.params; // Recebe o ID do usuário
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

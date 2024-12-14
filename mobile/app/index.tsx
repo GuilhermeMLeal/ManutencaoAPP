@@ -16,6 +16,10 @@ import EditMachineScreen from "./components/machine/editMachine";
 import MaintenanceDetailsScreen from "./components/maintenance/maintenanceDetailsScreen";
 import CreateSquadScreen from "./components/squads/createSquad";
 import ManageSquadsScreen from "./components/squads/manageSquads";
+import EditMaintenanceScreen from "./components/maintenance/editMaintenance";
+import CreateUserScreen from "./components/user/createUser";
+import UpdateUserScreen from "./components/user/updateUser";
+import UserDetailsScreen from "./components/user/userDetails";
 
 type RootStackParamList = {
   Home: undefined;
@@ -120,6 +124,38 @@ export default function Index()  {
           component={() => (
             <PrivateRoute>
               <CreateSquadScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="CreateUser"
+          component={() => (
+            <PrivateRoute>
+              <CreateUserScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="EditUser"
+          component={() => (
+            <PrivateRoute>
+              <UpdateUserScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="UserDetails"
+          component={() => (
+            <PrivateRoute>
+              <UserDetailsScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="EditMaintenance"
+          component={() => (
+            <PrivateRoute>
+              <EditMaintenanceScreen />
             </PrivateRoute>
           )}
         />

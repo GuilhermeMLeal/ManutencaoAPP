@@ -13,7 +13,7 @@ import {
 import Card from "../card";
 import FloatingButton from "../floatingButton";
 import { apiTool, endpointTool } from "../../services/api";
-import { useNavigation } from '@react-navigation/native'; // Importa useNavigation
+import { useNavigation } from "@react-navigation/native";
 
 const StockScreen: React.FC = () => {
   const [stockItems, setStockItems] = useState<any[]>([]);
@@ -22,7 +22,7 @@ const StockScreen: React.FC = () => {
   const [editedField, setEditedField] = useState<any>({});
   const [loading, setLoading] = useState(true);
 
-  const navigation = useNavigation(); // Obtém o objeto de navegação
+  const navigation = useNavigation();
 
   // Função para buscar itens de estoque
   const getStock = () => {
@@ -50,7 +50,7 @@ const StockScreen: React.FC = () => {
   useEffect(() => {
     getStock();
 
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = navigation.addListener("focus", () => {
       getStock();
     });
 
@@ -60,8 +60,10 @@ const StockScreen: React.FC = () => {
   const handleIconPress = (icon: string, item: any) => {
     if (icon === "pencil") {
       setSelectedItem(item);
-      setEditedField(item);
+      setEditedField({ ...item });
       setModalVisible(true);
+    } else if (icon === "trash") {
+      handleDelete(item);
     }
   };
 
@@ -69,14 +71,80 @@ const StockScreen: React.FC = () => {
     setEditedField({ ...editedField, [key]: value });
   };
 
-  const handleSave = () => {
-    const updatedStockItems = stockItems.map((item) =>
-      item.id === selectedItem.id ? { ...item, ...editedField } : item
-    );
-    setStockItems(updatedStockItems);
-    setModalVisible(false);
-  };
+  const handleSave = async () => {
+    if (!selectedItem || !selectedItem.id) {
+      Alert.alert("Erro", "O item selecionado está inválido.");
+      console.error("Erro: selectedItem ou seu id está ausente:", selectedItem);
+      return;
+    }
 
+    try {
+      setLoading(true);
+
+      const response = await apiTool.put(
+        `${endpointTool.tool}`, // Inclui o ID no endpoint
+        {
+          id: selectedItem.id,
+          name: editedField.name,
+          quantity: editedField.quantity,
+          description: editedField.description,
+        }
+      );
+
+      if (response.status === 204) {
+        const updatedStockItems = stockItems.map((item) =>
+          item.id === selectedItem.id ? { ...item, ...editedField } : item
+        );
+        setStockItems(updatedStockItems);
+        Alert.alert("Sucesso", "Item atualizado com sucesso!");
+      } else {
+        Alert.alert("Erro", "Não foi possível atualizar o item.");
+      }
+    } catch (error) {
+      console.error("Erro ao salvar alterações:", error);
+      Alert.alert("Erro", "Ocorreu um erro ao salvar as alterações.");
+    } finally {
+      setLoading(false);
+      setModalVisible(false);
+    }
+  };
+  const handleDelete = async (item: any) => {
+    Alert.alert(
+      "Confirmação",
+      `Tem certeza que deseja deletar o item "${item.name}"?`,
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Deletar",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              setLoading(true);
+
+              const response = await apiTool.delete(
+                `${endpointTool.tool}/${item.id}`
+              );
+
+              if (response.status === 200 || response.status === 204) {
+                const updatedStockItems = stockItems.filter(
+                  (stockItem) => stockItem.id !== item.id
+                );
+                setStockItems(updatedStockItems);
+                Alert.alert("Sucesso", "Item deletado com sucesso!");
+              } else {
+                Alert.alert("Erro", "Não foi possível deletar o item.");
+              }
+            } catch (error) {
+              console.error("Erro ao deletar item:", error);
+              Alert.alert("Erro", "Ocorreu um erro ao deletar o item.");
+            } finally {
+              setLoading(false);
+            }
+          },
+        },
+      ]
+    );
+  };
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -94,15 +162,15 @@ const StockScreen: React.FC = () => {
         </View>
       ) : (
         <ScrollView>
-          {stockItems.map((item) => (
-            <View key={item.id} style={styles.cardContainer}>
+          {stockItems.map((item, index) => (
+            <View key={index} style={styles.cardContainer}>
               <Card
                 title={item.name}
                 field={{
                   Quantidade: item.quantity,
                   Descrição: item.description,
                 }}
-                icons={["pencil"]}
+                icons={["pencil", "trash"]} // Adicionado ícone de lixeira
                 onIconPress={(icon) => handleIconPress(icon, item)}
               />
             </View>

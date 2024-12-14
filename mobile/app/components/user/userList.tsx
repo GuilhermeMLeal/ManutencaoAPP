@@ -6,13 +6,16 @@ import {
   StyleSheet,
   ActivityIndicator,
   Alert,
+  TouchableOpacity,
 } from "react-native";
-import { apiAuth, apiMachine, endpointUser } from "@/app/services/api";
+import { apiAuth, endpointUser } from "@/app/services/api";
 import FloatingButton from "@/app/components/floatingButton";
+import { useNavigation } from "expo-router";
 
 const UserListScreen: React.FC = () => {
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigation<any>();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -39,6 +42,12 @@ const UserListScreen: React.FC = () => {
     );
   }
 
+  const handlePress = (userId: number) => {
+    navigation.navigate("UserDetails", {
+      userId, // Certifique-se de que o nome do parâmetro corresponde na tela de detalhes
+    });
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Usuários</Text>
@@ -46,15 +55,19 @@ const UserListScreen: React.FC = () => {
         data={users}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <View style={styles.userCard}>
-            <Text style={styles.userName}>{item.name}</Text>
-            <Text style={styles.userEmail}>{item.email}</Text>
-            <Text style={styles.userSquads}>
-              Squads: {item.squads.map((squad: any) => squad.name).join(", ")}
-            </Text>
-          </View>
+          <TouchableOpacity onPress={() => handlePress(item.id)}>
+            <View style={styles.userCard}>
+              <Text style={styles.userName}>{item.name}</Text>
+              <Text style={styles.userEmail}>{item.email}</Text>
+              <Text style={styles.userSquads}>
+                Squads: {item.squads.map((squad: any) => squad.name).join(", ")}
+              </Text>
+            </View>
+          </TouchableOpacity>
         )}
-        ListEmptyComponent={<Text style={styles.emptyText}>Nenhum usuário encontrado.</Text>}
+        ListEmptyComponent={
+          <Text style={styles.emptyText}>Nenhum usuário encontrado.</Text>
+        }
       />
       <FloatingButton type="user" />
     </View>

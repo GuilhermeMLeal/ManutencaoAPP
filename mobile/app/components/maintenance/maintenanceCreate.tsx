@@ -12,7 +12,14 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "expo-router";
-import { apiMachine, endpointMaintenance, endpointMachine, apiMaintenance } from "@/app/services/api";
+import {
+  apiMachine,
+  apiTool,
+  endpointMaintenance,
+  endpointMachine,
+  endpointTool,
+  apiMaintenance,
+} from "@/app/services/api";
 
 const CreateMaintenance: React.FC = () => {
   const navigation = useNavigation();
@@ -21,6 +28,7 @@ const CreateMaintenance: React.FC = () => {
   const [endDate, setEndDate] = useState("");
   const [machineId, setMachineId] = useState<number | null>(null);
   const [machines, setMachines] = useState<{ id: number; name: string }[]>([]);
+  const [tools, setTools] = useState<{ id: number; name: string }[]>([]);
   const [maintenanceParts, setMaintenanceParts] = useState<
     { partId: number; quantity: number }[]
   >([]);
@@ -29,25 +37,30 @@ const CreateMaintenance: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Busca as máquinas para preencher o dropdown
-    const fetchMachines = async () => {
+    const fetchData = async () => {
       try {
-        const response = await apiMachine.get(endpointMachine.machine);
-        setMachines(response.data);
+        setLoading(true);
+        // Fetch machines
+        const machineResponse = await apiMachine.get(endpointMachine.machine);
+        setMachines(machineResponse.data);
+
+        // Fetch tools
+        const toolResponse = await apiTool.get(endpointTool.tool);
+        setTools(toolResponse.data);
       } catch (error) {
-        console.error("Erro ao buscar máquinas:", error);
-        Alert.alert("Erro", "Não foi possível carregar as máquinas.");
+        console.error("Erro ao buscar dados:", error);
+        Alert.alert("Erro", "Não foi possível carregar os dados.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchMachines();
+    fetchData();
   }, []);
 
   const handleAddPart = () => {
     if (!currentPartId || !currentQuantity) {
-      Alert.alert("Erro", "Informe o ID da peça e a quantidade.");
+      Alert.alert("Erro", "Selecione uma peça e informe a quantidade.");
       return;
     }
 
@@ -63,8 +76,13 @@ const CreateMaintenance: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (!observations || !startDate || !endDate || !machineId) {
+    if (!observations.trim() || !startDate.trim() || !endDate.trim() || !machineId) {
       Alert.alert("Erro", "Todos os campos são obrigatórios.");
+      return;
+    }
+
+    if (isNaN(new Date(startDate).getTime()) || isNaN(new Date(endDate).getTime())) {
+      Alert.alert("Erro", "As datas devem estar no formato válido (YYYY-MM-DD).");
       return;
     }
 
@@ -75,7 +93,7 @@ const CreateMaintenance: React.FC = () => {
 
     const maintenance = {
       machineId,
-      observations,
+      observations: observations.trim(),
       startDate: new Date(startDate).toISOString(),
       endDate: new Date(endDate).toISOString(),
       maintenanceParts,
@@ -83,15 +101,18 @@ const CreateMaintenance: React.FC = () => {
 
     try {
       const response = await apiMaintenance.post(endpointMaintenance.maintenance, maintenance);
-      if (response.status === 201) {
+      if (response.status === 201 || response.status === 200) {
         Alert.alert("Sucesso", "Manutenção criada com sucesso!");
         navigation.goBack();
       } else {
         throw new Error(`Erro: ${response.status}`);
       }
     } catch (error: any) {
-      console.error("Erro ao criar a manutenção:", error);
-      Alert.alert("Erro", "Não foi possível criar a manutenção.");
+      console.error("Erro ao criar a manutenção:", error.response?.data || error.message || error);
+      Alert.alert(
+        "Erro",
+        error.response?.data?.message || "Não foi possível criar a manutenção. Tente novamente."
+      );
     }
   };
 
@@ -99,7 +120,7 @@ const CreateMaintenance: React.FC = () => {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#007bff" />
-        <Text>Carregando máquinas...</Text>
+        <Text>Carregando dados...</Text>
       </View>
     );
   }
@@ -138,13 +159,16 @@ const CreateMaintenance: React.FC = () => {
       </Picker>
       <Text style={styles.label}>Peças de Manutenção:</Text>
       <View style={styles.partInputContainer}>
-        <TextInput
-          style={[styles.input, styles.partInput]}
-          placeholder="ID da Peça"
-          value={currentPartId ? currentPartId.toString() : ""}
-          onChangeText={(text) => setCurrentPartId(Number(text))}
-          keyboardType="numeric"
-        />
+        <Picker
+          selectedValue={currentPartId}
+          onValueChange={(itemValue) => setCurrentPartId(itemValue)}
+          style={[styles.picker, styles.partPicker]}
+        >
+          <Picker.Item label="Selecione uma peça" value={null} />
+          {tools.map((tool) => (
+            <Picker.Item key={tool.id} label={tool.name} value={tool.id} />
+          ))}
+        </Picker>
         <TextInput
           style={[styles.input, styles.partInput]}
           placeholder="Quantidade"
@@ -203,19 +227,17 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 16,
   },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   partInputContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 16,
   },
+  partPicker: {
+    flex: 2,
+  },
   partInput: {
     flex: 1,
-    marginRight: 8,
+    marginLeft: 8,
   },
   addButton: {
     backgroundColor: "#007bff",
@@ -231,6 +253,11 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: "#e9e9e9",
     borderRadius: 8,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

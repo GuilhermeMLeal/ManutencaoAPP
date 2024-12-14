@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getAccessToken } from "../utils/storage";
 
-const IP = "172.24.16.1";
+const IP = "192.168.0.14";
 const BASE_URL_AUTH = `http://${IP}:3001/api`;
 const BASE_URL_MACHINE = `http://${IP}:3002/api`;
 const BASE_URL_TOOL = `http://${IP}:3003/api`;

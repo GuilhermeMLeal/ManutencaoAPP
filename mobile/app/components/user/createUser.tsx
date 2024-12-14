@@ -23,6 +23,7 @@ const CreateUserScreen: React.FC = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [roles, setRoles] = useState<string>(""); // Adicionando campo para roles
   const [squads, setSquads] = useState<Squad[]>([]);
   const [selectedSquads, setSelectedSquads] = useState<number[]>([]);
 
@@ -50,7 +51,7 @@ const CreateUserScreen: React.FC = () => {
   };
 
   const handleCreateUser = async () => {
-    if (!name || !email || !username || !password) {
+    if (!name || !email || !username || !password || !roles) {
       Alert.alert("Erro", "Preencha todos os campos.");
       return;
     }
@@ -60,13 +61,14 @@ const CreateUserScreen: React.FC = () => {
       email,
       username,
       password,
+      roles: [{ name: roles }], // Adicionando roles
       squads: selectedSquads.map((id) => ({ id })), // Passa os IDs das Squads selecionadas
     };
 
     try {
       const response = await apiAuth.post(endpointUser.user, newUser);
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         Alert.alert("Sucesso", "Usuário criado com sucesso!");
         navigation.goBack();
       } else {
@@ -106,6 +108,12 @@ const CreateUserScreen: React.FC = () => {
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Role (Ex: Admin 1)"
+        value={roles}
+        onChangeText={setRoles}
       />
       <Text style={styles.subTitle}>Adicionar às Squads:</Text>
       {squads.map((squad) => (
