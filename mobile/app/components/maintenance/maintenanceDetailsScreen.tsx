@@ -85,7 +85,13 @@ const MaintenanceDetailsScreen: React.FC = () => {
     };
 
     fetchMaintenanceDetails();
-  }, [maintenanceId]);
+
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchMaintenanceDetails(); 
+    });
+  
+    return unsubscribe; 
+  }, [maintenanceId, navigation]);
 
   const handleEdit = () => {
     navigation.navigate("EditMaintenance", { maintenanceId });

@@ -37,7 +37,12 @@ const ManageSquadsScreen: React.FC = () => {
     };
 
     fetchSquads();
-  }, []);
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchSquads(); 
+    });
+  
+    return unsubscribe; 
+  }, [navigation]);
 
   if (loading) {
     return (

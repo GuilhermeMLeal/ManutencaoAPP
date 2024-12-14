@@ -50,7 +50,12 @@ const UserDetailsScreen: React.FC = () => {
     };
 
     fetchUserDetails();
-  }, [userId]);
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchUserDetails(); 
+    });
+  
+    return unsubscribe; 
+  }, [userId, navigation]);
 
   const handleEdit = () => {
     navigation.navigate("EditUser", { userId }); // Certifique-se de que existe uma tela de edição configurada
