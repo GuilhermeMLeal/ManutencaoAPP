@@ -131,7 +131,8 @@ namespace UserAuth.Application.Services
                 user.Username = userDTO.Username;
 
                 user.UserRoles.Clear();
-
+                var allRoles = await _roleRepository.GetAllRoles();
+                var allSquads = await _squadRepository.GetAllSquad();
                 foreach (var roleDTO in userDTO.Roles)
                 {
                     var existingRole = await _roleRepository.GetRoleByName(roleDTO.Name);
@@ -143,7 +144,20 @@ namespace UserAuth.Application.Services
 
                     user.UserRoles.Add(new UserRole { UserId = user.Id, Role = existingRole });
                 }
+                foreach (var squadDTO in userDTO.Squads)
+                {
+                    var existingSquad = allSquads.FirstOrDefault(s => s.Id == squadDTO.Id);
+                    Console.WriteLine("Id da squad" + squadDTO.Id);
+                    if (existingSquad == null)
+                    {
+                        throw new KeyNotFoundException($"Squad com ID {squadDTO.Id} não encontrada.");
+                    }
 
+                    if (!user.UserSquads.Any(us => us.SquadId == existingSquad.Id))
+                    {
+                        user.UserSquads.Add(new UserSquad { UserId = user.Id, SquadId = existingSquad.Id });
+                    }
+                }
                 await _userRepository.UpdateUser(user);
             }
         }

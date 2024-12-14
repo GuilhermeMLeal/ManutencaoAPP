@@ -29,7 +29,14 @@ namespace UserAuth.Infrastructure.Services
             {
                 Id = s.Id,
                 Name = s.Name,
-                Description = s.Description
+                Description = s.Description,
+                Users = s.UserSquads.Select(us => new UserDTO
+                {
+                    Id = us.User.Id,
+                    Name = us.User.Name,
+                    Email = us.User.Email,
+                    Username = us.User.Username
+                }).ToList()
             });
         }
 
@@ -44,7 +51,14 @@ namespace UserAuth.Infrastructure.Services
             {
                 Id = squad.Id,
                 Name = squad.Name,
-                Description = squad.Description
+                Description = squad.Description,
+                Users = squad.UserSquads.Select(us => new UserDTO
+                {
+                    Id = us.User.Id,
+                    Name = us.User.Name,
+                    Email = us.User.Email,
+                    Username = us.User.Username
+                }).ToList()
             };
         }
 
@@ -65,7 +79,7 @@ namespace UserAuth.Infrastructure.Services
                 if (existingUser == null)
                 {
                     //existingSquad = new UserAuth.Domain.Entities.Squad { Name = squadDTO.Name };
-                    //await _roleRepository.AddRole(existingRole); // Adicione um m�todo para adicionar role
+                    //await _roleRepository.AddRole(existingRole); // Adicione um m�todo para adicionar role
                 }
 
                 await _userRepository.AddSquadToUser(existingUser.Id, existingSquad);
@@ -88,33 +102,51 @@ namespace UserAuth.Infrastructure.Services
 
         public async Task UpdateSquad(int id, SquadDTO squadDTO)
         {
+            // Busca o Squad pelo ID
             var squad = await _squadRepository.GetSquadById(id);
 
             if (squad == null)
                 throw new KeyNotFoundException("Squad not found");
 
+            // Atualiza os campos do Squad
             squad.Name = squadDTO.Name;
             squad.Description = squadDTO.Description;
 
+            // Atualiza o Squad no repositório
             await _squadRepository.UpdateSquad(squad);
 
-            if(squadDTO.Users != null && squadDTO.Users.Count != 0)
+            // Atualiza os usuários associados ao Squad
+            if (squadDTO.Users != null && squadDTO.Users.Any())
             {
                 try
                 {
+                    // Remove todos os usuários associados ao Squad
                     await DeleteAllUsersOfSquads(id);
+
+                    // Adiciona os novos usuários ao Squad
+                    foreach (var user in squadDTO.Users)
+                    {
+                        var userExists = await _userRepository.GetUserById((int)user.Id);
+                        if (userExists == null)
+                            throw new KeyNotFoundException($"User with ID {user.Id} not found");
+
+                        await _userRepository.AddSquadToUser((int)user.Id, squad);
+                    }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    
-                }
-               
-                foreach (var user in squadDTO.Users)
-                {
-                    _userRepository.AddSquadToUser((int)user.Id, squad);
+                    // Loga o erro e relança a exceção para tratamento adequado
+                    Console.Error.WriteLine($"Erro ao atualizar usuários do Squad {id}: {ex.Message}");
+                    throw;
                 }
             }
+            else
+            {
+                // Se não há usuários na DTO, remove todos os associados
+                await DeleteAllUsersOfSquads(id);
+            }
         }
+
 
         public async Task DeleteSquad(int id)
         {
