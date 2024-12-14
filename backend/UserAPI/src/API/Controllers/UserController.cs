@@ -26,7 +26,7 @@ namespace UserAuth.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "users:admin")]
+        //[Authorize(Roles = "users:admin")]
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _userService.GetUserById(id);

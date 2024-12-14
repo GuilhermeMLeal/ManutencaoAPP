@@ -103,10 +103,10 @@ namespace Maintenance.Business
                 throw new Exception($"Maintenance with ID {id} not found.");
 
             // Restaurar quantidades ao ToolAPI antes de deletar
-            foreach (var part in maintenance.MaintenanceParts)
-            {
-                await NotifyToolApi(part.PartId, -part.Quantity); // Reverter estoque
-            }
+            // foreach (var part in maintenance.MaintenanceParts)
+            // {
+            //     await NotifyToolApi(part.PartId, -part.Quantity); // Reverter estoque
+            // }
 
             await _repository.DeleteAsync(id);
         }

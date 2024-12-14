@@ -57,6 +57,11 @@ namespace UserAuth.Application.Services
                 {
                     Id = userRole.Role.Id,
                     Name = userRole.Role.Name
+                }).ToList(),
+                Squads = user.UserSquads.Select(userSquad => new SquadDTO
+                {
+                    Id = userSquad.Squad.Id,
+                    Name = userSquad.Squad.Name
                 }).ToList()
             };
         }

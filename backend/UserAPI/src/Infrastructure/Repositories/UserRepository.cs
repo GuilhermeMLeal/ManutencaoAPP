@@ -16,12 +16,12 @@ namespace UserAuth.Infrastructure.Repositories
 
         public async Task<IEnumerable<User>> GetAllUsers()
         {
-            return await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).ToListAsync();
+            return await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).Include(u => u.UserSquads).ThenInclude(ur => ur.Squad).ToListAsync();
         }
 
         public async Task<User> GetUserById(int id)
         {
-            return await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).SingleOrDefaultAsync(u => u.Id == id);
+            return await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).Include(u => u.UserSquads).ThenInclude(ur => ur.Squad).SingleOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<User> GetUserByEmail(string email)
