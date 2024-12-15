@@ -1,11 +1,11 @@
 
 interface UserDTO {
-    Id: number;
+    Id?: number;
     Name: string;
     Email: string;
     Username: string;
     Password: string;
-    Roles: RoleDTO[];
+    Roles?: RoleDTO[];
 }
   
 interface RoleDTO {
