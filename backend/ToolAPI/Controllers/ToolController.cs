@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ToolApi.Controllers.Validation;
 using ToolAPI.Business;
-using ToolAPI.Controllers.Validation;
 using ToolAPI.Models;
 
 namespace ToolAPI.Controllers
@@ -66,6 +66,29 @@ namespace ToolAPI.Controllers
             try
             {
                 await _toolService.UpdateTool(tool);
+                return NoContent();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("quantity")]
+        public async Task<IActionResult> UpdateByQuantity([FromBody] UpdateTool tool)
+        {
+            try
+            {
+                await _toolService.UpdateToolByQuantity(tool);
                 return NoContent();
             }
             catch (KeyNotFoundException ex)

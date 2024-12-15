@@ -56,6 +56,17 @@ services:
     networks:
      - gateway_network
 
+  maintenance:
+    build:
+      context: ./backend/Maintenance
+      dockerfile: ./Dockerfile
+    ports:
+      - "3005:8080"
+    depends_on:
+      -  db
+    networks:
+     - gateway_network
+
   # frontend:
   #   container_name: frontend
   #   build:

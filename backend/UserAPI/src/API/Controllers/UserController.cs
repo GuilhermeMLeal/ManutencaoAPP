@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserAuth.API.DTOs;
+using UserAuth.API.Validation.Controllers.Validation;
 using UserAuth.Application.Interfaces;
-using UserAuth.API.Controllers.Validation;
 
 namespace UserAuth.API.Controllers
 {
-    [ServiceFilter(typeof(VerifyToken))]
+    //[ServiceFilter(typeof(VerifyToken))]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -26,7 +26,7 @@ namespace UserAuth.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "users:admin")]
+        //[Authorize(Roles = "users:admin")]
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _userService.GetUserById(id);
@@ -40,14 +40,14 @@ namespace UserAuth.API.Controllers
             await _userService.AddUser(userDTO);
 
             // Recupera o usuário criado para obter o Id
-            var createdUser = await _userService.GetUserByEmail(userDTO.Email);
-            if (createdUser == null) return BadRequest("Erro ao criar usuário.");
-
-            return CreatedAtAction(nameof(GetUser), new { id = createdUser.Id }, createdUser);
+            //var createdUser = await _userService.GetUserByEmail(userDTO.Email);
+            //if (createdUser == null) return BadRequest("Erro ao criar usuário.");
+            return Ok();
+         //   return CreatedAtAction(nameof(GetUser), new { id = userDTO.Id }, userDTO);
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "users:admin")]
+        //[Authorize(Roles = "users:admin")]
         public async Task<IActionResult> UpdateUser(int id, UserDTO userDTO)
         {
             var existingUser = await _userService.GetUserById(id);
@@ -58,7 +58,7 @@ namespace UserAuth.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "users:admin")]
+        //[Authorize(Roles = "users:admin")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var existingUser = await _userService.GetUserById(id);

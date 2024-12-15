@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using UserAuth.API.Controllers.Validation;
 using UserAuth.API.DTOs;
 using UserAuth.Application.Helpers;
 using UserAuth.Application.Interfaces;

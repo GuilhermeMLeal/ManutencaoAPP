@@ -12,7 +12,7 @@ import { useNavigation } from "expo-router";
  */
 
 type FloatingButtonProps = {
-  type: "machine" | "maintenance"; // Define o tipo para o botão
+  type: "machine" | "maintenance" | "tool" | "squad" | "user"; // Define o tipo para o botão
 };
 
 const FloatingButton: React.FC<FloatingButtonProps> = ({ type }) => {
@@ -23,6 +23,15 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({ type }) => {
       navigation.navigate("CreateMachine"); // Navegar para a tela de criação de máquina
     } else if (type === "maintenance") {
       navigation.navigate("CreateMaintenance"); // Navegar para a tela de criação de manutenção
+    }
+    else if (type === "tool") {
+      navigation.navigate("CreateTool"); // Navegar para a tela de criação de manutenção
+    }
+    else if (type === "squad") {
+      navigation.navigate("CreateSquad"); // Navegar para a tela de criação de squad
+    }
+    else if (type === "user") {
+      navigation.navigate("CreateUser"); // Navegar para a tela de criação de squad
     }
   };
 

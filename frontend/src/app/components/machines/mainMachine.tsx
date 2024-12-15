@@ -1,45 +1,86 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Button,
   Container,
-  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TablePagination,
+  Typography,
+  Paper,
+  IconButton,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  CardMedia,
-  DialogActions,
+  DialogTitle,
+  Button,
 } from "@mui/material";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import Title from "../titles/titleMain";
-import CardBox from "../table/cardBox";
 import { FindItemTextBox } from "../create/findItemTextBox";
-import PaginationComponent from "../table/PaginationComponent";
+import MachineService from "@/service/MachineService";
+import { useRouter } from "next/navigation";
 
-const machineData = [
-  {
-    title: "Máquina A",
-    description: "Parte Superior - Aço Inoxidável",
-    image: "/image/roboto.png",
-  },
-  {
-    title: "Máquina B",
-    description: "Parte Inferior - Plástico ABS",
-    image: "/image/roboto.png",
-  },
-  {
-    title: "Máquina C",
-    description: "Motor - Alumínio",
-    image: "/image/roboto.png",
-  },
-];
-
-export default function MainMachine() {
+export default function MainMachines() {
+  const [machines, setMachines] = useState<Machine[]>([]);
+  const [filteredMachines, setFilteredMachines] = useState<Machine[]>([]);
   const [page, setPage] = useState<number>(0);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(3);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(5);
   const [openDialog, setOpenDialog] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [selectedMachineId, setSelectedMachineId] = useState<number | null>(
+    null
+  );
+  const [places, setPlaces] = useState<Place[]>([]);
+  const [statuses, setStatuses] = useState<Status[]>([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch machines
+        const machineData = await MachineService.getAllMachines();
+
+        // Fetch places and statuses
+        const placeData = await MachineService.getAllPlaces();
+        const statusData = await MachineService.getAllStatuses();
+
+        setPlaces(placeData);
+        setStatuses(statusData);
+
+        // Map place and status names to machines
+        const enrichedMachines = machineData.map((machine) => {
+          const place = placeData.find((p) => p.id === machine.placeId);
+          const status = statusData.find((s) => s.id === machine.statusId);
+
+          return {
+            ...machine,
+            placeName: place?.name || "N/A",
+            statusName: status?.name || "N/A",
+          };
+        });
+
+        setMachines(enrichedMachines);
+        setFilteredMachines(enrichedMachines);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleSearch = (query: string) => {
+    const filtered = machines.filter((machine) =>
+      machine.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredMachines(filtered);
+    setPage(0);
+  };
 
   const handlePageChange = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -55,14 +96,35 @@ export default function MainMachine() {
     setPage(0);
   };
 
-  const handleOpenDialog = (item: any) => {
-    setSelectedItem(item);
+  const handleEditMachine = (id: number) => {
+    router.push(`/machines/createMachine?id=${id}`);
+  };
+
+  const handleOpenDialog = (id: number) => {
+    setSelectedMachineId(id);
     setOpenDialog(true);
   };
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    setSelectedItem(null);
+    setSelectedMachineId(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (selectedMachineId === null) return;
+
+    try {
+      await MachineService.deleteMachine(selectedMachineId);
+      setMachines((prev) =>
+        prev.filter((machine) => machine.id !== selectedMachineId)
+      );
+      setFilteredMachines((prev) =>
+        prev.filter((machine) => machine.id !== selectedMachineId)
+      );
+      handleCloseDialog();
+    } catch (error) {
+      console.error(`Error deleting machine with ID ${selectedMachineId}:`, error);
+    }
   };
 
   return (
@@ -72,59 +134,98 @@ export default function MainMachine() {
         subtitle="Visualização Detalhada de Máquinas"
       />
       <FindItemTextBox
-        textReport="Criar Relatório de Máquinas"
         textButton="Cadastrar uma Máquina"
-        pageText="/pages/machines/createMachine"
+        pageText="/machines/createMachine"
         nameTextSearch="Máquina"
-        typeTextField="Tipo de Máquina"
+        onSearch={handleSearch}
       />
       <Container maxWidth="lg" className="mb-4">
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            flexWrap: "wrap",
-            gap: 2,
-            mt: 4,
-          }}
-        >
-          {machineData.map((machine, index) => (
-            <CardBox
-              key={index}
-              item={machine}
-              updatePath="/pages/machines/createMachine"
-              onSeeMore={() => handleOpenDialog(machine)}
-            />
-          ))}
-        </Box>
-        {/* <PaginationComponent
-          count={machineData.length}
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Nome</TableCell>
+                <TableCell>Tipo</TableCell>
+                <TableCell>Modelo</TableCell>
+                <TableCell>Status da Máquina/Manutenção</TableCell>
+                <TableCell>Localização</TableCell>
+                <TableCell>Ações</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredMachines.length > 0 ? (
+                filteredMachines
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((machine) => (
+                    <TableRow key={machine.id}>
+                      <TableCell>{machine.id}</TableCell>
+                      <TableCell>{machine.name}</TableCell>
+                      <TableCell>{machine.type}</TableCell>
+                      <TableCell>{machine.model}</TableCell>
+                      <TableCell>{machine.statusName}</TableCell>
+                      <TableCell>{machine.placeName}</TableCell>
+                      <TableCell>
+                        <IconButton
+                          color="primary"
+                          onClick={() => handleEditMachine(machine.id!)}
+                        >
+                          <FaEdit />
+                        </IconButton>
+                        <IconButton
+                          color="error"
+                          onClick={() => handleOpenDialog(machine.id!)}
+                          sx={{ ml: 1 }}
+                        >
+                          <FaTrashAlt />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={7} align="center">
+                    <Typography variant="body1" color="textSecondary">
+                      Nenhuma máquina foi encontrada
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          component="div"
+          count={filteredMachines.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
-        /> */}
+          rowsPerPageOptions={[5, 10, 15, 20]}
+        />
       </Container>
+
+      {/* Modal de Confirmação de Exclusão */}
       <Dialog
         open={openDialog}
         onClose={handleCloseDialog}
-        maxWidth="md"
-        fullWidth
-        sx={{
-          maxWidth: 800,
-          margin: "auto",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
       >
-        <DialogTitle>{selectedItem?.title}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Confirmar Exclusão</DialogTitle>
         <DialogContent>
-          <DialogContentText>{selectedItem?.description}</DialogContentText>
-          <CardMedia sx={{ height: 300 }} image={selectedItem?.image} />
+          <DialogContentText id="alert-dialog-description">
+            Tem certeza de que deseja excluir esta máquina? Esta ação não pode
+            ser desfeita.
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog}>Fechar</Button>
+          <Button onClick={handleCloseDialog} sx={{ color: "black" }}>
+            Cancelar
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error" autoFocus>
+            Excluir
+          </Button>
         </DialogActions>
       </Dialog>
     </main>

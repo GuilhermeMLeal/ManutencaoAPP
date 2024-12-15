@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Container,
@@ -10,39 +10,44 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  CardMedia,
+  Typography,
 } from "@mui/material";
 import Title from "../titles/titleMain";
 import CardBox from "../table/cardBox";
 import { FindItemTextBox } from "../create/findItemTextBox";
 import PaginationComponent from "../table/PaginationComponent";
+import UnifiedService from "@/service/UserService";
 
-const teamData = [
-  {
-    title: "Time 1",
-    description: "Elétrica",
-    image: "/image/equipe.png",
-  },
-  {
-    title: "Time 2",
-    description: "Mecânica",
-    image: "/image/equipe.png",
-  },
-  {
-    title: "Time 3",
-    description: "Logística",
-    image: "/image/equipe.png",
-  },
-];
-
-export default function MainTeam() {
+const MainTeam: React.FC = () => {
+  const [squads, setSquads] = useState<Squad[]>([]);
   const [openDialog, setOpenDialog] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [selectedItem, setSelectedItem] = useState<Squad | null>(null);
 
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(3);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleOpenDialog = (item: any) => {
+  const [filteredSquads, setFilteredSquads] = useState<Squad[]>([]);
+
+  // Fetch squads from the API
+  useEffect(() => {
+    fetchSquads();
+  }, []);
+
+  const fetchSquads = async () => {
+    try {
+      setLoading(true);
+      const squadsData = await UnifiedService.getAllSquads();
+      setSquads(squadsData);
+    } catch (error) {
+      setError("Não foi possível carregar as equipes.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleOpenDialog = (item: Squad) => {
     setSelectedItem(item);
     setOpenDialog(true);
   };
@@ -50,6 +55,19 @@ export default function MainTeam() {
   const handleCloseDialog = () => {
     setOpenDialog(false);
     setSelectedItem(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (selectedItem) {
+      try {
+        await UnifiedService.deleteSquad(selectedItem.id);
+        setOpenDialog(false);
+        setSelectedItem(null);
+        fetchSquads();
+      } catch (error) {
+        console.error("Error deleting squad:", error);
+      }
+    }
   };
 
   const handlePageChange = (
@@ -66,6 +84,34 @@ export default function MainTeam() {
     setPage(0);
   };
 
+  const handleSearch = (query: string) => {
+    const filtered = squads.filter((squad) =>
+      squad.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredSquads(filtered);
+    setPage(0);
+  };
+
+  if (loading) {
+    return (
+      <main className="flex-1 flex flex-col bg-white/90 overflow-y-auto max-h-svh">
+        <Title
+          title="Sistema de Gestão de Equipes"
+          subtitle="Carregando equipes..."
+        />
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="flex-1 flex flex-col bg-white/90 overflow-y-auto max-h-svh">
+        <Title title="Sistema de Gestão de Equipes" subtitle="Erro" />
+        <p>{error}</p>
+      </main>
+    );
+  }
+
   return (
     <main className="flex-1 flex flex-col bg-white/90 overflow-y-auto max-h-svh">
       <Title
@@ -73,11 +119,10 @@ export default function MainTeam() {
         subtitle="Visualização Detalhada de Equipe"
       />
       <FindItemTextBox
-        textReport="Criar Relatório de Equipe"
         textButton="Cadastrar uma Equipe"
-        pageText="/pages/teams/createTeam"
+        pageText="/teams/createTeam"
         nameTextSearch="Equipe"
-        typeTextField="Área do Time"
+        onSearch={handleSearch}
       />
       <Container maxWidth="lg" className="mb-4">
         <Box
@@ -89,35 +134,70 @@ export default function MainTeam() {
             mt: 4,
           }}
         >
-          {teamData
+          {squads
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((team, index) => (
+            .map((squad) => (
               <CardBox
-                key={index}
-                item={team}
-                updatePath="/pages/teams/createTeam"
-                onSeeMore={() => handleOpenDialog(team)}
+                key={squad.id}
+                item={{
+                  title: squad.name,
+                  description: squad.description,
+                  image: "/image/equipe.png",
+                }}
+                updatePath={`/teams/createTeam?id=${squad.id}`}
+                onDelete={() => handleOpenDialog(squad)} // Abre o modal de confirmação
               />
             ))}
         </Box>
-        {/* <PaginationComponent
-          count={teamData.length}
+        <PaginationComponent
+          count={squads.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
-        /> */}
+        />
       </Container>
-      <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>{selectedItem?.title}</DialogTitle>
+
+      {/* Modal de Exclusão */}
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          Confirmar Exclusão
+        </DialogTitle>
         <DialogContent>
-          <DialogContentText>{selectedItem?.description}</DialogContentText>
-          <CardMedia sx={{ height: 140 }} image={selectedItem?.image} />
+          <DialogContentText id="alert-dialog-description">
+            Tem certeza de que deseja excluir a equipe{" "}
+            <strong>{selectedItem?.name}</strong>? Esta ação não pode ser
+            desfeita.
+          </DialogContentText>
+
+          {selectedItem && (
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="subtitle1" color="textPrimary">
+                <strong>Nome:</strong> {selectedItem.name}
+              </Typography>
+              <Typography variant="subtitle2" color="textSecondary">
+                <strong>Descrição:</strong>{" "}
+                {selectedItem.description || "Sem descrição"}
+              </Typography>
+            </Box>
+          )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog}>Fechar</Button>
+          <Button onClick={handleCloseDialog} sx={{ color: "black" }}>
+            Cancelar
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error" autoFocus>
+            Excluir
+          </Button>
         </DialogActions>
       </Dialog>
     </main>
   );
-}
+};
+
+export default MainTeam;

@@ -12,6 +12,7 @@ namespace UserAuth.Application.Interfaces
         Task DeleteUser(int id);
         Task<IEnumerable<RoleDTO>> GetRolesByUserId(int userId);
         Task AddRoleToUser(int userId, RoleDTO roleDTO);
+        Task AddSquadToUser(List<int> users, int squadId);
         Task RemoveRoleFromUser(int userId, int roleId);
     }
 }

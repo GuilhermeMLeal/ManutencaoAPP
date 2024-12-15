@@ -43,7 +43,7 @@ namespace MachineAPI.Application.Services
 
         public async Task<MachineDTO> AddMachine(MachineCreateDto machineCreateDto)
         {
-            // Valida o PlaceId antes de adicionar a máquina
+            // Valida o PlaceId antes de adicionar a mï¿½quina
             if (machineCreateDto.PlaceId.HasValue)
             {
                 var place = await _placeRepository.GetByIdAsync(machineCreateDto.PlaceId.Value);
@@ -64,7 +64,7 @@ namespace MachineAPI.Application.Services
             if (existingMachine == null)
                 throw new KeyNotFoundException($"Machine with ID {machineUpdateDto.Id} not found.");
 
-            // Valida o PlaceId antes de atualizar a máquina
+            // Valida o PlaceId antes de atualizar a mï¿½quina
             if (machineUpdateDto.PlaceId != null)
             {
                 var place = await _placeRepository.GetByIdAsync(machineUpdateDto.PlaceId);
@@ -78,11 +78,22 @@ namespace MachineAPI.Application.Services
             existingMachine.Type = machineUpdateDto.Type;
             existingMachine.Model = machineUpdateDto.Model;
             existingMachine.ManufactureDate = machineUpdateDto.ManufactureDate;
-            existingMachine.Status = machineUpdateDto.Status;
+            existingMachine.StatusId = machineUpdateDto.StatusId;
             existingMachine.PlaceId = machineUpdateDto.PlaceId;
 
             await _machineRepository.UpdateAsync(existingMachine);
             return existingMachine.ToDto();
+        }
+        
+        public async Task DeleteMachine(int id)
+        {
+            var existingMachine = await _machineRepository.GetByIdAsync(id);
+            if (existingMachine == null)
+            {
+                throw new KeyNotFoundException($"Machine with ID {id} not found.");
+            }
+
+            await _machineRepository.DeleteAsync(id);
         }
     }
 }

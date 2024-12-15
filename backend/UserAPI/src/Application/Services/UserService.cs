@@ -1,3 +1,5 @@
+using AuthUser.Domain.Interfaces;
+using Squad.API.DTOs;
 using UserAuth.API.DTOs;
 using UserAuth.Application.Helpers;
 using UserAuth.Application.Interfaces;
@@ -10,11 +12,12 @@ namespace UserAuth.Application.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
-
-        public UserService(IUserRepository userRepository, IRoleRepository roleRepository)
+        private readonly ISquadRepository _squadRepository;
+        public UserService(IUserRepository userRepository, IRoleRepository roleRepository, ISquadRepository squadRepository)
         {
             _userRepository = userRepository;
             _roleRepository = roleRepository;
+            _squadRepository = squadRepository;
         }
 
         public async Task<IEnumerable<UserDTO>> GetAllUsers()
@@ -30,6 +33,11 @@ namespace UserAuth.Application.Services
                 {
                     Id = userRole.Role.Id,
                     Name = userRole.Role.Name
+                }).ToList(),
+                Squads = user.UserSquads.Select(userSquad => new SquadDTO
+                {
+                    Id = userSquad.Squad.Id,
+                    Name = userSquad.Squad.Name
                 }).ToList()
             }).ToList();
         }
@@ -49,6 +57,11 @@ namespace UserAuth.Application.Services
                 {
                     Id = userRole.Role.Id,
                     Name = userRole.Role.Name
+                }).ToList(),
+                Squads = user.UserSquads.Select(userSquad => new SquadDTO
+                {
+                    Id = userSquad.Squad.Id,
+                    Name = userSquad.Squad.Name
                 }).ToList()
             };
         }
@@ -94,6 +107,18 @@ namespace UserAuth.Application.Services
 
                 await _userRepository.AddRoleToUser(user.Id, existingRole);
             }
+
+            foreach (var squadDTO in userDTO.Squads)
+            {
+                var existingSquad = await _squadRepository.GetSquadById((int)squadDTO.Id);
+                if (existingSquad== null)
+                {
+                    //existingSquad = new UserAuth.Domain.Entities.Squad { Name = squadDTO.Name };
+                    //await _roleRepository.AddRole(existingRole); // Adicione um método para adicionar role
+                }
+
+                await _userRepository.AddSquadToUser(user.Id, existingSquad);
+            }
         }
 
         public async Task UpdateUser(int id, UserDTO userDTO)
@@ -106,7 +131,8 @@ namespace UserAuth.Application.Services
                 user.Username = userDTO.Username;
 
                 user.UserRoles.Clear();
-
+                var allRoles = await _roleRepository.GetAllRoles();
+                var allSquads = await _squadRepository.GetAllSquad();
                 foreach (var roleDTO in userDTO.Roles)
                 {
                     var existingRole = await _roleRepository.GetRoleByName(roleDTO.Name);
@@ -118,7 +144,20 @@ namespace UserAuth.Application.Services
 
                     user.UserRoles.Add(new UserRole { UserId = user.Id, Role = existingRole });
                 }
+                foreach (var squadDTO in userDTO.Squads)
+                {
+                    var existingSquad = allSquads.FirstOrDefault(s => s.Id == squadDTO.Id);
+                    Console.WriteLine("Id da squad" + squadDTO.Id);
+                    if (existingSquad == null)
+                    {
+                        throw new KeyNotFoundException($"Squad com ID {squadDTO.Id} não encontrada.");
+                    }
 
+                    if (!user.UserSquads.Any(us => us.SquadId == existingSquad.Id))
+                    {
+                        user.UserSquads.Add(new UserSquad { UserId = user.Id, SquadId = existingSquad.Id });
+                    }
+                }
                 await _userRepository.UpdateUser(user);
             }
         }
@@ -146,6 +185,21 @@ namespace UserAuth.Application.Services
                 Name = roleDTO.Name
             };
             await _userRepository.AddRoleToUser(userId, role);
+        }
+
+        public async Task AddSquadToUser(List<int> users, int squadId)
+        {
+            foreach (var userDTO in users)
+            {
+                var existingSquad = await _squadRepository.GetSquadById(squadId);
+                if (existingSquad == null)
+                {
+                    //existingSquad = new UserAuth.Domain.Entities.Squad { Name = squadDTO.Name };
+                    //await _roleRepository.AddRole(existingRole); // Adicione um método para adicionar role
+                }
+
+                await _userRepository.AddSquadToUser((int)userDTO, existingSquad);
+            }
         }
 
         public async Task RemoveRoleFromUser(int userId, int roleId)

@@ -64,7 +64,23 @@ namespace ToolAPI.Business
 
             await _toolRepository.UpdateTool(tool);
         }
+        public async Task UpdateToolByQuantity(UpdateTool tool)
+        {
+            if (tool == null)
+            {
+                throw new ArgumentNullException(nameof(tool), "Tool cannot be null.");
+            }
 
+            var existingTool = await _toolRepository.GetToolById(tool.Id);
+            if (existingTool == null)
+            {
+                throw new KeyNotFoundException($"Tool with ID {tool.Id} not found.");
+            }
+            var quantityActual = existingTool.Quantity - tool.SubQuantity;
+            existingTool.Quantity = quantityActual;
+
+            await _toolRepository.UpdateTool(existingTool);
+        }
         public async Task DeleteTool(int id)
         {
             var tool = await _toolRepository.GetToolById(id);

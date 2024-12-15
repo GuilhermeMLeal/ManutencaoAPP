@@ -15,13 +15,22 @@ namespace AuthUser.Infrastructure.Repositories
 
         public async Task<IEnumerable<UserAuth.Domain.Entities.Squad>> GetAllSquad()
         {
-            return await _context.Squads.ToListAsync();
+            // Inclui os usuários associados ao Squad via UserSquads
+            return await _context.Squads
+                .Include(s => s.UserSquads)
+                .ThenInclude(us => us.User) // Carrega os dados dos usuários associados
+                .ToListAsync();
         }
 
         public async Task<UserAuth.Domain.Entities.Squad> GetSquadById(int id)
         {
-            return await _context.Squads.FirstOrDefaultAsync(s => s.Id == id);
+            // Inclui os usuários associados ao Squad via UserSquads
+            return await _context.Squads
+                .Include(s => s.UserSquads)
+                .ThenInclude(us => us.User) // Carrega os dados dos usuários associados
+                .FirstOrDefaultAsync(s => s.Id == id);
         }
+
 
         public async Task AddSquad(UserAuth.Domain.Entities.Squad entity)
         {

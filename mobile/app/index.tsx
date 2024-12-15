@@ -11,6 +11,17 @@ import CreateMachine from "./components/machine/machineCreate";
 import CreateMaintenance from "./components/maintenance/maintenanceCreate";
 import { AuthProvider, useAuth } from "./context/authService";
 import PrivateRoute from "./privateRoute";
+import CreateTool from "./components/tool/createTool";
+import EditMachineScreen from "./components/machine/editMachine";
+import MaintenanceDetailsScreen from "./components/maintenance/maintenanceDetailsScreen";
+import CreateSquadScreen from "./components/squads/createSquad";
+import ManageSquadsScreen from "./components/squads/manageSquads";
+import EditMaintenanceScreen from "./components/maintenance/editMaintenance";
+import CreateUserScreen from "./components/user/createUser";
+import UpdateUserScreen from "./components/user/updateUser";
+import UserDetailsScreen from "./components/user/userDetails";
+import UpdateSquadScreen from "./components/squads/updateSquad";
+import SquadDetailsScreen from "./components/squads/squadDetails";
 
 type RootStackParamList = {
   Home: undefined;
@@ -79,10 +90,98 @@ export default function Index()  {
           )}
         />
         <Stack.Screen
+          name="EditMachineScreen"
+          component={() => (
+            <PrivateRoute>
+              <EditMachineScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="MaintenanceDetailsScreen"
+          component={() => (
+            <PrivateRoute>
+              <MaintenanceDetailsScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
           name="CreateMaintenance"
           component={() => (
             <PrivateRoute>
               <CreateMaintenance />
+            </PrivateRoute>
+          )}
+        /> 
+        <Stack.Screen
+          name="CreateTool"
+          component={() => (
+            <PrivateRoute>
+              <CreateTool />
+            </PrivateRoute>
+        )}
+        />
+        <Stack.Screen
+          name="CreateSquad"
+          component={() => (
+            <PrivateRoute>
+              <CreateSquadScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="CreateUser"
+          component={() => (
+            <PrivateRoute>
+              <CreateUserScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="EditUser"
+          component={() => (
+            <PrivateRoute>
+              <UpdateUserScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="UserDetails"
+          component={() => (
+            <PrivateRoute>
+              <UserDetailsScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="EditMaintenance"
+          component={() => (
+            <PrivateRoute>
+              <EditMaintenanceScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="ManageSquad"
+          component={() => (
+            <PrivateRoute>
+              <ManageSquadsScreen />
+            </PrivateRoute>
+          )}
+        />
+         <Stack.Screen
+          name="SquadDetails"
+          component={() => (
+            <PrivateRoute>
+              <SquadDetailsScreen />
+            </PrivateRoute>
+          )}
+        />
+        <Stack.Screen
+          name="UpdateSquad"
+          component={() => (
+            <PrivateRoute>
+              <UpdateSquadScreen />
             </PrivateRoute>
           )}
         />

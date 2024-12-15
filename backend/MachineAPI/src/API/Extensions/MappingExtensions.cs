@@ -15,7 +15,7 @@ namespace MachineAPI.API.Extensions
                 Model = createDto.Model,
                 ManufactureDate = createDto.ManufactureDate,
                 SerialNumber = createDto.SerialNumber,
-                Status = createDto.Status,
+                StatusId = createDto.StatusId,
                 PlaceId = createDto.PlaceId != null ? createDto.PlaceId.Value : null
             };
         }
@@ -28,7 +28,7 @@ namespace MachineAPI.API.Extensions
                 Type = updateDto.Type,
                 Model = updateDto.Model,
                 ManufactureDate = updateDto.ManufactureDate,
-                Status = updateDto.Status,
+                StatusId = updateDto.StatusId,
                 PlaceId = updateDto.PlaceId
             };
         }
@@ -42,8 +42,16 @@ namespace MachineAPI.API.Extensions
                 Model = machine.Model,
                 ManufactureDate = machine.ManufactureDate,
                 SerialNumber = machine.SerialNumber,
-                Status = machine.Status,
+                StatusId = machine.StatusId,
                 PlaceId = machine.PlaceId != null ? machine.PlaceId.Value : null
+            };
+        }
+        public static StatusDTO ToDtoStatus(this Status status)
+        {
+            return new StatusDTO
+            {
+                Id = status.Id,
+                Name = status.Name
             };
         }
 
@@ -69,7 +77,7 @@ namespace MachineAPI.API.Extensions
                 Model = machineDto.Model,
                 ManufactureDate = machineDto.ManufactureDate,
                 SerialNumber = machineDto.SerialNumber,
-                Status = machineDto.Status,
+                StatusId = machineDto.StatusId,
                 PlaceId = machineDto.PlaceId
             };
         }

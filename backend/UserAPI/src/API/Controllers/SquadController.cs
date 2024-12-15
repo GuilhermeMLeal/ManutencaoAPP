@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Squad.API.DTOs;
 using UserAuth.API.DTOs;
+using UserAuth.API.Validation.Controllers.Validation;
 using UserAuth.Application.Helpers;
 using UserAuth.Application.Interfaces;
 using UserAuth.Application.Services;
-using UserAuth.API.Controllers.Validation;
 
 namespace UserAuth.API.Controllers
 {
@@ -30,7 +30,7 @@ namespace UserAuth.API.Controllers
             }
             catch (Exception ex)
             {
-                // Log a mensagem da exceção (se um sistema de log estiver configurado)
+                // Log a mensagem da exceï¿½ï¿½o (se um sistema de log estiver configurado)
                 return StatusCode(500, new { message = "An unexpected error occurred.", details = ex.Message });
             }
         }
@@ -64,7 +64,7 @@ namespace UserAuth.API.Controllers
                     return BadRequest(ModelState);
 
                 await _squadService.AddSquad(squadDTO);
-                return CreatedAtAction(nameof(GetById), new { id = squadDTO.Id }, squadDTO);
+                return Ok();
             }
             catch (ArgumentException ex)
             {

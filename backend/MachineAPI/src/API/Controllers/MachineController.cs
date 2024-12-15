@@ -99,5 +99,22 @@ namespace MachineAPI.API.Controllers
                 return StatusCode(500, new { message = "An error occurred while updating the machine.", details = ex.Message });
             }
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteMachine(int id)
+        {
+            try
+            {
+                await _machineService.DeleteMachine(id);
+                return NoContent();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
+        }
     }
 }

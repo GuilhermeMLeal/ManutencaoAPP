@@ -7,7 +7,7 @@
         public string Type { get; set; }
         public string Model { get; set; }
         public DateTime ManufactureDate { get; set; }
-        public string Status { get; set; }
+        public int? StatusId { get; set; }
         public int PlaceId { get; set; }
     }
 }

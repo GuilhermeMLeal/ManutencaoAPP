@@ -1,21 +1,14 @@
 "use client";
-import { AuthProvider } from "@/AuthContext";
-import Index from "./pages/index/page";
-import Login from "./pages/login/page";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import PrivateRoute from "@/PrivateRoute";
 
-export default function Home() {
-  return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/"
-          element={<PrivateRoute component={Index}/>} />
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </Router>
-    </AuthProvider>
-  );
+export default function App() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace("/login");
+  }, [router]);
+
+  return null;
 }

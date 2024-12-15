@@ -10,6 +10,7 @@ namespace ToolAPI.Business
         Task<Tool> GetToolById(int id);
         Task AddTool(Tool tool);
         Task UpdateTool(Tool tool);
+        Task UpdateToolByQuantity(UpdateTool tool);
         Task DeleteTool(int id);
     }
 }

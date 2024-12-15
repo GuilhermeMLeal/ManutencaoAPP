@@ -16,12 +16,12 @@ namespace UserAuth.Infrastructure.Repositories
 
         public async Task<IEnumerable<User>> GetAllUsers()
         {
-            return await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).ToListAsync();
+            return await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).Include(u => u.UserSquads).ThenInclude(ur => ur.Squad).ToListAsync();
         }
 
         public async Task<User> GetUserById(int id)
         {
-            return await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).SingleOrDefaultAsync(u => u.Id == id);
+            return await _context.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).Include(u => u.UserSquads).ThenInclude(ur => ur.Squad).SingleOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<User> GetUserByEmail(string email)
@@ -71,6 +71,31 @@ namespace UserAuth.Infrastructure.Repositories
             var userRole = new UserRole { UserId = userId, RoleId = role.Id };
             await _context.UserRoles.AddAsync(userRole);
             await _context.SaveChangesAsync();
+        }
+        public async Task AddSquadToUser(int userId, UserAuth.Domain.Entities.Squad squad)
+        {
+            var userSquad = new UserSquad { UserId = userId, SquadId = squad.Id };
+            await _context.UserSquads.AddAsync(userSquad);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteSquadToUser(int squadId)
+        {
+            // Busca todas as relações onde SquadId corresponde ao fornecido
+            var userSquads = await _context.UserSquads
+                .Where(us => us.SquadId == squadId)
+                .ToListAsync();
+
+            // Verifica se existem relações antes de tentar remover
+            if (userSquads.Any())
+            {
+                _context.UserSquads.RemoveRange(userSquads); // Remove todas as relações encontradas
+                await _context.SaveChangesAsync(); // Salva as alterações
+            }
+            else
+            {
+                throw new KeyNotFoundException("Nenhuma relação encontrada para o SquadId especificado.");
+            }
         }
 
         public async Task RemoveRoleFromUser(int userId, int roleId)
