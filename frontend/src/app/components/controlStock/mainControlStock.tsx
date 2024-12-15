@@ -1,196 +1,179 @@
 "use client";
 
-import React from "react";
-import { Container, Box, Typography, Paper, Grid } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Container, Box, Typography, Paper, Grid, CircularProgress } from "@mui/material";
+import { Bar, Pie } from "react-chartjs-2";
 import TitleMain from "../titles/titleMain";
-import { Line, Bar, Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
+  ArcElement,
   Title,
   Tooltip,
   Legend,
-  ArcElement,
-  LineElement,
-  PointElement,
 } from "chart.js";
+import ToolService from "@/service/ToolService";
+import MaintenanceService from "@/service/MaintenanceService";
+import MachineService from "@/service/MachineService";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  LineElement,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend,
-  PointElement
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);
 
-const maintenanceData = {
-  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-  datasets: [
-    {
-      label: "Manutenções",
-      data: [5, 10, 15, 20, 25, 30],
-      borderColor: "#3f51b5",
-      backgroundColor: "rgba(63, 81, 181, 0.2)",
-      fill: true,
-    },
-  ],
-};
+// Tipos para os dados de API
+interface Tool {
+  Id: number;
+  Name: string;
+  Quantity: number;
+}
 
-const machineData = {
-  labels: ["Máquina A", "Máquina B", "Máquina C"],
-  datasets: [
-    {
-      label: "Número de Falhas",
-      data: [10, 15, 7],
-      backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe"],
-    },
-  ],
-};
+interface Maintenance {
+  id: number;
+  machineId: number;
+  maintenanceParts: { partId: number; quantity: number }[];
+}
 
-const partsData = {
-  labels: ["Peça X", "Peça Y", "Peça Z"],
-  datasets: [
-    {
-      label: "Quantidade",
-      data: [100, 200, 150],
-      backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe"],
-    },
-  ],
-};
-
-const teamPerformanceData = {
-  labels: ["Time A", "Time B", "Time C"],
-  datasets: [
-    {
-      label: "Desempenho",
-      data: [80, 70, 90],
-      backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe"],
-    },
-  ],
-};
-
-const avgResolutionTimeData = {
-  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-  datasets: [
-    {
-      label: "Tempo Médio de Resolução (Horas)",
-      data: [2, 4, 3, 5, 4, 3],
-      borderColor: "#ff5733",
-      backgroundColor: "rgba(255, 87, 51, 0.2)",
-      fill: true,
-    },
-  ],
-};
-
-const maintenanceVolumeData = {
-  labels: [
-    "Manutenção Preventiva",
-    "Manutenção Corretiva",
-    "Manutenção Predial",
-  ],
-  datasets: [
-    {
-      label: "Quantidade de Manutenções",
-      data: [25, 15, 10],
-      backgroundColor: ["#ff6384", "#36a2eb", "#cc65fe"],
-    },
-  ],
-};
+interface Machine {
+  id: number;
+  name: string;
+  placeId: number;
+}
 
 export default function DashboardPage() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [charts, setCharts] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+
+        // Fetch Ferramentas no Estoque
+        const tools: Tool[] = await ToolService.getAllTools();
+        const toolLabels = tools.map((tool) => tool.Name);
+        const toolQuantities = tools.map((tool) => Math.max(tool.Quantity, 0)); // Evitar valores negativos
+
+        // Fetch Peças Utilizadas em Manutenção por Máquina
+        const maintenances: Maintenance[] = await MaintenanceService.getAllMaintenances();
+        const machines: Machine[] = await MachineService.getAllMachines();
+
+        const toolsUsedByMachine = maintenances.reduce((acc: Record<string, number>, curr) => {
+          const machine = machines.find((m) => m.id === curr.machineId)?.name || "Desconhecida";
+          const totalToolsUsed = curr.maintenanceParts.reduce((sum, part) => sum + part.quantity, 0);
+          acc[machine] = (acc[machine] || 0) + totalToolsUsed;
+          return acc;
+        }, {});
+
+        // Fetch Quantidade de Máquinas por Localização
+        const locations = await MachineService.getAllPlaces(); // Assumindo que `getAllPlaces` retorna informações das localizações
+        const machinesByLocation = machines.reduce((acc: Record<string, number>, curr) => {
+          const locationName = locations.find((loc) => loc.id === curr.placeId)?.name || "Local Desconhecido";
+          acc[locationName] = (acc[locationName] || 0) + 1;
+          return acc;
+        }, {});
+
+        // Configurações dos gráficos
+        const chartConfigs = [
+          {
+            type: "pie",
+            title: "Peças no Estoque",
+            data: {
+              labels: toolLabels,
+              datasets: [
+                {
+                  label: "Quantidade",
+                  data: toolQuantities,
+                  backgroundColor: toolLabels.map(
+                    (_, index) => `hsl(${(index * 360) / toolLabels.length}, 70%, 50%)`
+                  ),
+                },
+              ],
+            },
+          },
+          {
+            type: "bar",
+            title: "Quantidade de Máquinas por Localização",
+            data: {
+              labels: Object.keys(machinesByLocation),
+              datasets: [
+                {
+                  label: "Quantidade de Máquinas",
+                  data: Object.values(machinesByLocation),
+                  backgroundColor: ["#36a2eb", "#ff6384", "#cc65fe", "#ffce56", "#4bc0c0"],
+                },
+              ],
+            },
+          },
+          {
+            type: "horizontalBar",
+            title: "Peças Utilizadas em Manutenção (Horizontal)",
+            data: {
+              labels: Object.keys(toolsUsedByMachine),
+              datasets: [
+                {
+                  label: "Peças Utilizadas",
+                  data: Object.values(toolsUsedByMachine),
+                  backgroundColor: ["#36a2eb", "#ff6384", "#cc65fe", "#ffce56", "#4bc0c0"],
+                },
+              ],
+            },
+          },
+        ];
+
+        setCharts(chartConfigs);
+        setError(null);
+      } catch (err) {
+        console.error("Erro ao buscar dados:", err);
+        setError("Erro ao carregar os dados. Por favor, tente novamente.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <main className="flex-1 flex justify-center items-center">
+        <CircularProgress />
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="flex-1 flex justify-center items-center">
+        <Typography color="error">{error}</Typography>
+      </main>
+    );
+  }
+
   return (
-    <main className="flex-1 flex flex-col p-6 pt-24 bg-white/90">
-      <TitleMain
-        title={"Sistema de Gestão de Manutenção"}
-        subtitle="Dashboard de Manutenção e Recursos"
-      />
-      <Container maxWidth="lg">
+    <main className="flex-1 flex flex-col bg-white/90 overflow-y-auto max-h-svh">
+      <TitleMain title={"Relatórios de Manutenção e Recursos"} subtitle="Dashboard de Manutenção e Recursos" />
+      <Container maxWidth="lg" className="pt-2">
         <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
-            <Paper elevation={3} sx={{ p: 2, height: "100%" }}>
-              <Typography variant="h6">
-                Manutenções ao Longo do Tempo
-              </Typography>
-              <Box sx={{ height: 300 }}>
-                <Line data={maintenanceData} />
-              </Box>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Paper elevation={3} sx={{ p: 2, height: "100%" }}>
-              <Typography variant="h6">
-                Distribuição das Falhas por Máquina
-              </Typography>
-              <Box sx={{ height: 300 }}>
-                <Bar data={machineData} />
-              </Box>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={6} display="flex" justifyContent="center">
-            <Paper elevation={3} sx={{ p: 2, height: 400 }}>
-              <Typography variant="h6" align="center">
-                Quantidade de Peças em Estoque
-              </Typography>
-              <Box
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Pie data={partsData} />
-              </Box>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={6} display="flex" justifyContent="center">
-            <Paper elevation={3} sx={{ p: 2, height: 400 }}>
-              <Typography variant="h6" align="center">
-                Tempo Médio de Resolução de Solicitações
-              </Typography>
-              <Box
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Line data={avgResolutionTimeData} />
-              </Box>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={6} display="flex" justifyContent="center">
-            <Paper elevation={3} sx={{ p: 2, height: 400 }}>
-              <Typography variant="h6" align="center">
-                Desempenho dos Times
-              </Typography>
-              <Box
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Bar data={teamPerformanceData} />
-              </Box>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={6} display="flex" justifyContent="center">
-            <Paper elevation={3} sx={{ p: 2, height: 400 }}>
-              <Typography variant="h6">Volume de Manutenções</Typography>
-              <Box sx={{ height: "100%" }}>
-                <Pie data={maintenanceVolumeData} />
-              </Box>
-            </Paper>
-          </Grid>
+          {charts.map((chart, index) => (
+            <Grid item xs={12} md={6} key={index}>
+              <Paper elevation={3} sx={{ p: 2, height: "100%" }}>
+                <Typography variant="h6">{chart.title}</Typography>
+                <Box sx={{ height: 300 }}>
+                  {chart.type === "bar" && <Bar data={chart.data} />}
+                  {chart.type === "pie" && <Pie data={chart.data} />}
+                  {chart.type === "horizontalBar" && (
+                    <Bar
+                      data={chart.data}
+                      options={{
+                        indexAxis: "y",
+                      }}
+                    />
+                  )}
+                </Box>
+              </Paper>
+            </Grid>
+          ))}
         </Grid>
       </Container>
     </main>

@@ -1,6 +1,7 @@
-import React from 'react';
-import { Card, CardContent, CardMedia, Typography, CardActions, Button } from '@mui/material';
-import Link from 'next/link';
+import React from "react";
+import { Card, CardContent, CardMedia, Typography, CardActions, IconButton } from "@mui/material";
+import { FaEdit, FaTrashAlt } from "react-icons/fa"; // Importa os ícones
+import Link from "next/link";
 
 interface CardBoxProps {
   item: {
@@ -8,11 +9,11 @@ interface CardBoxProps {
     description: string;
     image: string;
   };
-  updatePath:string;
-  onSeeMore: () => void;
+  updatePath: string;
+  onDelete: () => void; // Função de deleção
 }
 
-export default function CardBox({ item, updatePath, onSeeMore }: CardBoxProps) {
+export default function CardBox({ item, updatePath, onDelete }: CardBoxProps) {
   return (
     <Card sx={{ width: 300 }}>
       <CardMedia sx={{ height: 140 }} image={item.image} title={item.title} />
@@ -25,12 +26,17 @@ export default function CardBox({ item, updatePath, onSeeMore }: CardBoxProps) {
         </Typography>
       </CardContent>
       <CardActions>
+        {/* Botão de Editar */}
         <Link href={updatePath} passHref>
-          <Button size="small">Editar</Button>
+          <IconButton color="primary">
+            <FaEdit />
+          </IconButton>
         </Link>
-        <Button size="small" onClick={onSeeMore}>
-          Ver Mais Sobre
-        </Button>
+
+        {/* Botão de Deletar */}
+        <IconButton color="error" onClick={onDelete} sx={{ ml: 1 }}>
+          <FaTrashAlt />
+        </IconButton>
       </CardActions>
     </Card>
   );

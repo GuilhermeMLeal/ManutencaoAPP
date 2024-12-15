@@ -1,0 +1,520 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7F5C86E5-342B-4956-973A-FA7A6DACE8CC}|backend\\Maintenance\\Maintenance.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\maintenance\\controllers\\maintenancecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F5C86E5-342B-4956-973A-FA7A6DACE8CC}|backend\\Maintenance\\Maintenance.csproj|solutionrelative:backend\\maintenance\\controllers\\maintenancecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C78D06A5-2A25-4BC5-BF9D-A9E04AD32F6D}|backend\\ToolAPI\\ToolAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\toolapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C78D06A5-2A25-4BC5-BF9D-A9E04AD32F6D}|backend\\ToolAPI\\ToolAPI.csproj|solutionrelative:backend\\toolapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\machineapi\\src\\application\\services\\statusservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\application\\services\\statusservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\machineapi\\src\\application\\interfaces\\istatusservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\application\\interfaces\\istatusservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\machineapi\\src\\api\\controllers\\statuscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\api\\controllers\\statuscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\machineapi\\src\\api\\controllers\\placescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\api\\controllers\\placescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\machineapi\\src\\infrastructure\\repositories\\statusrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\infrastructure\\repositories\\statusrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\machineapi\\src\\domain\\interfaces\\istatusrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\domain\\interfaces\\istatusrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\machineapi\\src\\infrastructure\\repositories\\placerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\infrastructure\\repositories\\placerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\machineapi\\src\\infrastructure\\repositories\\machinerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\infrastructure\\repositories\\machinerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\machineapi\\src\\application\\services\\placeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\application\\services\\placeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\machineapi\\src\\application\\services\\machineservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\application\\services\\machineservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\machineapi\\src\\api\\dtos\\machinedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\api\\dtos\\machinedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\machineapi\\src\\api\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\api\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\machineapi\\src\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\machineapi\\src\\api\\extensions\\migrationextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\api\\extensions\\migrationextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\machineapi\\src\\infrastructure\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB3A1A05-F1DB-47AF-93C5-5E810ADA3D25}|backend\\MachineAPI\\MachineAPI.csproj|solutionrelative:backend\\machineapi\\src\\infrastructure\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F5C86E5-342B-4956-973A-FA7A6DACE8CC}|backend\\Maintenance\\Maintenance.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\maintenance\\repository\\migrationextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F5C86E5-342B-4956-973A-FA7A6DACE8CC}|backend\\Maintenance\\Maintenance.csproj|solutionrelative:backend\\maintenance\\repository\\migrationextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F5C86E5-342B-4956-973A-FA7A6DACE8CC}|backend\\Maintenance\\Maintenance.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\maintenance\\data\\maintenancedbcontext .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F5C86E5-342B-4956-973A-FA7A6DACE8CC}|backend\\Maintenance\\Maintenance.csproj|solutionrelative:backend\\maintenance\\data\\maintenancedbcontext .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C78D06A5-2A25-4BC5-BF9D-A9E04AD32F6D}|backend\\ToolAPI\\ToolAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\toolapi\\business\\toolbusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C78D06A5-2A25-4BC5-BF9D-A9E04AD32F6D}|backend\\ToolAPI\\ToolAPI.csproj|solutionrelative:backend\\toolapi\\business\\toolbusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C78D06A5-2A25-4BC5-BF9D-A9E04AD32F6D}|backend\\ToolAPI\\ToolAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\toolapi\\business\\itoolbusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C78D06A5-2A25-4BC5-BF9D-A9E04AD32F6D}|backend\\ToolAPI\\ToolAPI.csproj|solutionrelative:backend\\toolapi\\business\\itoolbusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C78D06A5-2A25-4BC5-BF9D-A9E04AD32F6D}|backend\\ToolAPI\\ToolAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\toolapi\\models\\tool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C78D06A5-2A25-4BC5-BF9D-A9E04AD32F6D}|backend\\ToolAPI\\ToolAPI.csproj|solutionrelative:backend\\toolapi\\models\\tool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F5C86E5-342B-4956-973A-FA7A6DACE8CC}|backend\\Maintenance\\Maintenance.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\maintenance\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F5C86E5-342B-4956-973A-FA7A6DACE8CC}|backend\\Maintenance\\Maintenance.csproj|solutionrelative:backend\\maintenance\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F5C86E5-342B-4956-973A-FA7A6DACE8CC}|backend\\Maintenance\\Maintenance.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\maintenance\\models\\maintenancemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F5C86E5-342B-4956-973A-FA7A6DACE8CC}|backend\\Maintenance\\Maintenance.csproj|solutionrelative:backend\\maintenance\\models\\maintenancemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7F5C86E5-342B-4956-973A-FA7A6DACE8CC}|backend\\Maintenance\\Maintenance.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\maintenance\\business\\maintenancebusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F5C86E5-342B-4956-973A-FA7A6DACE8CC}|backend\\Maintenance\\Maintenance.csproj|solutionrelative:backend\\maintenance\\business\\maintenancebusiness.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C78D06A5-2A25-4BC5-BF9D-A9E04AD32F6D}|backend\\ToolAPI\\ToolAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\toolapi\\repository\\toolrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C78D06A5-2A25-4BC5-BF9D-A9E04AD32F6D}|backend\\ToolAPI\\ToolAPI.csproj|solutionrelative:backend\\toolapi\\repository\\toolrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\userapi\\src\\api\\extensions\\migrationextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C4DBCCEF-C23B-4931-8190-F7C4021E8C8E}|backend\\UserAPI\\AuthMicroservice.csproj|solutionrelative:backend\\userapi\\src\\api\\extensions\\migrationextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C78D06A5-2A25-4BC5-BF9D-A9E04AD32F6D}|backend\\ToolAPI\\ToolAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\toolapi\\repository\\migrationextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C78D06A5-2A25-4BC5-BF9D-A9E04AD32F6D}|backend\\ToolAPI\\ToolAPI.csproj|solutionrelative:backend\\toolapi\\repository\\migrationextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C78D06A5-2A25-4BC5-BF9D-A9E04AD32F6D}|backend\\ToolAPI\\ToolAPI.csproj|c:\\users\\neves\\documents\\manutencaoapp\\backend\\toolapi\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C78D06A5-2A25-4BC5-BF9D-A9E04AD32F6D}|backend\\ToolAPI\\ToolAPI.csproj|solutionrelative:backend\\toolapi\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 21,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "MachineRepository.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Infrastructure\\Repositories\\MachineRepository.cs",
+              "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\Infrastructure\\Repositories\\MachineRepository.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Infrastructure\\Repositories\\MachineRepository.cs",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\Infrastructure\\Repositories\\MachineRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T01:18:45.284Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PlaceRepository.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Infrastructure\\Repositories\\PlaceRepository.cs",
+              "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\Infrastructure\\Repositories\\PlaceRepository.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Infrastructure\\Repositories\\PlaceRepository.cs",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\Infrastructure\\Repositories\\PlaceRepository.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABsAAABOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T01:18:45.535Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "StatusRepository.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Infrastructure\\Repositories\\StatusRepository.cs",
+              "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\Infrastructure\\Repositories\\StatusRepository.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Infrastructure\\Repositories\\StatusRepository.cs",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\Infrastructure\\Repositories\\StatusRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T01:17:48.129Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "PlaceService.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Application\\Services\\PlaceService.cs",
+              "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\Application\\Services\\PlaceService.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Application\\Services\\PlaceService.cs",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\Application\\Services\\PlaceService.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T01:08:08.992Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MachineService.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Application\\Services\\MachineService.cs",
+              "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\Application\\Services\\MachineService.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Application\\Services\\MachineService.cs",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\Application\\Services\\MachineService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T01:08:06.64Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IStatusRepository.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Domain\\Interfaces\\IStatusRepository.cs",
+              "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\Domain\\Interfaces\\IStatusRepository.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Domain\\Interfaces\\IStatusRepository.cs",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\Domain\\Interfaces\\IStatusRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T01:07:38.471Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "StatusService.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Application\\Services\\StatusService.cs",
+              "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\Application\\Services\\StatusService.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Application\\Services\\StatusService.cs",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\Application\\Services\\StatusService.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAACIAAABBAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T01:06:42.661Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IStatusService.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Application\\Interfaces\\IStatusService.cs",
+              "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\Application\\Interfaces\\IStatusService.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Application\\Interfaces\\IStatusService.cs",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\Application\\Interfaces\\IStatusService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T01:06:08.581Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "MachineDTO.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\DTOs\\MachineDTO.cs",
+              "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\API\\DTOs\\MachineDTO.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\DTOs\\MachineDTO.cs",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\API\\DTOs\\MachineDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T01:04:38.708Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Infrastructure\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\Infrastructure\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\Infrastructure\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\Infrastructure\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T00:40:59.829Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "MaintenanceDbContext .cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\Maintenance\\Data\\MaintenanceDbContext .cs",
+              "RelativeDocumentMoniker": "backend\\Maintenance\\Data\\MaintenanceDbContext .cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\Maintenance\\Data\\MaintenanceDbContext .cs",
+              "RelativeToolTip": "backend\\Maintenance\\Data\\MaintenanceDbContext .cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T00:40:34.296Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "IToolBusiness.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\ToolAPI\\Business\\IToolBusiness.cs",
+              "RelativeDocumentMoniker": "backend\\ToolAPI\\Business\\IToolBusiness.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\ToolAPI\\Business\\IToolBusiness.cs",
+              "RelativeToolTip": "backend\\ToolAPI\\Business\\IToolBusiness.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T00:37:54.029Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Tool.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\ToolAPI\\Models\\Tool.cs",
+              "RelativeDocumentMoniker": "backend\\ToolAPI\\Models\\Tool.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\ToolAPI\\Models\\Tool.cs",
+              "RelativeToolTip": "backend\\ToolAPI\\Models\\Tool.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T00:37:45.792Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PlacesController.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\Controllers\\PlacesController.cs",
+              "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\API\\Controllers\\PlacesController.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\Controllers\\PlacesController.cs",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\API\\Controllers\\PlacesController.cs",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAAAAcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T00:30:20.851Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "StatusController.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\Controllers\\StatusController.cs",
+              "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\API\\Controllers\\StatusController.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\Controllers\\StatusController.cs",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\API\\Controllers\\StatusController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-06T00:25:50.673Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "MaintenanceModel.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\Maintenance\\Models\\MaintenanceModel.cs",
+              "RelativeDocumentMoniker": "backend\\Maintenance\\Models\\MaintenanceModel.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\Maintenance\\Models\\MaintenanceModel.cs",
+              "RelativeToolTip": "backend\\Maintenance\\Models\\MaintenanceModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T23:41:23.878Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\Maintenance\\Program.cs",
+              "RelativeDocumentMoniker": "backend\\Maintenance\\Program.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\Maintenance\\Program.cs",
+              "RelativeToolTip": "backend\\Maintenance\\Program.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAABwAAAA2AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T23:37:30.561Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ToolBusiness.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\ToolAPI\\Business\\ToolBusiness.cs",
+              "RelativeDocumentMoniker": "backend\\ToolAPI\\Business\\ToolBusiness.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\ToolAPI\\Business\\ToolBusiness.cs",
+              "RelativeToolTip": "backend\\ToolAPI\\Business\\ToolBusiness.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAA2AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T23:21:20.813Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "ToolRepository.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\ToolAPI\\Repository\\ToolRepository.cs",
+              "RelativeDocumentMoniker": "backend\\ToolAPI\\Repository\\ToolRepository.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\ToolAPI\\Repository\\ToolRepository.cs",
+              "RelativeToolTip": "backend\\ToolAPI\\Repository\\ToolRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T23:13:06.379Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "MaintenanceBusiness.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\Maintenance\\Business\\MaintenanceBusiness.cs",
+              "RelativeDocumentMoniker": "backend\\Maintenance\\Business\\MaintenanceBusiness.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\Maintenance\\Business\\MaintenanceBusiness.cs",
+              "RelativeToolTip": "backend\\Maintenance\\Business\\MaintenanceBusiness.cs",
+              "ViewState": "AQIAAHQAAAAAAAAAAAAmwIsAAABEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T23:14:46.424Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MaintenanceController.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\Maintenance\\Controllers\\MaintenanceController.cs",
+              "RelativeDocumentMoniker": "backend\\Maintenance\\Controllers\\MaintenanceController.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\Maintenance\\Controllers\\MaintenanceController.cs",
+              "RelativeToolTip": "backend\\Maintenance\\Controllers\\MaintenanceController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEEAAABaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T23:14:43.668Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Startup.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\Startup.cs",
+              "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\API\\Startup.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\Startup.cs",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\API\\Startup.cs",
+              "ViewState": "AQIAAGkAAAAAAAAAAAAAAIAAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T23:14:06.455Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\Program.cs",
+              "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\API\\Program.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\Program.cs",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\API\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T23:14:05.689Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "MigrationExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\Extensions\\MigrationExtensions.cs",
+              "RelativeDocumentMoniker": "backend\\MachineAPI\\src\\API\\Extensions\\MigrationExtensions.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\MachineAPI\\src\\API\\Extensions\\MigrationExtensions.cs",
+              "RelativeToolTip": "backend\\MachineAPI\\src\\API\\Extensions\\MigrationExtensions.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T23:13:39.34Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "MigrationExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\API\\Extensions\\MigrationExtensions.cs",
+              "RelativeDocumentMoniker": "backend\\UserAPI\\src\\API\\Extensions\\MigrationExtensions.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\UserAPI\\src\\API\\Extensions\\MigrationExtensions.cs",
+              "RelativeToolTip": "backend\\UserAPI\\src\\API\\Extensions\\MigrationExtensions.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T23:13:37.507Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "MigrationExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\ToolAPI\\Repository\\MigrationExtensions.cs",
+              "RelativeDocumentMoniker": "backend\\ToolAPI\\Repository\\MigrationExtensions.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\ToolAPI\\Repository\\MigrationExtensions.cs",
+              "RelativeToolTip": "backend\\ToolAPI\\Repository\\MigrationExtensions.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T23:13:06.78Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "ApplicationDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\ToolAPI\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "backend\\ToolAPI\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\ToolAPI\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeToolTip": "backend\\ToolAPI\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T23:13:00.637Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "MigrationExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\Maintenance\\Repository\\MigrationExtensions.cs",
+              "RelativeDocumentMoniker": "backend\\Maintenance\\Repository\\MigrationExtensions.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\Maintenance\\Repository\\MigrationExtensions.cs",
+              "RelativeToolTip": "backend\\Maintenance\\Repository\\MigrationExtensions.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T23:12:57.846Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\ToolAPI\\Program.cs",
+              "RelativeDocumentMoniker": "backend\\ToolAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\NEVES\\Documents\\ManutencaoAPP\\backend\\ToolAPI\\Program.cs",
+              "RelativeToolTip": "backend\\ToolAPI\\Program.cs",
+              "ViewState": "AQIAACEAAAAAAAAAAAAAAD0AAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T23:12:23.767Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 1017,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:2:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:3:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:4:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

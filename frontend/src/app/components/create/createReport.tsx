@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, MenuItem, Box } from "@mui/material";
-import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Box } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
@@ -54,27 +54,27 @@ export default function CreateReport({ textButton, typeTextField }: CreateItem):
             onChange={(e) => setName(e.target.value)}
           />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, mt: 2 }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", gap: 2, mt: 2 }}>
               <DatePicker
                 label="Data de Início"
                 value={startDate}
                 onChange={(newValue: Dayjs | null) => setStartDate(newValue)}
-                renderInput={(params:any) => <TextField {...params} fullWidth />}
+                slots={{ textField: TextField }}
               />
               <DatePicker
                 label="Data de Término"
                 value={endDate}
                 onChange={(newValue: Dayjs | null) => setEndDate(newValue)}
-                renderInput={(params:any) => <TextField {...params} fullWidth />}
+                slots={{ textField: TextField }}
               />
             </Box>
           </LocalizationProvider>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} sx={{ color: 'red' }}>
+          <Button onClick={handleClose} sx={{ color: "red" }}>
             Cancelar
           </Button>
-          <Link href='/pages/controlStock' passHref>
+          <Link href="/pages/controlStock" passHref>
             <Button onClick={handleClose} color="primary">
               Gerar
             </Button>
@@ -84,4 +84,3 @@ export default function CreateReport({ textButton, typeTextField }: CreateItem):
     </>
   );
 }
- 

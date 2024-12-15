@@ -1,5 +1,14 @@
-import Index from "./pages/index/page";
+"use client";
 
-export default function Home() {
-  return <Index />;
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+export default function App() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace("/login");
+  }, [router]);
+
+  return null;
 }
