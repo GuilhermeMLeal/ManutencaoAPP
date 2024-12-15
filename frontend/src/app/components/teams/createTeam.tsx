@@ -3,37 +3,53 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Button, Grid, Box, MenuItem, CircularProgress } from "@mui/material";
 import TitleCreate from "../titles/titleCreate";
+import { useRouter, useSearchParams } from "next/navigation";
 import UnifiedService from "@/service/UserService";
-import { useRouter } from "next/navigation";
 
-export default function CreateSquad() {
+export default function UpdateSquad() {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    userIds: [] as number[], // IDs dos usuários selecionados
+    userIds: [] as number[],
   });
 
   const [users, setUsers] = useState<User[]>([]); // Lista de usuários
   const [loading, setLoading] = useState(false); // Indicador de carregamento
   const [isSubmitting, setIsSubmitting] = useState(false); // Indicador de envio do formulário
-  const router = useRouter();
+  const [squadId, setSquadId] = useState<number | null>(null);
 
-  // Buscar a lista de usuários ao montar o componente
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Buscar os dados do squad e dos usuários ao montar o componente
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchSquadData = async () => {
+      const id = searchParams.get("id");
       setLoading(true);
+
       try {
-        const data = await UnifiedService.getUsers();
-        setUsers(data); // Armazena os usuários no estado
+        if (id) {
+          setSquadId(Number(id));
+          const squadData = await UnifiedService.getSquadById(Number(id));
+          setFormData({
+            name: squadData.name,
+            description: squadData.description,
+            userIds: squadData.users.map((user) => user.id),
+          });
+        }
+
+        // Carrega a lista de todos os usuários
+        const userList = await UnifiedService.getUsers();
+        setUsers(userList);
       } catch (error) {
-        console.error("Erro ao buscar usuários:", error);
+        console.error("Erro ao carregar dados:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUsers();
-  }, []);
+    fetchSquadData();
+  }, [searchParams]);
 
   // Atualiza os campos do formulário
   const handleInputChange = (
@@ -45,7 +61,9 @@ export default function CreateSquad() {
 
   // Atualiza os IDs dos usuários selecionados
   const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedIds = e.target.value as unknown as number[];
+    const selectedIds = Array.isArray(e.target.value)
+      ? e.target.value.map((val) => Number(val))
+      : [];
     setFormData((prev) => ({ ...prev, userIds: selectedIds }));
   };
 
@@ -58,13 +76,18 @@ export default function CreateSquad() {
       const squadDTO = {
         name: formData.name,
         description: formData.description,
-        users: formData.userIds.map((id) => ({ id })), // Formata os usuários para o backend
+        users: formData.userIds.map((id) => ({ id })), // Apenas os IDs dos usuários
       };
 
-      await UnifiedService.createSquad(squadDTO);
-      router.push("/teams"); // Redireciona após o sucesso
+      if (squadId) {
+        await UnifiedService.updateSquad(squadId, squadDTO);
+      } else {
+        await UnifiedService.createSquad(squadDTO);
+      }
+
+      router.push("/teams"); // Redireciona para a lista de times
     } catch (error) {
-      console.error("Erro ao criar o Squad:", error);
+      console.error("Erro ao enviar dados do Squad:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -72,7 +95,7 @@ export default function CreateSquad() {
 
   return (
     <main className="flex-1 flex flex-col bg-white/90 overflow-y-auto max-h-svh">
-      <TitleCreate title="Cadastro de Time" />
+      <TitleCreate title={squadId ? "Atualizar Time" : "Criar Time"} />
       <Box
         component="form"
         noValidate
@@ -145,7 +168,7 @@ export default function CreateSquad() {
               color="primary"
               disabled={isSubmitting || loading}
             >
-              {isSubmitting ? "Cadastrando..." : "Cadastrar Time"}
+              {isSubmitting ? "Salvando..." : squadId ? "Atualizar Time" : "Criar Time"}
             </Button>
           </Grid>
         </Grid>

@@ -144,7 +144,7 @@ const MainTeam: React.FC = () => {
                   description: squad.description,
                   image: "/image/equipe.png",
                 }}
-                updatePath={`/teams/editTeam?id=${squad.id}`}
+                updatePath={`/teams/createTeam?id=${squad.id}`}
                 onDelete={() => handleOpenDialog(squad)} // Abre o modal de confirmação
               />
             ))}
