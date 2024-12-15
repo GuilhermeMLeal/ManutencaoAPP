@@ -67,21 +67,21 @@ services:
     networks:
      - gateway_network
 
-  # frontend:
-  #   container_name: frontend
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "3000:3000"
-  #   networks:
-  #    - gateway_network
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+     - gateway_network
 
   # mobile:
   #   container_name: mobile-academy
   #   build:
   #     context: ./mobile
-  #     dockerfile: Dockerfile
+  #     dockerfile: ./Dockerfile
   #   ports:
   #     - "8081:8081"
   #   networks:
