@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 // import { getAccessToken } from "../../utils/storage";
 
 const transformResponseForLogin = [
@@ -41,37 +41,67 @@ const transformResponse = [
   },
 ];
 
+const validateToken = async (token) => {
+  try {
+    const response = await axios.get("http://localhost:3001/api/Auth/validate-token", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.status === 200; // Retorna true se o token for válido
+  } catch (error) {
+    console.error("Erro ao validar o token:", error.response?.data || error.message);
+    return false; // Token inválido
+  }
+};
+
+// Função para criar uma instância do Axios
 const createAPIInstance = (baseURL) => {
   const instance = axios.create({
     baseURL,
-   // withCredentials: true,
     headers: {
       "Content-Type": "application/json",
     },
     transformResponse,
   });
 
-  // Comentando o interceptor de request relacionado ao token
-  // instance.interceptors.request.use(
-  //   async (config) => {
-  //     const token = await getAccessToken();
-  //     if (token) {
-  //       config.headers.Authorization = `Bearer ${token}`;
-  //     }
-  //     return config;
-  //   },
-  //   (error) => {
-  //     console.error("Erro ao adicionar o token ao cabeçalho:", error);
-  //     return Promise.reject(error);
-  //   }
-  // );
+  // Interceptor de requisição: adiciona o token e verifica sua validade
+  instance.interceptors.request.use(
+    async (config) => {
+      const token = localStorage.getItem("accessToken");
+      if (token) {
+        const isValid = await validateToken(token);
+        if (!isValid) {
+          console.error("Token inválido ou expirado. Redirecionando para o login...");
+          localStorage.removeItem("accessToken");
+          window.location.href = "/login";
+          return Promise.reject(new Error("Token inválido ou expirado."));
+        }
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => {
+      console.error("Erro ao adicionar token ao cabeçalho:", error);
+      return Promise.reject(error);
+    }
+  );
 
+  // Interceptor de resposta: trata erros globais
   instance.interceptors.response.use(
     (response) => response,
     (error) => {
-      console.error("Erro na requisição:", error.response || error.message);
-      if (error.response && error.response.status === 403) {
-        console.error("Acesso negado. Verifique o token.");
+      if (error.response) {
+        const { status } = error.response;
+        if (status === 401) {
+          console.error("Token inválido ou expirado. Faça login novamente.");
+          localStorage.removeItem("accessToken");
+          window.location.href = "/login"; // Redireciona para o login
+        } else if (status === 403) {
+          console.error("Acesso negado. Permissão insuficiente.");
+        }
+      } else {
+        console.error("Erro na requisição:", error.message);
       }
       return Promise.reject(error);
     }
