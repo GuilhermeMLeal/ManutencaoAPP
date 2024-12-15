@@ -24,7 +24,7 @@ const UnifiedService = {
 
   async createUser(userDTO: User): Promise<User> {
     try {
-      const response = await userApiClient.post<User>("/users", userDTO);
+      const response = await userApiClient.post<User>("/User", userDTO);
       return response.data;
     } catch (error) {
       console.error("Error creating user:", error);
