@@ -31,7 +31,12 @@ const UserListScreen: React.FC = () => {
     };
 
     fetchUsers();
-  }, []);
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchUsers(); 
+    });
+  
+    return unsubscribe; 
+  }, [navigation]);
 
   if (loading) {
     return (

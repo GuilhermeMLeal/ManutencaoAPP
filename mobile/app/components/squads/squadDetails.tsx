@@ -49,7 +49,12 @@ const SquadDetailsScreen: React.FC = () => {
     };
 
     fetchSquadDetails();
-  }, [squadId]);
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchSquadDetails(); 
+    });
+  
+    return unsubscribe; 
+  }, [squadId, navigation]);
 
   const handleEdit = () => {
     navigation.navigate("UpdateSquad", { squadId });

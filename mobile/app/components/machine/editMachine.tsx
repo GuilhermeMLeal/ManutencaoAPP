@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Alert,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { apiMachine, endpointStatus, endpointPlace, endpointMachine } from "@/app/services/api";
@@ -17,15 +18,22 @@ const EditMachineScreen: React.FC = () => {
   const route = useRoute<any>();
   const { machineDetails: initialMachineDetails } = route.params;
 
-  const [machineDetails, setMachineDetails] = useState(initialMachineDetails);
+  const [machineDetails, setMachineDetails] = useState({
+    ...initialMachineDetails,
+    StatusId: initialMachineDetails.StatusId || null, // Use o ID do status
+  });
+
   const [statuses, setStatuses] = useState<{ id: number; name: string }[]>([]);
   const [places, setPlaces] = useState<{ id: number; name: string }[]>([]);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     const fetchDropdownData = async () => {
       try {
-        const statusResponse = await apiMachine.get(endpointStatus.status);
-        const placeResponse = await apiMachine.get(endpointPlace.place);
+        const [statusResponse, placeResponse] = await Promise.all([
+          apiMachine.get(endpointStatus.status),
+          apiMachine.get(endpointPlace.place),
+        ]);
 
         setStatuses(statusResponse.data);
         setPlaces(placeResponse.data);
@@ -38,25 +46,35 @@ const EditMachineScreen: React.FC = () => {
   }, []);
 
   const handleSave = async () => {
-    try {
-      // Enviando os dados corrigidos com os IDs de Status e Place
-      const dataToSave = {
-        ...machineDetails,
-        statusId: machineDetails.Status, // ID do status
-        placeId: machineDetails.PlaceId, // ID do local
-      };
-      await apiMachine.put(`${endpointMachine.machine}`, dataToSave);
+    const dataToSave = {
+      id: machineDetails.Id,
+      name: machineDetails.Name,
+      type: machineDetails.Type,
+      model: machineDetails.Model,
+      manufactureDate: machineDetails.ManufactureDate,
+      serialNumber: machineDetails.SerialNumber,
+      statusId: machineDetails.StatusId, // Envie o ID do status
+      placeId: machineDetails.PlaceId,
+    };
 
+    console.log("Dados enviados:", dataToSave);
+    setSaving(true);
+    try {
+      await apiMachine.put(`${endpointMachine.machine}`, dataToSave);
       Alert.alert("Sucesso", "Os dados foram salvos!");
       navigation.goBack();
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Erro ao salvar máquina:", error.response?.data || error);
       Alert.alert("Erro", "Não foi possível salvar os dados.");
+    } finally {
+      setSaving(false);
     }
   };
 
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Editar Máquina</Text>
+
       <TextInput
         style={styles.input}
         placeholder="Nome"
@@ -87,16 +105,18 @@ const EditMachineScreen: React.FC = () => {
         value={machineDetails.ManufactureDate}
         onChangeText={(text) => setMachineDetails({ ...machineDetails, ManufactureDate: text })}
       />
+
       <Text style={styles.label}>Status:</Text>
       <Picker
-        selectedValue={machineDetails.Status}
-        onValueChange={(value: number) => setMachineDetails({ ...machineDetails, Status: value })}
+        selectedValue={machineDetails.StatusId}
+        onValueChange={(value: number) => setMachineDetails({ ...machineDetails, StatusId: value })}
         style={styles.picker}
       >
         {statuses.map((status) => (
           <Picker.Item key={status.id} label={status.name} value={status.id} />
         ))}
       </Picker>
+
       <Text style={styles.label}>Localização:</Text>
       <Picker
         selectedValue={machineDetails.PlaceId}
@@ -107,10 +127,14 @@ const EditMachineScreen: React.FC = () => {
           <Picker.Item key={place.id} label={place.name} value={place.id} />
         ))}
       </Picker>
-      <Button title="Salvar" onPress={handleSave} />
+
+      <Button title={saving ? "Salvando..." : "Salvar"} onPress={handleSave} disabled={saving} />
+
+      {saving && <ActivityIndicator size="large" color="#007bff" style={{ marginTop: 16 }} />}
     </ScrollView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

@@ -10,10 +10,8 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import MachineService from "../../services/MachineService";
-import { apiMachine, endpointMachine, endpointStatus } from "@/app/services/api";
-import axios from "axios";
-
+import { apiMachine, endpointMachine, endpointStatus, endpointPlace } from "@/app/services/api";
+import { useReloadContext } from "@/app/context/reloadContext";
 interface MachineDetails {
   Id: number;
   Name: string;
@@ -22,55 +20,53 @@ interface MachineDetails {
   ManufactureDate: string;
   SerialNumber: string;
   Status: string;
+  StatusId: number;
+  PlaceName?: string; // Nome da localização
   PlaceId?: number | null;
 }
 
 const MachineDetailsScreen: React.FC = () => {
-  const [machineDetails, setMachineDetails] = useState<MachineDetails | null>(
-    null
-  );
+  const [machineDetails, setMachineDetails] = useState<MachineDetails | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
-
+  const { reloadKey } = useReloadContext();
   // Obtém o ID da máquina a partir dos parâmetros da rota
   const { itemId } = route.params;
 
   useEffect(() => {
-    // Função assíncrona para buscar os detalhes da máquina
     const fetchData = async () => {
       try {
-        // Busca os detalhes da máquina pelo ID
         const response = await apiMachine.get(`${endpointMachine.machine}/${itemId}`);
-        console.log(response.data + "DADO INTEIRO")
         const details = response.data;
-        console.log(details.statusId)
-        let statusName = "N/A";
   
+        let statusName = "N/A";
+        let placeName = "Desconhecido";
         try {
-          // Busca o nome do status relacionado
           const statusResponse = await apiMachine.get(`${endpointStatus.status}/${details.statusId}`);
           statusName = statusResponse?.data?.name || "N/A";
         } catch (statusError: any) {
-          if (statusError.response && statusError.response.status === 400) {
-            console.warn(`Status não encontrado para ID ${details.status}. Usando "N/A".`);
-          } else {
-            console.error("Erro ao buscar status:", statusError);
-            throw statusError; // Repassa outros erros para o bloco catch principal
-          }
+          console.warn("Erro ao buscar o status:", statusError.message);
+        }
+        try {
+          const statusResponse = await apiMachine.get(`${endpointPlace.place}/${details.placeId}`);
+          placeName = statusResponse?.data?.name || "N/A";
+        } catch (statusError: any) {
+          console.warn("Erro ao buscar o status:", statusError.message);
         }
   
-        // Atualiza os detalhes da máquina
         setMachineDetails({
           Id: details.id,
-          Name: details.name,
-          Type: details.type,
-          Model: details.model,
-          ManufactureDate: details.manufactureDate,
-          SerialNumber: details.serialNumber,
-          Status: statusName,
+          Name: details.name || "N/A",
+          Type: details.type || "N/A",
+          Model: details.model || "N/A",
+          ManufactureDate: details.manufactureDate || "N/A",
+          SerialNumber: details.serialNumber || "N/A",
+          Status: statusName, // Nome do status (para exibição)
+          StatusId: details.statusId, // Adicione o ID do status
           PlaceId: details.placeId,
+          PlaceName: placeName,
         });
   
         setLoading(false);
@@ -80,13 +76,15 @@ const MachineDetailsScreen: React.FC = () => {
         setLoading(false);
       }
     };
-  
+
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchData(); // Recarrega os dados ao voltar para a tela
+    });
     fetchData();
-  }, [itemId]);
+    return unsubscribe;
+    
+  }, [itemId, navigation]);
   
-  const handleOpenMachineDetails = () => {
-    navigation.navigate("MachineMaintenanceHistoryScreen", { itemId }); // Navega para a tela de histórico de manutenção
-  };
 
   const handleEditMachine = () => {
     if (machineDetails) {
@@ -107,7 +105,7 @@ const MachineDetailsScreen: React.FC = () => {
             try {
               await apiMachine.delete(`${endpointMachine.machine}/${itemId}`);
               Alert.alert("Sucesso", "Máquina excluída com sucesso.");
-              navigation.goBack(); // Volta para a tela anterior
+              navigation.goBack();
             } catch (error) {
               console.error("Erro ao excluir a máquina:", error);
               Alert.alert("Erro", "Não foi possível excluir a máquina.");
@@ -117,7 +115,7 @@ const MachineDetailsScreen: React.FC = () => {
       ]
     );
   };
-  
+
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -178,11 +176,7 @@ const MachineDetailsScreen: React.FC = () => {
         </View>
         <View style={styles.detail}>
           <Text style={styles.label}>Localização:</Text>
-          <Text style={styles.value}>
-            {machineDetails.PlaceId
-              ? `Setor ${machineDetails.PlaceId}`
-              : "Desconhecido"}
-          </Text>
+          <Text style={styles.value}>{machineDetails.PlaceName}</Text>
         </View>
       </View>
       <TouchableOpacity style={styles.button} onPress={handleEditMachine}>
@@ -191,11 +185,6 @@ const MachineDetailsScreen: React.FC = () => {
       <TouchableOpacity style={styles.button} onPress={handleDeleteMachine}>
         <Text style={styles.buttonText}>Excluir Máquina</Text>
       </TouchableOpacity>
-      {/* <TouchableOpacity style={styles.button} onPress={handleOpenMachineDetails}>
-        <Text style={styles.buttonText}>
-          Visualizar histórico de manutenção da máquina
-        </Text>
-      </TouchableOpacity> */}
     </ScrollView>
   );
 };

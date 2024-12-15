@@ -49,7 +49,12 @@ const MaintenanceListScreen: React.FC = () => {
     };
 
     fetchMaintenances();
-  }, []);
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchMaintenances(); 
+    });
+  
+    return unsubscribe; 
+  }, [navigation]);
 
   const renderMaintenance = ({ item }: { item: Maintenance }) => (
     <View style={styles.card}>

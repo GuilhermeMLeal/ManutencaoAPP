@@ -11,6 +11,13 @@ import { useNavigation } from "expo-router";
 import Card from "../card";
 import FloatingButton from "../floatingButton";
 import MachineService from "../../services/MachineService"; // Importa o serviço
+import { apiMachine, endpointPlace } from "@/app/services/api";
+import { useReloadContext } from "@/app/context/reloadContext";
+
+interface Place {
+  id: number;
+  name: string;
+}
 
 interface Machine {
   Id: number;
@@ -21,7 +28,7 @@ interface Machine {
   SerialNumber: string;
   Status: string;
   PlaceId?: number | null;
-  Place?: Place | null;
+  PlaceName?: string; // Inclui o nome do lugar
 }
 
 const MachineScreen: React.FC = () => {
@@ -29,32 +36,59 @@ const MachineScreen: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const navigation = useNavigation<any>();
+  const { reloadKey } = useReloadContext();
 
   useEffect(() => {
-    // Busca as máquinas ao montar o componente
-    MachineService.getAllMachines()
-      .then((fetchedMachines) => {
-        // Mapeia os dados para garantir a conformidade com o modelo `Machine`
-        const mappedMachines = fetchedMachines.map((machine: any): Machine => ({
-          Id: machine.id,
-          Name: machine.name,
-          Type: machine.type,
-          Model: machine.model,
-          ManufactureDate: new Date(machine.manufactureDate),
-          SerialNumber: machine.serialNumber,
-          Status: machine.status,
-          PlaceId: machine.placeId ?? null,
-          Place: machine.place ?? null,
-        }));
-        setMachines(mappedMachines);
+    const fetchMachines = async () => {
+      try {
+        const fetchedMachines = await MachineService.getAllMachines();
+
+        const machinesWithPlaces = await Promise.all(
+          fetchedMachines.map(async (machine: any): Promise<Machine> => {
+            let placeName = "Desconhecido";
+
+            // Faz um GET no backend para buscar o nome do lugar se `PlaceId` existir
+            if (machine.placeId) {
+              try {
+                const placeResponse = await apiMachine.get(
+                  `${endpointPlace.place}/${machine.placeId}`
+                );
+                placeName = placeResponse.data?.name || "Desconhecido";
+              } catch (err) {
+                console.warn(`Erro ao buscar PlaceId ${machine.placeId}:`, err);
+              }
+            }
+
+            return {
+              Id: machine.id,
+              Name: machine.name,
+              Type: machine.type,
+              Model: machine.model,
+              ManufactureDate: new Date(machine.manufactureDate),
+              SerialNumber: machine.serialNumber,
+              Status: machine.status,
+              PlaceId: machine.placeId ?? null,
+              PlaceName: placeName,
+            };
+          })
+        );
+
+        setMachines(machinesWithPlaces);
         setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching machines:", err);
+      } catch (err) {
+        console.error("Erro ao buscar máquinas:", err);
         setError("Não foi possível carregar as máquinas.");
         setLoading(false);
-      });
-  }, []);
+      }
+    };
+
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchMachines(); 
+    });
+    fetchMachines();
+    return unsubscribe;
+    
+  }, [reloadKey, navigation]);
 
   const handlePress = (itemId: number) => {
     navigation.navigate("MachineDetails", {
@@ -69,7 +103,7 @@ const MachineScreen: React.FC = () => {
         field={{
           Tipo: item.Type,
           Modelo: item.Model,
-          Localização: item.PlaceId ? `Setor ${item.PlaceId}` : "Desconhecido",
+          Localização: item.PlaceName || "Desconhecido",
         }}
         icons={[]} // Ícones desativados para o exemplo
         onIconPress={() => {}} // Nenhuma ação definida para ícones
