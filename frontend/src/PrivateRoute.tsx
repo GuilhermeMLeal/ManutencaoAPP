@@ -1,47 +1,41 @@
 "use client";
 
-import UnifiedService from "@/service/UserService";
-import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
-import { getAccessToken } from "./utils/storage";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface PrivateRouteProps {
-  component: React.ComponentType;
+  children: React.ReactNode;
 }
 
-const isAuthenticated = (): boolean => {
-  const token = getAccessToken();
-  return !!token;
-};
-
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component }) => {
-  const [isAuth, setIsAuth] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
+  const router = useRouter();
+  const [isMounted, setIsMounted] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const validate = async () => {
-      try {
-        if (isAuthenticated()) {
-          const isValid = await UnifiedService.validateToken();
-          setIsAuth(isValid);
-        } else {
-          setIsAuth(false);
-        }
-      } catch {
-        setIsAuth(false);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    // Marcar que estamos no cliente
+    setIsMounted(true);
 
-    validate();
-  }, []);
+    const token = localStorage.getItem("accessToken");
 
-  if (isLoading) {
-    return <div>Loading...</div>;
+    if (!token) {
+      router.replace("/unauthorized");
+    } else {
+      setIsAuthenticated(true);
+    }
+  }, [router]);
+
+  // Renderiza um fallback até que o componente seja montado
+  if (!isMounted) {
+    return null; // Evita renderizar no servidor
   }
 
-  return isAuth ? <Component /> : <Navigate to="/unauthorized" />;
+  // Evita renderizar o conteúdo caso não esteja autenticado
+  if (!isAuthenticated) {
+    return null; // O redirecionamento será tratado no `useEffect`
+  }
+
+  return <>{children}</>;
 };
 
 export default PrivateRoute;
