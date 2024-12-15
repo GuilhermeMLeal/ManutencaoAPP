@@ -101,6 +101,7 @@ export default function Register() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            textAlign: "center",
           }}
         >
           {/* Avatar */}
