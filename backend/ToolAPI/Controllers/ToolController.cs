@@ -7,7 +7,7 @@ using ToolAPI.Models;
 
 namespace ToolAPI.Controllers
 {
-    //[ServiceFilter(typeof(VerifyToken))]
+    [ServiceFilter(typeof(VerifyToken))]
     [ApiController]
     [Route("api/[controller]")]
     public class ToolController : ControllerBase

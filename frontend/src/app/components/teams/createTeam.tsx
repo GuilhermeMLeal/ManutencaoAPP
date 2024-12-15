@@ -1,37 +1,57 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { TextField, Button, Grid, Box, MenuItem } from "@mui/material";
+import { TextField, Button, Grid, Box, MenuItem, CircularProgress } from "@mui/material";
 import TitleCreate from "../titles/titleCreate";
+import { useRouter, useSearchParams } from "next/navigation";
 import UnifiedService from "@/service/UserService";
-import { useRouter } from "next/navigation";
 
-export default function CreateSquad() {
+export default function UpdateSquad() {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    userIds: [] as number[], // Array de IDs de usuários selecionados
+    userIds: [] as number[],
   });
 
-  const [users, setUsers] = useState<User[]>([]); // Lista de usuários disponíveis
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [users, setUsers] = useState<User[]>([]); // Lista de usuários
+  const [loading, setLoading] = useState(false); // Indicador de carregamento
+  const [isSubmitting, setIsSubmitting] = useState(false); // Indicador de envio do formulário
+  const [squadId, setSquadId] = useState<number | null>(null);
 
-  // Buscar usuários ao carregar a página
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Buscar os dados do squad e dos usuários ao montar o componente
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchSquadData = async () => {
+      const id = searchParams.get("id");
+      setLoading(true);
+
       try {
-        const data = await UnifiedService.getUsers();
-        setUsers(data);
+        if (id) {
+          setSquadId(Number(id));
+          const squadData = await UnifiedService.getSquadById(Number(id));
+          setFormData({
+            name: squadData.name,
+            description: squadData.description,
+            userIds: squadData.users.map((user) => user.id),
+          });
+        }
+
+        // Carrega a lista de todos os usuários
+        const userList = await UnifiedService.getUsers();
+        setUsers(userList);
       } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error("Erro ao carregar dados:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchUsers();
-  }, []);
+    fetchSquadData();
+  }, [searchParams]);
 
-  // Atualizar o estado do formulário
+  // Atualiza os campos do formulário
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -39,44 +59,43 @@ export default function CreateSquad() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Atualizar os IDs de usuários selecionados
+  // Atualiza os IDs dos usuários selecionados
   const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Array.from(
-      e.target.selectedOptions,
-      (option) => parseInt(option.value, 10)
-    );
-    setFormData((prev) => ({ ...prev, userIds: value }));
+    const selectedIds = Array.isArray(e.target.value)
+      ? e.target.value.map((val) => Number(val))
+      : [];
+    setFormData((prev) => ({ ...prev, userIds: selectedIds }));
   };
 
-  // Submeter o formulário
+  // Envia os dados do formulário
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
+    setIsSubmitting(true);
 
     try {
-      const squadDTO: Squad = {
-        Id: 0, // Será gerado pelo backend
-        Name: formData.name,
-        Description: formData.description,
-        UserSquads: formData.userIds.map((userId) => ({
-          UserId: userId,
-          SquadId: 0, // Será gerado pelo backend
-          User: { Id: userId } as User, // Apenas referenciar o ID
-        })),
+      const squadDTO = {
+        name: formData.name,
+        description: formData.description,
+        users: formData.userIds.map((id) => ({ id })), // Apenas os IDs dos usuários
       };
 
-      await UnifiedService.createSquad(squadDTO);
-      router.push("/teams"); // Redireciona após o cadastro
+      if (squadId) {
+        await UnifiedService.updateSquad(squadId, squadDTO);
+      } else {
+        await UnifiedService.createSquad(squadDTO);
+      }
+
+      router.push("/teams"); // Redireciona para a lista de times
     } catch (error) {
-      console.error("Error creating squad:", error);
+      console.error("Erro ao enviar dados do Squad:", error);
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
   return (
     <main className="flex-1 flex flex-col bg-white/90 overflow-y-auto max-h-svh">
-      <TitleCreate title="Cadastro de Times" />
+      <TitleCreate title={squadId ? "Atualizar Time" : "Criar Time"} />
       <Box
         component="form"
         noValidate
@@ -119,33 +138,37 @@ export default function CreateSquad() {
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              select
-              id="userIds"
-              name="userIds"
-              label="Selecionar Usuários"
-              fullWidth
-              SelectProps={{
-                multiple: true,
-              }}
-              value={formData.userIds}
-              onChange={handleUserChange}
-            >
-              {users.map((user) => (
-                <MenuItem key={user.Id} value={user.Id}>
-                  {user.Name}
-                </MenuItem>
-              ))}
-            </TextField>
+            {loading ? (
+              <CircularProgress />
+            ) : (
+              <TextField
+                select
+                id="userIds"
+                name="userIds"
+                label="Selecionar Usuários"
+                fullWidth
+                SelectProps={{
+                  multiple: true,
+                }}
+                value={formData.userIds}
+                onChange={handleUserChange}
+              >
+                {users.map((user) => (
+                  <MenuItem key={user.id} value={user.id}>
+                    {user.name} ({user.email})
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
           </Grid>
           <Grid item xs={12} className="flex justify-center items-center">
             <Button
               type="submit"
               variant="contained"
               color="primary"
-              disabled={loading}
+              disabled={isSubmitting || loading}
             >
-              {loading ? "Cadastrando..." : "Cadastrar Time"}
+              {isSubmitting ? "Salvando..." : squadId ? "Atualizar Time" : "Criar Time"}
             </Button>
           </Grid>
         </Grid>

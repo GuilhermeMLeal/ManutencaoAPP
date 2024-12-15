@@ -33,7 +33,7 @@ const MaintenanceService = {
 
   async updateMaintenance(maintenanceDto: Maintenance): Promise<void> {
     try {
-      await maintenanceApiClient.put(`/Maintenance/${maintenanceDto.id}`, maintenanceDto);
+      await maintenanceApiClient.put('/Maintenance', maintenanceDto);
     } catch (error) {
       console.error(`Error updating maintenance with id ${maintenanceDto.id}:`, error);
       throw error;

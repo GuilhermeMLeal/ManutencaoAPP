@@ -148,7 +148,7 @@ export default function MainMachines() {
                 <TableCell>Nome</TableCell>
                 <TableCell>Tipo</TableCell>
                 <TableCell>Modelo</TableCell>
-                <TableCell>Status</TableCell>
+                <TableCell>Status da Máquina/Manutenção</TableCell>
                 <TableCell>Localização</TableCell>
                 <TableCell>Ações</TableCell>
               </TableRow>

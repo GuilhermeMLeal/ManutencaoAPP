@@ -1,27 +1,47 @@
 "use client";
 
-import React from "react";
-import { useRouter } from "next/router";
-import { useAuth } from "./app/context/AuthContext";
+import UnifiedService from "@/service/UserService";
+import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
+import { getAccessToken } from "./utils/storage";
 
 interface PrivateRouteProps {
   component: React.ComponentType;
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component }) => {
-  const { isAuthenticated, loading } = useAuth();
-  const router = useRouter();
+const isAuthenticated = (): boolean => {
+  const token = getAccessToken();
+  return !!token;
+};
 
-  if (loading) {
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component }) => {
+  const [isAuth, setIsAuth] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const validate = async () => {
+      try {
+        if (isAuthenticated()) {
+          const isValid = await UnifiedService.validateToken();
+          setIsAuth(isValid);
+        } else {
+          setIsAuth(false);
+        }
+      } catch {
+        setIsAuth(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    validate();
+  }, []);
+
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (!isAuthenticated) {
-    router.push("/unauthorized"); // Redireciona para a página não autorizada
-    return null;
-  }
-
-  return <Component />;
+  return isAuth ? <Component /> : <Navigate to="/unauthorized" />;
 };
 
 export default PrivateRoute;

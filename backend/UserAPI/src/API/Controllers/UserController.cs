@@ -6,7 +6,7 @@ using UserAuth.Application.Interfaces;
 
 namespace UserAuth.API.Controllers
 {
-    [ServiceFilter(typeof(VerifyToken))]
+    //[ServiceFilter(typeof(VerifyToken))]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase

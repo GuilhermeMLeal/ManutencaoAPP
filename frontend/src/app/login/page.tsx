@@ -15,7 +15,7 @@ import {
 import TextFieldComponent from "@/app/components/TextFieldComponent";
 import ButtonComponent from "@/app/components/ButtonComponent";
 import { useRouter } from "next/navigation";
-import { storeAccessToken, storeTokens } from "@/utils/storage";
+import { storeAccessToken } from "@/utils/storage";
 import UnifiedService from "@/service/UserService";
 
 export default function Login() {
@@ -28,11 +28,8 @@ export default function Login() {
   const handleLogin = async () => {
     try {
       const userLoginDTO = { username, password };
-
       const token = await UnifiedService.login(userLoginDTO);
-
       storeAccessToken(token);
-
       setSuccess(true);
       setTimeout(() => {
         router.push("/maintenance");
@@ -60,103 +57,86 @@ export default function Login() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        bgcolor: "white",
         minHeight: "100vh",
+        bgcolor: "white",
       }}
     >
-      <Box
+      <Paper
+        elevation={6}
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
           width: "100%",
           maxWidth: 400,
+          padding: 4,
+          borderRadius: 2,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
         }}
       >
-        <Paper
-          elevation={3}
-          sx={{
-            padding: 4,
-            width: "100%",
-            borderRadius: 2,
-            border: "1px solid #e0e0e0",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
+        {/* Avatar */}
+        <Box display="flex" justifyContent="center" mb={2}>
+          <Avatar
+            alt="Logo"
+            src={"/image/Logo2.jpg"}
+            sx={{
+              width: 80,
+              height: 80,
+              border: "2px solid #1976D2",
+            }}
+          />
+        </Box>
+
+        {/* Título */}
+        <Typography
+          variant="h4"
+          component="h1"
+          color="primary"
+          textAlign="center"
+          gutterBottom
         >
-          {/* Avatar */}
-          <Box display="flex" justifyContent="center" mb={3}>
-            <Avatar
-              alt="User Avatar"
-              src={"/image/Logo2.jpg"}
-              sx={{
-                width: 80,
-                height: 80,
-                border: "2px solid #1976D2",
-              }}
+          Login
+        </Typography>
+
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextFieldComponent
+              value={username}
+              placeholder="Username"
+              onChange={(e) => setUsername(e.target.value)}
+              onKeyPress={handleKeyPress}
             />
-          </Box>
-
-          {/* Título */}
-          <Typography
-            variant="h4"
-            component="h1"
-            color="primary"
-            textAlign="center"
-            gutterBottom
-          >
-            Login
-          </Typography>
-
-          <Grid container spacing={2} direction="column" alignItems="center">
-            <Grid item xs={12} width="100%">
-              {/* Campo de Username */}
-              <TextFieldComponent
-                value={username}
-                placeholder="Username"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setUsername(e.target.value)
-                }
-                onKeyPress={handleKeyPress}
-              />
-            </Grid>
-
-            <Grid item xs={12} width="100%">
-              {/* Campo de Senha */}
-              <TextFieldComponent
-                type="password"
-                value={password}
-                placeholder="Password"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setPassword(e.target.value)
-                }
-                onKeyPress={handleKeyPress}
-              />
-            </Grid>
-
-            <Grid item xs={12} width="100%">
-              {/* Botão Criar Usuário */}
-              <Button
-                variant="outlined"
-                onClick={handleCreateUserRedirect}
-                fullWidth
-              >
-                Criar Usuário
-              </Button>
-            </Grid>
-
-            <Grid item xs={12} width="100%">
-              {/* Botão de Login */}
-              <ButtonComponent
-                className="button"
-                onClick={handleLogin}
-                name="Logar"
-              />
-            </Grid>
           </Grid>
-        </Paper>
-      </Box>
+
+          <Grid item xs={12}>
+            <TextFieldComponent
+              type="password"
+              value={password}
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={handleKeyPress}
+            />
+          </Grid>
+
+          <Grid item xs={12} textAlign="center">
+            <Button
+              variant="outlined"
+              onClick={handleCreateUserRedirect}
+            >
+              Criar Usuário
+            </Button>
+          </Grid>
+
+          <Grid item xs={12} textAlign="center">
+            <ButtonComponent
+              className="button"
+              onClick={handleLogin}
+              name="Logar"
+            />
+          </Grid>
+        </Grid>
+      </Paper>
 
       {/* Snackbars */}
       <Snackbar
