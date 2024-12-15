@@ -78,6 +78,7 @@ namespace MachineAPI.Application.Services
             existingMachine.Type = machineUpdateDto.Type;
             existingMachine.Model = machineUpdateDto.Model;
             existingMachine.ManufactureDate = machineUpdateDto.ManufactureDate;
+            existingMachine.SerialNumber = machineUpdateDto.SerialNumber;
             existingMachine.StatusId = machineUpdateDto.StatusId;
             existingMachine.PlaceId = machineUpdateDto.PlaceId;
 

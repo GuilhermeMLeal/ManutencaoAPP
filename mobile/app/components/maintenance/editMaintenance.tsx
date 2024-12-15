@@ -102,13 +102,13 @@ const EditMaintenanceScreen: React.FC = () => {
       return;
     }
 
-    setMaintenance((prev) => {
+    setMaintenance((prev: any) => {
       if (!prev) return prev;
       return {
         ...prev,
         maintenanceParts: [
           ...prev.maintenanceParts,
-          { id: Date.now(), maintenanceId: prev.id, partId: currentPartId, quantity },
+          { partId: currentPartId, quantity },
         ],
       };
     });
