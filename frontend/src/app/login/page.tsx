@@ -28,11 +28,11 @@ export default function Login() {
   const handleLogin = async () => {
     try {
       const userLoginDTO = { username, password };
-  
+
       const token = await UnifiedService.login(userLoginDTO);
-  
+
       storeAccessToken(token);
-  
+
       setSuccess(true);
       setTimeout(() => {
         router.push("/maintenance");
@@ -48,6 +48,10 @@ export default function Login() {
       event.preventDefault();
       handleLogin();
     }
+  };
+
+  const handleCreateUserRedirect = () => {
+    router.push("/createUsers");
   };
 
   return (
@@ -135,7 +139,7 @@ export default function Login() {
               {/* Botão Criar Usuário */}
               <Button
                 variant="outlined"
-                onClick={() => alert("Criar Usuário")}
+                onClick={handleCreateUserRedirect}
                 fullWidth
               >
                 Criar Usuário
