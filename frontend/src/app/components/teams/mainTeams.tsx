@@ -10,16 +10,16 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  CardMedia,
+  Typography,
 } from "@mui/material";
 import Title from "../titles/titleMain";
 import CardBox from "../table/cardBox";
 import { FindItemTextBox } from "../create/findItemTextBox";
 import PaginationComponent from "../table/PaginationComponent";
-import SquadService from "@/service/SquadService";
+import UnifiedService from "@/service/UserService";
 
 const MainTeam: React.FC = () => {
-  const [squads, setSquads] = useState<Squad[]>([]); // Correct Squad type used here
+  const [squads, setSquads] = useState<Squad[]>([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Squad | null>(null);
 
@@ -28,25 +28,24 @@ const MainTeam: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const [filteredSquads, setFilteredSquads] = useState<SquadCreateDTO[]>([]);
+  const [filteredSquads, setFilteredSquads] = useState<Squad[]>([]);
+
   // Fetch squads from the API
   useEffect(() => {
-    const fetchSquads = async () => {
-      try {
-        setLoading(true);
-        const squadsData = await SquadService.getAllSquads();
-
-        setSquads(squadsData as Squad[]); // Explicitly cast the response to the correct Squad type
-      } catch (error) {
-        console.error("Error fetching squads:", error);
-        setError("Não foi possível carregar as equipes.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchSquads();
   }, []);
+
+  const fetchSquads = async () => {
+    try {
+      setLoading(true);
+      const squadsData = await UnifiedService.getAllSquads();
+      setSquads(squadsData);
+    } catch (error) {
+      setError("Não foi possível carregar as equipes.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleOpenDialog = (item: Squad) => {
     setSelectedItem(item);
@@ -56,6 +55,19 @@ const MainTeam: React.FC = () => {
   const handleCloseDialog = () => {
     setOpenDialog(false);
     setSelectedItem(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (selectedItem) {
+      try {
+        await UnifiedService.deleteSquad(selectedItem.id);
+        setOpenDialog(false);
+        setSelectedItem(null);
+        fetchSquads();
+      } catch (error) {
+        console.error("Error deleting squad:", error);
+      }
+    }
   };
 
   const handlePageChange = (
@@ -74,10 +86,10 @@ const MainTeam: React.FC = () => {
 
   const handleSearch = (query: string) => {
     const filtered = squads.filter((squad) =>
-      squad.Name.toLowerCase().includes(query.toLowerCase())
+      squad.name.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredSquads(filtered);
-    setPage(0); 
+    setPage(0);
   };
 
   if (loading) {
@@ -133,7 +145,7 @@ const MainTeam: React.FC = () => {
                   image: "/image/equipe.png",
                 }}
                 updatePath={`/teams/editTeam?id=${squad.id}`}
-                onSeeMore={() => handleOpenDialog(squad)}
+                onDelete={() => handleOpenDialog(squad)} // Abre o modal de confirmação
               />
             ))}
         </Box>
@@ -145,17 +157,43 @@ const MainTeam: React.FC = () => {
           onRowsPerPageChange={handleRowsPerPageChange}
         />
       </Container>
-      <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>{selectedItem?.name}</DialogTitle>
+
+      {/* Modal de Exclusão */}
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          Confirmar Exclusão
+        </DialogTitle>
         <DialogContent>
-          <DialogContentText>{selectedItem?.description}</DialogContentText>
-          <CardMedia
-            sx={{ height: 140 }}
-            image="/image/equipe.png" // Replace with dynamic image if available
-          />
+          <DialogContentText id="alert-dialog-description">
+            Tem certeza de que deseja excluir a equipe{" "}
+            <strong>{selectedItem?.name}</strong>? Esta ação não pode ser
+            desfeita.
+          </DialogContentText>
+
+          {selectedItem && (
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="subtitle1" color="textPrimary">
+                <strong>Nome:</strong> {selectedItem.name}
+              </Typography>
+              <Typography variant="subtitle2" color="textSecondary">
+                <strong>Descrição:</strong>{" "}
+                {selectedItem.description || "Sem descrição"}
+              </Typography>
+            </Box>
+          )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog}>Fechar</Button>
+          <Button onClick={handleCloseDialog} sx={{ color: "black" }}>
+            Cancelar
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error" autoFocus>
+            Excluir
+          </Button>
         </DialogActions>
       </Dialog>
     </main>

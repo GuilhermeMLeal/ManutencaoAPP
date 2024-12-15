@@ -4,7 +4,7 @@ const UnifiedService = {
   // User Services
   async getUsers(): Promise<User[]> {
     try {
-      const response = await userApiClient.get<User[]>("/users");
+      const response = await userApiClient.get<User[]>("/User");
       return response.data;
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -14,7 +14,7 @@ const UnifiedService = {
 
   async getUserById(id: number): Promise<User> {
     try {
-      const response = await userApiClient.get<User>(`/users/${id}`);
+      const response = await userApiClient.get<User>(`/User/${id}`);
       return response.data;
     } catch (error) {
       console.error(`Error fetching user with ID ${id}:`, error);
@@ -34,7 +34,7 @@ const UnifiedService = {
 
   async updateUser(id: number, userDTO: User): Promise<void> {
     try {
-      await userApiClient.put(`/users/${id}`, userDTO);
+      await userApiClient.put(`/User/${id}`, userDTO);
     } catch (error) {
       console.error(`Error updating user with ID ${id}:`, error);
       throw error;
@@ -43,7 +43,7 @@ const UnifiedService = {
 
   async deleteUser(id: number): Promise<void> {
     try {
-      await userApiClient.delete(`/users/${id}`);
+      await userApiClient.delete(`/User/${id}`);
     } catch (error) {
       console.error(`Error deleting user with ID ${id}:`, error);
       throw error;
@@ -53,7 +53,7 @@ const UnifiedService = {
   // Role Services
   async getRoles(): Promise<Role[]> {
     try {
-      const response = await userApiClient.get<Role[]>("/roles");
+      const response = await userApiClient.get<Role[]>("/Role");
       return response.data;
     } catch (error) {
       console.error("Error fetching roles:", error);
@@ -63,7 +63,7 @@ const UnifiedService = {
 
   async getRoleById(id: number): Promise<Role> {
     try {
-      const response = await userApiClient.get<Role>(`/roles/${id}`);
+      const response = await userApiClient.get<Role>(`/Role/${id}`);
       return response.data;
     } catch (error) {
       console.error(`Error fetching role with ID ${id}:`, error);
@@ -73,7 +73,7 @@ const UnifiedService = {
 
   async createRole(roleDTO: Role): Promise<Role> {
     try {
-      const response = await userApiClient.post<Role>("/roles", roleDTO);
+      const response = await userApiClient.post<Role>("/Role", roleDTO);
       return response.data;
     } catch (error) {
       console.error("Error creating role:", error);
@@ -83,7 +83,7 @@ const UnifiedService = {
 
   async updateRole(id: number, roleDTO: Role): Promise<void> {
     try {
-      await userApiClient.put(`/roles/${id}`, roleDTO);
+      await userApiClient.put(`/Role/${id}`, roleDTO);
     } catch (error) {
       console.error(`Error updating role with ID ${id}:`, error);
       throw error;
@@ -92,7 +92,7 @@ const UnifiedService = {
 
   async deleteRole(id: number): Promise<void> {
     try {
-      await userApiClient.delete(`/roles/${id}`);
+      await userApiClient.delete(`/Role/${id}`);
     } catch (error) {
       console.error(`Error deleting role with ID ${id}:`, error);
       throw error;
@@ -102,7 +102,7 @@ const UnifiedService = {
   // Squad Services
   async getAllSquads(): Promise<Squad[]> {
     try {
-      const response = await userApiClient.get<Squad[]>("/Squads");
+      const response = await userApiClient.get<Squad[]>("/Squad");
       return response.data;
     } catch (error) {
       console.error("Error fetching squads:", error);
@@ -112,7 +112,7 @@ const UnifiedService = {
 
   async getSquadById(id: number): Promise<Squad> {
     try {
-      const response = await userApiClient.get<Squad>(`/Squads/${id}`);
+      const response = await userApiClient.get<Squad>(`/Squad/${id}`);
       return response.data;
     } catch (error) {
       console.error(`Error fetching squad with ID ${id}:`, error);
@@ -122,7 +122,7 @@ const UnifiedService = {
 
   async createSquad(squadDTO: Squad): Promise<Squad> {
     try {
-      const response = await userApiClient.post<Squad>("/Squads", squadDTO);
+      const response = await userApiClient.post<Squad>("/Squad", squadDTO);
       return response.data;
     } catch (error) {
       console.error("Error creating squad:", error);
@@ -132,7 +132,7 @@ const UnifiedService = {
 
   async updateSquad(id: number, squadDTO: Squad): Promise<void> {
     try {
-      await userApiClient.put(`/Squads/${id}`, squadDTO);
+      await userApiClient.put(`/Squad/${id}`, squadDTO);
     } catch (error) {
       console.error(`Error updating squad with ID ${id}:`, error);
       throw error;
@@ -141,7 +141,7 @@ const UnifiedService = {
 
   async deleteSquad(id: number): Promise<void> {
     try {
-      await userApiClient.delete(`/Squads/${id}`);
+      await userApiClient.delete(`/Squad/${id}`);
     } catch (error) {
       console.error(`Error deleting squad with ID ${id}:`, error);
       throw error;
