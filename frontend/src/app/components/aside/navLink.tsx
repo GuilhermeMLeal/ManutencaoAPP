@@ -32,7 +32,6 @@ export default function NavLink() {
       text: "Relatórios",
       icon: <ChecklistIcon fontSize="large" />,
     },
-    { target: "#", text: "Usuário", icon: <ManageAccountsIcon fontSize="large" /> },
   ];
 
   return (

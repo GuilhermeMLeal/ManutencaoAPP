@@ -29,12 +29,23 @@ export default function Register() {
   const handleRegister = async () => {
     try {
       setLoading(true);
-      const userRegisterDTO = { name, username, password, email };
-
+      console.log("Password value:", password);
+      if (!password) {
+        setError(true);
+        console.error("Password is required but not provided.");
+        return;
+      }
+  
+      const userRegisterDTO = { 
+        name, 
+        username, 
+        email, 
+        password: password
+      };
+  
       await UnifiedService.createUser(userRegisterDTO);
-
+  
       setSuccess(true);
-      alert("Usuário cadastrado com sucesso!");
       setTimeout(() => {
         router.push("/");
       }, 2000);
