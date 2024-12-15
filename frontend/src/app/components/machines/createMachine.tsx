@@ -227,7 +227,7 @@ export default function CreateOrEditMachine() {
               select
               id="statusId"
               name="statusId"
-              label="Status"
+              label="Status da Máquina/Manutenção"
               fullWidth
               variant="outlined"
               value={formData.statusId}
