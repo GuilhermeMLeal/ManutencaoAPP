@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Component } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./login/page";
 import Unauthorized from "./unauthorized/page";
@@ -14,6 +14,7 @@ import CreateTeamPage from "./teams/createTeam/page";
 import Tools from "./tools/page";
 import CreateToolPage from "./tools/createTool/page";
 import ControlStock from "./controlStock/page";
+import CreateUser from "./createUsers/page"
 
 const publicRoutes = [
   { path: "/login", component: Login },
@@ -30,6 +31,7 @@ const privateRoutes = [
   { path: "/tools", component: Tools },
   { path: "/teams/createTool", component: CreateToolPage },
   { path: "/controlStock", component: ControlStock },
+  { path: "/createUsers", component: CreateUser},
 ];
 
 export default function AppRoutes() {
