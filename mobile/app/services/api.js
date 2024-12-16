@@ -13,7 +13,7 @@ const transformResponse = [
     try {
       return JSON.parse(data); // Tenta converter para JSON
     } catch (error) {
-      console.error("Erro ao converter a resposta para JSON:", error);
+      //console.error("Erro ao converter a resposta para JSON:", error);
       return data; // Retorna como texto se não for JSON
     }
   },

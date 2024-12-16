@@ -4,7 +4,6 @@ import {
   Text,
   FlatList,
   ActivityIndicator,
-  Alert,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
@@ -38,7 +37,9 @@ const MaintenanceListScreen: React.FC = () => {
   useEffect(() => {
     const fetchMaintenances = async () => {
       try {
-        const response = await apiMaintenance.get(endpointMaintenance.maintenance);
+        const response = await apiMaintenance.get(
+          endpointMaintenance.maintenance
+        );
         setMaintenances(response.data);
         setLoading(false);
       } catch (error) {
@@ -49,32 +50,35 @@ const MaintenanceListScreen: React.FC = () => {
     };
 
     fetchMaintenances();
+
     const unsubscribe = navigation.addListener("focus", () => {
-      fetchMaintenances(); 
+      fetchMaintenances();
     });
-  
-    return unsubscribe; 
+
+    return unsubscribe;
   }, [navigation]);
 
   const renderMaintenance = ({ item }: { item: Maintenance }) => (
     <View style={styles.card}>
       <Text style={styles.title}>Manutenção #{item.id}</Text>
       <Text style={styles.detail}>
-        <Text style={styles.label}>ID da Máquina:</Text> {item.machineId}
+        <Text style={styles.label}>ID da Máquina: </Text>
+        {item.machineId}
       </Text>
       <Text style={styles.detail}>
-        <Text style={styles.label}>Observações:</Text> {item.observations}
+        <Text style={styles.label}>Observações: </Text>
+        {item.observations}
       </Text>
       <Text style={styles.detail}>
-        <Text style={styles.label}>Última Atualização:</Text>{" "}
+        <Text style={styles.label}>Última Atualização: </Text>
         {new Date(item.lastUpdate).toLocaleString()}
       </Text>
       <Text style={styles.detail}>
-        <Text style={styles.label}>Início:</Text>{" "}
+        <Text style={styles.label}>Início: </Text>
         {new Date(item.startDate).toLocaleString()}
       </Text>
       <Text style={styles.detail}>
-        <Text style={styles.label}>Fim:</Text>{" "}
+        <Text style={styles.label}>Fim: </Text>
         {new Date(item.endDate).toLocaleString()}
       </Text>
       <Text style={styles.label}>Peças:</Text>
@@ -86,7 +90,9 @@ const MaintenanceListScreen: React.FC = () => {
       <TouchableOpacity
         style={styles.button}
         onPress={() =>
-          navigation.navigate("MaintenanceDetailsScreen", { maintenanceId: item.id })
+          navigation.navigate("MaintenanceDetailsScreen", {
+            maintenanceId: item.id,
+          })
         }
       >
         <Text style={styles.buttonText}>Ver Detalhes</Text>
@@ -119,8 +125,8 @@ const MaintenanceListScreen: React.FC = () => {
         keyExtractor={(item: any) => item.id.toString()}
         contentContainerStyle={styles.listContainer}
       />
-      <FloatingButton type="maintenance" /> {/* Adicionando o botão flutuante */}
-    </View> 
+      <FloatingButton type="maintenance" />
+    </View>
   );
 };
 
